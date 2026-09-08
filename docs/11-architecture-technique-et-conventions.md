@@ -98,7 +98,7 @@ Cinq raisons, à connaître avant toute tentation de mutualisation :
   /migrations                fichiers SQL numérotés
   /seed                      référentiels et énumérations
   /functions                 tâches planifiées
-/docs                        les douze documents du projet
+/docs                        les documents du projet, 1 à 12 et lots 9 bis, 9 ter, 9 quater
 /types                       types générés depuis le schéma
 ```
 
@@ -356,11 +356,11 @@ Un composant est terminé lorsqu'il implémente ses cinq états, qu'il affiche s
 | 4 | Chrome, navigation, bandeau de périmètre | Cadre commun à tous les écrans |
 | 5 | Couches `queries`, `masking`, `indicators`, `format`, `i18n` | Socle transverse |
 | 6 | Bibliothèque de composants et cinq états | Réutilisé partout |
-| 7 | `M1_OFFRE` | Premier module fonctionnel |
-| 8 | `M2_DEMANDE` | |
-| 9 | `M4_TENSION` | |
-| 10 | `M9_SYNTHESE` et `M10_METHODO` | Agrégation et méthode |
-| 11 | `M11_ADMIN` | |
+| 7 | `M11_ADMIN` | **Back-office de saisie. Sans lui, aucune donnée n'entre** |
+| 8 | `M1_OFFRE` | Premier module de restitution |
+| 9 | `M2_DEMANDE` | |
+| 10 | `M4_TENSION` | |
+| 11 | `M9_SYNTHESE` et `M10_METHODO` | Agrégation et méthode |
 | 12 | Modules restants | Selon dépendances |
 
 Le rang 6 est celui que l'on est tenté de sauter pour aller plus vite. Le sauter produit onze écrans aux comportements divergents.

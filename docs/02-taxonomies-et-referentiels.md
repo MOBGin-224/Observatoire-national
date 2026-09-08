@@ -42,38 +42,207 @@ Le découpage résulte des décrets présidentiels du **20 août 2026**, qui ont
 
 Les dix régions retenues par la carte administrative du ministère de l'Administration du Territoire et de la Décentralisation :
 
-| Région |
-|---|
-| Conakry |
-| Kindia |
-| Boké |
-| Mamou |
-| Labé |
-| Faranah |
-| Kankan |
-| Siguiri |
-| Beyla |
-| Nzérékoré |
+| Code | Région | Nature | Préfectures |
+|---|---|---|---|
+| `01` | Conakry | Zone spéciale, gouvernorat | 0 |
+| `02` | Boké | Région administrative | 6 |
+| `03` | Kindia | Région administrative | 5 |
+| `04` | Mamou | Région administrative | 4 |
+| `05` | Labé | Région administrative | 5 |
+| `06` | Faranah | Région administrative | 4 |
+| `07` | Kankan | Région administrative | 7 |
+| `08` | Siguiri | Région administrative, nouvelle | 4 |
+| `09` | Nzérékoré | Région administrative | 5 |
+| `10` | Beyla | Région administrative, nouvelle | 4 |
 
-Codification à deux chiffres, de `01` à `10`. La correspondance exacte entre code et région est à établir sur les textes officiels, les codes antérieurs allant de `01` à `08`.
+Total : 44 préfectures, Conakry exceptée.
 
-### 2.3 Les préfectures
+La correspondance entre code et région suit l'ordre ci-dessus. Si la codification officielle des décrets diffère, seule cette colonne change : les codes de préfecture et de commune en dérivent mécaniquement.
 
-44 préfectures : les 33 antérieures, auxquelles s'ajoutent onze anciennes sous-préfectures érigées en préfectures.
+### 2.3 Les 44 préfectures
 
-**Les onze nouvelles préfectures :** Kamsar, Timbo, Tokounou, Djalakoro, Sabadou-Baranama, Doko, Siguirini, Kintinian, Sinko, Kouankan, Karala.
+Codification : code région sur deux chiffres, puis numéro d'ordre sur deux chiffres. Forme : `07-05`.
 
-Elles se répartissent entre Boké, Mamou, Kankan, Siguiri et Beyla. Beyla relevait auparavant de la région de Nzérékoré, et Siguiri de celle de Kankan.
+**`01` Conakry**
 
-La liste nominative complète des 44 préfectures et leur rattachement régional sont à relever sur la carte administrative du MATD.
+Zone spéciale sans niveau préfectoral. Ses communes se rattachent directement à la région.
 
-Codification : code région sur deux chiffres, puis numéro d'ordre sur deux chiffres. Forme : `05-03`.
+**`02` Boké**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `02-01` | Boké | |
+| `02-02` | Boffa | |
+| `02-03` | Fria | |
+| `02-04` | Gaoual | |
+| `02-05` | Koundara | |
+| `02-06` | Kamsar | Nouvelle |
+
+**`03` Kindia**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `03-01` | Kindia | |
+| `03-02` | Coyah | |
+| `03-03` | Dubréka | |
+| `03-04` | Forécariah | |
+| `03-05` | Télimélé | |
+
+**`04` Mamou**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `04-01` | Mamou | |
+| `04-02` | Dalaba | |
+| `04-03` | Pita | |
+| `04-04` | Timbo | Nouvelle |
+
+**`05` Labé**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `05-01` | Labé | |
+| `05-02` | Koubia | |
+| `05-03` | Lélouma | |
+| `05-04` | Mali | |
+| `05-05` | Tougué | |
+
+**`06` Faranah**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `06-01` | Faranah | |
+| `06-02` | Dabola | |
+| `06-03` | Dinguiraye | |
+| `06-04` | Kissidougou | |
+
+**`07` Kankan**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `07-01` | Kankan | |
+| `07-02` | Kérouané | |
+| `07-03` | Kouroussa | |
+| `07-04` | Mandiana | |
+| `07-05` | Tokounou | Nouvelle |
+| `07-06` | Djalakoro | Nouvelle |
+| `07-07` | Sabadou-Baranama | Nouvelle |
+
+**`08` Siguiri**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `08-01` | Siguiri | Chef-lieu de région, anciennement en Kankan |
+| `08-02` | Doko | Nouvelle |
+| `08-03` | Siguirini | Nouvelle |
+| `08-04` | Kintinian | Nouvelle |
+
+**`09` Nzérékoré**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `09-01` | Nzérékoré | |
+| `09-02` | Guéckédou | |
+| `09-03` | Lola | |
+| `09-04` | Macenta | |
+| `09-05` | Yomou | |
+
+**`10` Beyla**
+
+| Code | Préfecture | Note |
+|---|---|---|
+| `10-01` | Beyla | Chef-lieu de région, anciennement en Nzérékoré |
+| `10-02` | Kouankan | Nouvelle |
+| `10-03` | Sinko | Nouvelle |
+| `10-04` | Karala | Nouvelle |
+
+### Contrôle de cohérence
+
+| Élément | Compte |
+|---|---|
+| Préfectures antérieures | 33 |
+| Devenues régions : Siguiri, Beyla | conservent leur statut de préfecture |
+| Nouvelles préfectures | 11 |
+| **Total** | **44** |
+
+Les onze nouvelles : Kamsar, Timbo, Tokounou, Djalakoro, Sabadou-Baranama, Doko, Siguirini, Kintinian, Kouankan, Sinko, Karala.
+
+**Beyla ne figure que dans la région `10`.** Elle relevait de Nzérékoré avant le 20 août 2026 et n'y figure plus. Toute liste plaçant Beyla dans Nzérékoré est antérieure aux décrets et produit un total erroné de 45.
+
+### Variantes orthographiques à charger
+
+Table `territoire_variante`. Liste non exhaustive, à compléter au fil des imports.
+
+| Territoire | Variantes |
+|---|---|
+| Nzérékoré | N'Zérékoré, N'Zerekore, Nzerekore |
+| Djalakoro | Dialakoro |
+| Kouankan | Kouakan |
+| Sinko | Sinkon |
+| Sabadou-Baranama | Sabadou Baranama, Baranama |
+| Guéckédou | Gueckedou, Guékédou |
+| Kérouané | Kerouane |
+| Forécariah | Forecariah |
+| Télimélé | Telimele |
+| Lélouma | Lelouma |
+| Tougué | Tougue |
+| Boké | Boke |
+| Labé | Labe |
+
+### Homonymie région et préfecture
+
+Neuf noms désignent à la fois une région et sa préfecture chef-lieu : Boké, Kindia, Mamou, Labé, Faranah, Kankan, Siguiri, Nzérékoré, Beyla.
+
+**Règle de résolution :** lors d'un import ou de la normalisation d'une destination saisie, un libellé ambigu se résout **au niveau préfecture**, jamais au niveau région. Un établissement situé « à Kankan » est à la préfecture de Kankan, pas quelque part dans la région.
+
+Sans cette règle, un établissement se rattacherait à un territoire de niveau région et n'apparaîtrait dans aucun agrégat communal ou préfectoral.
 
 ### 2.4 Les communes
 
 Environ 366 communes, chacune portant un attribut de nature : urbaine ou rurale.
 
-Codification : code préfecture, puis numéro d'ordre. Forme : `05-03-02`.
+**Codification :** code préfecture, puis numéro d'ordre sur deux chiffres. Forme : `07-05-02`.
+
+**Règle de forme, impérative.** Un code à deux segments désigne toujours une préfecture. Un code à trois segments désigne toujours une commune. Cette règle permet d'identifier le niveau d'un territoire à sa seule forme, sans requête.
+
+**Cas de Conakry.** Conakry n'ayant pas de niveau préfectoral, ses communes utilisent le segment de remplacement `00` en position préfecture. Leur parent hiérarchique reste la région `01`.
+
+Sans ce segment, une commune de Conakry serait codée `01-01`, forme identique à celle d'une préfecture. La confusion serait invisible à la lecture et fausserait toute requête d'agrégation par niveau.
+
+### 2.4.1 Les 13 communes de Conakry
+
+| Code | Commune | Nature | Note |
+|---|---|---|---|
+| `01-00-01` | Kaloum | Urbaine | Commune historique |
+| `01-00-02` | Dixinn | Urbaine | Commune historique |
+| `01-00-03` | Matam | Urbaine | Commune historique |
+| `01-00-04` | Ratoma | Urbaine | Commune historique |
+| `01-00-05` | Matoto | Urbaine | Commune historique |
+| `01-00-06` | Kassa | Urbaine | Îles de Loos |
+| `01-00-07` | Gbessia | Urbaine | Grand Conakry |
+| `01-00-08` | Tombolia | Urbaine | Grand Conakry |
+| `01-00-09` | Lambanyi | Urbaine | Grand Conakry |
+| `01-00-10` | Sonfonia | Urbaine | Grand Conakry |
+| `01-00-11` | Kagbélén | Urbaine | Grand Conakry |
+| `01-00-12` | Sanoyah | Urbaine | Grand Conakry |
+| `01-00-13` | Manéah | Urbaine | Grand Conakry |
+
+**Priorité de recensement.** Conakry est la zone prioritaire, à couvrir de manière exhaustive avant tout autre territoire. Ces treize communes constituent donc le premier maillage à intégrer.
+
+**Point de vigilance sur l'extension du Grand Conakry.** Plusieurs des communes ajoutées relevaient auparavant de préfectures de la région de Kindia, notamment Coyah et Dubréka. Toute liste d'établissements antérieure à cette réforme peut rattacher un établissement de Manéah, Sanoyah ou Kagbélén à la région de Kindia. La table de correspondance entre versions de découpage doit traiter ce cas explicitement.
+
+### 2.4.2 Variantes orthographiques des communes de Conakry
+
+| Commune | Variantes |
+|---|---|
+| Kagbélén | Kagbelen, Kagbélen |
+| Manéah | Maneah, Manea |
+| Sanoyah | Sanoya |
+| Lambanyi | Lambandji, Lambagni |
+| Tombolia | Tombolya |
+| Sonfonia | Sonfonya |
+| Gbessia | Gbéssia |
+| Kassa | Île de Kassa, Iles de Loos, Loos |
 
 ### 2.5 Avertissement sur les sources et la fraîcheur du découpage
 
@@ -88,7 +257,7 @@ Deux versions doivent coexister : l'ancien découpage, car toute liste obtenue d
 **Une seule source de vérité, nommée et datée.**
 Le MATD est l'autorité compétente. Le référentiel de l'Observatoire est constitué à partir de sa carte, avec mention de sa date de publication. Aucun mélange avec une autre source.
 
-Le cas de **Conakry** est à vérifier séparément : son découpage communal a lui aussi évolué et les sources divergent entre cinq, six et treize communes. Conakry étant la zone prioritaire de recensement, ce point doit être tranché avant tout import.
+Le cas de **Conakry** est traité en section 2.4.1 : la zone spéciale compte 13 communes, cinq historiques et huit issues de l'extension du Grand Conakry. Conakry étant la zone prioritaire de recensement, ce maillage est le premier à intégrer.
 
 ### 2.6 Champs du référentiel
 
@@ -444,11 +613,15 @@ Tous les profils institutionnels disposent des quatre niveaux.
 
 ## 20. Décisions à arrêter avant intégration
 
-1. Source officielle retenue pour le référentiel administratif, nommée et datée.
-2. Correspondance exacte entre codes `01` à `10` et régions, à vérifier sur les décrets du 20 août 2026.
-3. Liste nominative des 44 préfectures et de leur rattachement régional, relevée sur la carte du MATD.
-4. Nombre et liste des communes de Conakry, à confirmer auprès du MATD.
-5. Bornes chiffrées en GNF des quatre gammes tarifaires.
+**Réglées.** Les 10 régions et leur codification, section 2.2. Les 44 préfectures et leur rattachement, section 2.3. Les 13 communes de Conakry, section 2.4.1. La règle de forme des codes territoriaux, section 2.4.
+
+**Restent ouvertes.**
+
+1. **Confirmation officielle.** Les listes des sections 2.2, 2.3 et 2.4.1 proviennent de la presse et de sources publiques, non de la carte du MATD. Elles sont cohérentes et vérifiées arithmétiquement, mais doivent être confirmées sur le document officiel avant mise en production. Toute divergence se corrige dans la seule table `territoire`.
+2. **Codification officielle des régions.** Si les décrets retiennent un ordre différent de celui de la section 2.2, seule la colonne de code change, les codes de préfecture et de commune en dérivant mécaniquement.
+3. **Communes hors Conakry.** La liste nominative des communes des 44 préfectures, environ 353, reste à établir. Non bloquant pour le démarrage : le recensement commence par Conakry, dont le maillage est complet.
+4. **Bornes chiffrées en GNF** des quatre gammes tarifaires. **Bloquant pour le démarrage du recensement.**
+5. **Correspondance Grand Conakry.** Rattachement antérieur des communes issues de Coyah et Dubréka, à documenter dans la table de correspondance entre versions de découpage.
 
 ---
 

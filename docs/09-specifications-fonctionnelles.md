@@ -6,7 +6,15 @@
 **Statut :** Prescriptif. Une fiche par module.
 **Prérequis :** documents 1 à 8.
 
-> **Portée de cette version.** Ce document contient le cadre commun applicable à toutes les fiches, puis les fiches des trois modules prioritaires : `M1_OFFRE`, `M2_DEMANDE` et `M4_TENSION`. Ce sont les seuls modules qui ne dépendent pas du raccordement à la plateforme. Les fiches des modules suivants sont produites au fil du développement, chacune juste avant sa réalisation.
+> **Portée de cette version.** Ce document contient le cadre commun applicable à toutes les fiches, puis les fiches des trois modules prioritaires : `M1_OFFRE`, `M2_DEMANDE` et `M4_TENSION`. Ce sont les seuls modules qui ne dépendent pas du raccordement à la plateforme.
+>
+> **Les huit autres fiches existent.** Elles sont réparties dans trois documents complémentaires :
+>
+> - **9 bis** : `M9_SYNTHESE`, `M10_METHODO`, `M11_ADMIN`
+> - **9 ter** : `M6_MATURITE`, `M7_EVENEMENTIEL`
+> - **9 quater** : `M3_ACTIVITE`, `M5_CONFORMITE`, `M8_RETOMBEES`
+>
+> La partie A de ce document s'applique intégralement aux onze fiches.
 >
 > **Règle de référence.** Aucune formule n'est redéfinie ici. Les indicateurs sont désignés par leur code du document 4. Si un écran a besoin d'un indicateur absent du document 4, il ne s'affiche pas : le document 4 est modifié d'abord.
 
@@ -463,22 +471,36 @@ C'est le seul écran de l'outil qui produit directement du pipeline d'investisse
 
 ---
 
-# Partie E. Modules restants
+# Partie E. Les huit autres fiches
 
-Les fiches suivantes sont produites au fil du développement, chacune juste avant sa réalisation, selon le même format.
+Les onze modules sont spécifiés. Les huit fiches non contenues dans ce document se trouvent dans les documents complémentaires suivants, qui appliquent le même format et le même cadre commun.
 
-| Ordre | Module | Dépendance principale |
+| Module | Document | Partie |
 |---|---|---|
-| 4 | `M9_SYNTHESE` | Modules 1, 2 et 4 |
-| 5 | `M10_METHODO` | Document 4, aucune dépendance technique |
-| 6 | `M6_MATURITE` | Recensement, dérivé de `M1_OFFRE` |
-| 7 | `M3_ACTIVITE` | Raccordement à la plateforme |
-| 8 | `M7_EVENEMENTIEL` | Recensement et demande institutionnelle |
-| 9 | `M5_CONFORMITE` | Convention avec la tutelle |
-| 10 | `M8_RETOMBEES` | Validation de la méthodologie |
-| 11 | `M11_ADMIN` | Peut être développé à tout moment |
+| `M9_SYNTHESE` | 9 bis | F |
+| `M10_METHODO` | 9 bis | G |
+| `M11_ADMIN` | 9 bis | H |
+| `M6_MATURITE` | 9 ter | I |
+| `M7_EVENEMENTIEL` | 9 ter | J |
+| `M3_ACTIVITE` | 9 quater | K |
+| `M5_CONFORMITE` | 9 quater | L |
+| `M8_RETOMBEES` | 9 quater | M |
 
-`M10_METHODO` mérite d'être avancé si l'occasion se présente : il ne dépend d'aucune donnée, il se contente de restituer le document 4 stocké en base, et il est ce qui rend les chiffres de l'Observatoire citables dans un document officiel.
+Ordre de développement recommandé :
+
+| Rang | Module | Motif |
+|---|---|---|
+| 1 | `M11_ADMIN` | Back-office de saisie. Sans lui, aucune donnée n'entre |
+| 2 | `M1_OFFRE` | Premier module de restitution |
+| 3 | `M2_DEMANDE` | |
+| 4 | `M4_TENSION` | |
+| 5 | `M9_SYNTHESE` | Écran d'atterrissage |
+| 6 | `M10_METHODO` | Aucune dépendance de données, coût faible, forte valeur institutionnelle |
+| 7 | `M6_MATURITE` | Dérivé du recensement |
+| 8 | `M7_EVENEMENTIEL` | |
+| 9 | `M5_CONFORMITE` | Zones 4 et 5 fonctionnelles dès le recensement |
+| 10 | `M3_ACTIVITE` | Attend le raccordement à la plateforme |
+| 11 | `M8_RETOMBEES` | Désactivé tant que la méthodologie n'est pas validée |
 
 ---
 

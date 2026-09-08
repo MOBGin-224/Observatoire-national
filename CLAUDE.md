@@ -38,12 +38,15 @@ Toute fonctionnalité doit servir l'une de ces trois questions. Sinon elle est h
 | 6 | Matrice profils, modules, permissions | Qui voit quoi |
 | 7 | Règles de confidentialité et gouvernance | **Prime sur tout le reste** |
 | 8 | Système de design et charte visuelle | Jetons, composants, cinq états |
-| 9 | Spécifications fonctionnelles par module | Une fiche par module |
+| 9 | Spécifications fonctionnelles par module | Cadre commun, `M1`, `M2`, `M4` |
+| 9 bis | Spécifications, lot 2 | `M9`, `M10`, `M11` |
+| 9 ter | Spécifications, lot 3 | `M6`, `M7` |
+| 9 quater | Spécifications, lot 4 | `M3`, `M5`, `M8` |
 | 10 | Charte des libellés bilingue | Tous les textes de l'interface |
 | 11 | Architecture technique et conventions | Pile, structure, nommage |
 | 12 | Plan de recette | Critères d'acceptation |
 
-Tous dans `/docs`.
+Tous dans `/docs`. **Les onze modules sont spécifiés.** La partie A du document 9 s'applique aux onze fiches.
 
 ---
 
@@ -174,11 +177,11 @@ Le domaine métier est en français, le code est en anglais.
 4. Chrome, navigation, bandeau de périmètre
 5. Couches transverses : `queries`, `masking`, `indicators`, `format`, `i18n`
 6. **Bibliothèque de composants et cinq états**
-7. `M1_OFFRE`
-8. `M2_DEMANDE`
-9. `M4_TENSION`
-10. `M9_SYNTHESE` et `M10_METHODO`
-11. `M11_ADMIN`
+7. **`M11_ADMIN`**, back-office de saisie. Sans lui, aucune donnée n'entre
+8. `M1_OFFRE`
+9. `M2_DEMANDE`
+10. `M4_TENSION`
+11. `M9_SYNTHESE` et `M10_METHODO`
 12. Modules restants
 
 **Le rang 6 est celui qu'on est tenté de sauter pour voir un écran plus vite.** Le sauter produit onze écrans aux comportements divergents.
@@ -261,13 +264,3 @@ Un visiteur non invité n'a aucune raison d'arriver ici et ne doit rien y trouve
 - il affiche son statut de donnée, son niveau de fiabilité et sa fraîcheur ;
 - il ne contient aucune chaîne ni aucune valeur visuelle en dur ;
 - il est lisible en projection à trois mètres.
-
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
