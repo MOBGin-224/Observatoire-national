@@ -16,6 +16,37 @@
     }
   },
   "app": {
+    "titre": "Observatoire National de l'Hospitalité Guinéenne",
+    "titre_court": "Observatoire",
     "attribution": "Une infrastructure Simandou Séjour"
+  },
+  "nav": {
+    "modules": "Modules",
+    "compte": "Mon compte",
+    "langue": "Langue",
+    "deconnexion": "Se déconnecter",
+    "aide": "Aide",
+    "methodologie": "Méthodologie"
+  },
+  "perimetre": {
+    "titre": "Périmètre observé",
+    "etablissements": "{n} établissements recensés",
+    "partenaires": "dont {n} partenaires",
+    "couverture": "soit {p} de la capacité identifiée",
+    "date": "Données au {date}",
+    "avertissement": "Les indicateurs de conjoncture portent sur le périmètre observé et ne constituent pas une statistique nationale exhaustive."
+  },
+  "module": {
+    "m1": { "titre": "Offre nationale d'hébergement", "court": "Offre" },
+    "m2": { "titre": "Demande exprimée", "court": "Demande" },
+    "m3": { "titre": "Activité observée", "court": "Activité" },
+    "m4": { "titre": "Tension et déficit d'offre", "court": "Tension" },
+    "m5": { "titre": "Conformité et classification", "court": "Conformité" },
+    "m6": { "titre": "Maturité numérique du secteur", "court": "Maturité numérique" },
+    "m7": { "titre": "Événementiel et pics de demande", "court": "Événementiel" },
+    "m8": { "titre": "Retombées économiques estimées", "court": "Retombées estimées" },
+    "m9": { "titre": "Synthèse institutionnelle", "court": "Synthèse" },
+    "m10": { "titre": "Méthodologie", "court": "Méthodologie" },
+    "m11": { "titre": "Administration", "court": "Administration" }
   }
 }

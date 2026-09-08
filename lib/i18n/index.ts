@@ -18,7 +18,17 @@ function resoudre(catalogue: Record<string, unknown>, cle: string): string {
 /**
  * Document 11, section 8 : les libelles viennent exclusivement de ces fichiers,
  * jamais d'une chaine ecrite en dur dans un composant.
+ * `variables` remplace les marqueurs {cle} du libelle (ex: perimetre.etablissements).
  */
-export function t(cle: string, langue: Langue = "fr"): string {
-  return resoudre(catalogues[langue], cle);
+export function t(
+  cle: string,
+  variables?: Record<string, string | number>,
+  langue: Langue = "fr"
+): string {
+  const brut = resoudre(catalogues[langue], cle);
+  if (!variables) return brut;
+  return Object.entries(variables).reduce(
+    (texte, [nom, valeur]) => texte.replaceAll(`{${nom}}`, String(valeur)),
+    brut
+  );
 }

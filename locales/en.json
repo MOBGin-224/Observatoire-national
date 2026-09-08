@@ -16,6 +16,37 @@
     }
   },
   "app": {
+    "titre": "National Observatory of Guinean Hospitality",
+    "titre_court": "Observatory",
     "attribution": "A Simandou Séjour infrastructure"
+  },
+  "nav": {
+    "modules": "Modules",
+    "compte": "My account",
+    "langue": "Language",
+    "deconnexion": "Sign out",
+    "aide": "Help",
+    "methodologie": "Methodology"
+  },
+  "perimetre": {
+    "titre": "Observed scope",
+    "etablissements": "{n} establishments surveyed",
+    "partenaires": "including {n} partners",
+    "couverture": "representing {p} of identified capacity",
+    "date": "Data as of {date}",
+    "avertissement": "Market indicators cover the observed scope only and do not constitute exhaustive national statistics."
+  },
+  "module": {
+    "m1": { "titre": "National accommodation supply", "court": "Supply" },
+    "m2": { "titre": "Expressed demand", "court": "Demand" },
+    "m3": { "titre": "Observed activity", "court": "Activity" },
+    "m4": { "titre": "Pressure and supply gap", "court": "Pressure" },
+    "m5": { "titre": "Compliance and classification", "court": "Compliance" },
+    "m6": { "titre": "Sector digital maturity", "court": "Digital maturity" },
+    "m7": { "titre": "Events and demand peaks", "court": "Events" },
+    "m8": { "titre": "Estimated economic impact", "court": "Estimated impact" },
+    "m9": { "titre": "Institutional summary", "court": "Summary" },
+    "m10": { "titre": "Methodology", "court": "Methodology" },
+    "m11": { "titre": "Administration", "court": "Administration" }
   }
 }
