@@ -1,7 +1,7 @@
 import { EtatDonnee } from "@/components/states/EtatDonnee";
 import { appliquerM0 } from "@/lib/masking";
 import { resoudreIndicateur } from "@/lib/indicators";
-import { formatNombre } from "@/lib/format";
+import { formatNombre, formatPourcentage } from "@/lib/format";
 
 /*
  * Un bloc d'indicateur cle (document 9, B.5, zone Z1). Ne connait jamais son
@@ -43,7 +43,9 @@ export async function BlocIndicateurCle({
               color: "var(--color-primary)",
             }}
           >
-            {formatNombre(v, meta?.decimales ?? 0)}
+            {meta?.unite === "pourcentage"
+              ? formatPourcentage(v, meta?.decimales ?? 1)
+              : formatNombre(v, meta?.decimales ?? 0)}
           </span>
         )}
       </EtatDonnee>

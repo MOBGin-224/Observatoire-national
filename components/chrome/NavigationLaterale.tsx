@@ -32,6 +32,7 @@ const CLE_LIBELLE: Record<string, string> = {
 /* Ecrans reellement construits a ce jour. Un module actif sans ecran reste visible, non cliquable. */
 const ROUTES_CONSTRUITES: Record<string, string> = {
   M9_SYNTHESE: "/synthese",
+  M1_OFFRE: "/offre",
 };
 
 export function NavigationLaterale({
