@@ -61,6 +61,8 @@
     "masque_court": "Non publié",
     "masque_aide": "Un agrégat de performance n'est publié que si l'échantillon comporte au moins trois établissements et qu'aucun n'y est prépondérant.",
     "non_renseigne": "Non renseigné",
+    "tension_indefinie": "Capacité réservable nulle sur ce territoire.",
+    "estimation_non_produite": "Moins de 10 recherches en échec, estimation non produite.",
     "erreur": {
       "titre": "Les données n'ont pas pu être chargées.",
       "action": "Réessayer",

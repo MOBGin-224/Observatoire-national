@@ -16,6 +16,7 @@ export async function BlocIndicateurCle({
   calculeA,
   masque = false,
   cleLibelleMasque,
+  libelleVide,
   niveauFiabilite,
   pied,
 }: {
@@ -24,11 +25,12 @@ export async function BlocIndicateurCle({
   calculeA: string;
   masque?: boolean;
   cleLibelleMasque?: string;
+  libelleVide?: string;
   niveauFiabilite?: string;
   pied?: ReactNode;
 }) {
   const meta = await resoudreIndicateur(code);
-  const etat = masque ? appliquerM1(valeur, true) : appliquerM0(valeur);
+  const etat = masque ? appliquerM1(valeur, true) : appliquerM0(valeur, libelleVide);
 
   return (
     <div

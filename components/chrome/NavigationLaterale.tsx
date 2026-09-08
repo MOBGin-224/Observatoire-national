@@ -34,6 +34,7 @@ const ROUTES_CONSTRUITES: Record<string, string> = {
   M9_SYNTHESE: "/synthese",
   M1_OFFRE: "/offre",
   M2_DEMANDE: "/demande",
+  M4_TENSION: "/tension",
 };
 
 export function NavigationLaterale({

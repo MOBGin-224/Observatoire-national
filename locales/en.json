@@ -61,6 +61,8 @@
     "masque_court": "Not published",
     "masque_aide": "A performance aggregate is published only if the sample includes at least three establishments and none is predominant.",
     "non_renseigne": "Not recorded",
+    "tension_indefinie": "No bookable capacity in this territory.",
+    "estimation_non_produite": "Fewer than 10 failed searches, estimate not produced.",
     "erreur": {
       "titre": "Data could not be loaded.",
       "action": "Try again",
