@@ -57,6 +57,7 @@
       "subdivision": "Ce territoire n'a pas de subdivision référencée."
     },
     "masque": "Non publié : effectif insuffisant pour préserver la confidentialité des établissements.",
+    "masque_budget": "Non publié : moins de 10 recherches avec filtre budget sur la période.",
     "masque_court": "Non publié",
     "masque_aide": "Un agrégat de performance n'est publié que si l'échantillon comporte au moins trois établissements et qu'aucun n'y est prépondérant.",
     "non_renseigne": "Non renseigné",

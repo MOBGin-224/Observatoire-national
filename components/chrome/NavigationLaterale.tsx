@@ -33,6 +33,7 @@ const CLE_LIBELLE: Record<string, string> = {
 const ROUTES_CONSTRUITES: Record<string, string> = {
   M9_SYNTHESE: "/synthese",
   M1_OFFRE: "/offre",
+  M2_DEMANDE: "/demande",
 };
 
 export function NavigationLaterale({

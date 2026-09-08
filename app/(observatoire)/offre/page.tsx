@@ -1,5 +1,5 @@
 import { BlocIndicateurCle } from "@/components/indicators/BlocIndicateurCle";
-import { Repartition } from "@/components/modules/offre/Repartition";
+import { Repartition } from "@/components/modules/Repartition";
 import { TableauTerritorial } from "@/components/modules/offre/TableauTerritorial";
 import { EtatVide } from "@/components/states/EtatVide";
 import { t } from "@/lib/i18n";

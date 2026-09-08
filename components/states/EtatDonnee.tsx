@@ -22,6 +22,7 @@ export function EtatDonnee<T>({
   calculeA,
   onReessayer,
   hauteurSquelette,
+  cleLibelleMasque,
   children,
 }: {
   etat: EtatBloc<T>;
@@ -30,6 +31,7 @@ export function EtatDonnee<T>({
   calculeA?: string;
   onReessayer?: () => void;
   hauteurSquelette?: string;
+  cleLibelleMasque?: string;
   children: (valeur: T) => ReactNode;
 }) {
   if (etat.type === "chargement") {
@@ -40,7 +42,7 @@ export function EtatDonnee<T>({
     <div className="flex flex-col gap-2">
       {etat.type === "erreur" && <EtatErreur onReessayer={onReessayer} />}
       {etat.type === "vide" && <EtatVide libelle={etat.libelle} />}
-      {etat.type === "masque" && <EtatMasque />}
+      {etat.type === "masque" && <EtatMasque cleLibelle={cleLibelleMasque} />}
       {etat.type === "donnee" && children(etat.valeur)}
 
       {etat.type !== "erreur" && (statutDonnee || niveauFiabilite || calculeA) && (

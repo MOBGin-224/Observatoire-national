@@ -494,6 +494,7 @@ Libellé invariable, jamais reformulé.
 |---|---|---|
 | `state.tension_indefinie` | Capacité réservable nulle sur ce territoire. | No bookable capacity in this territory. |
 | `state.estimation_non_produite` | Moins de 10 recherches en échec, estimation non produite. | Fewer than 10 failed searches, estimate not produced. |
+| `state.masque_budget` | Non publié : moins de 10 recherches avec filtre budget sur la période. | Not published: fewer than 10 searches with a budget filter for this period. |
 | `state.non_renseigne` | Non renseigné | Not recorded |
 
 ### État 5, erreur

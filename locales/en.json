@@ -57,6 +57,7 @@
       "subdivision": "This territory has no recorded subdivision."
     },
     "masque": "Not published: sample size too small to protect establishment confidentiality.",
+    "masque_budget": "Not published: fewer than 10 searches with a budget filter for this period.",
     "masque_court": "Not published",
     "masque_aide": "A performance aggregate is published only if the sample includes at least three establishments and none is predominant.",
     "non_renseigne": "Not recorded",

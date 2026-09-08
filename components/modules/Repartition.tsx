@@ -3,9 +3,12 @@ import { EtatVide } from "@/components/states/EtatVide";
 import { formatNombre } from "@/lib/format";
 
 /*
- * Z3, repartitions (document 9, B.4/B.5). Barres horizontales, pas de camembert
- * ni d'anneau (document 8, section 2.5 ; document 11, section 12 : interdictions
- * verifiables sur /components/charts).
+ * Repartition en barres horizontales, reutilisee par tous les modules
+ * (document 9). Pas de camembert ni d'anneau (document 8, section 2.5 ;
+ * document 11, section 12 : interdictions verifiables sur /components/charts).
+ * `domaine` resout les libelles depuis la table enumeration (document 11,
+ * section 8). Sans domaine (ex : codes pays ISO, hors enumeration du
+ * document 2), les codes bruts sont affiches tels quels.
  */
 export async function Repartition({
   titre,
@@ -13,7 +16,7 @@ export async function Repartition({
   valeurs,
 }: {
   titre: string;
-  domaine: string;
+  domaine?: string;
   valeurs: Record<string, number>;
 }) {
   const entrees = Object.entries(valeurs).sort((a, b) => b[1] - a[1]);
@@ -28,13 +31,15 @@ export async function Repartition({
     );
   }
 
-  const supabase = await createClient();
-  const { data: libelles } = await supabase
-    .from("enumeration")
-    .select("code, libelle_fr")
-    .eq("domaine", domaine);
-
-  const libelleParCode = new Map((libelles ?? []).map((l) => [l.code, l.libelle_fr]));
+  let libelleParCode = new Map<string, string>();
+  if (domaine) {
+    const supabase = await createClient();
+    const { data: libelles } = await supabase
+      .from("enumeration")
+      .select("code, libelle_fr")
+      .eq("domaine", domaine);
+    libelleParCode = new Map((libelles ?? []).map((l) => [l.code, l.libelle_fr]));
+  }
 
   return (
     <div className="flex flex-col gap-2">
