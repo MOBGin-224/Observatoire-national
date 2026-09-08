@@ -97,18 +97,18 @@ Contraste minimum de 4,5 pour 1 sur tout texte. La couleur ne porte jamais seule
 
 ## 3. Typographie
 
-**Famille unique : Montserrat.** Poids 400, 500, 600, 700. Aucune autre famille, aucune police décorative.
+**Deux familles, rôles séparés.** `--font-titre` (Montserrat) pour les titres et éléments de structure, `--font-texte` (Arial) pour le texte courant et les données. Aucune autre famille, aucune police décorative.
 
-| Jeton | Taille | Poids | Usage |
-|---|---|---|---|
-| `--text-display` | 32 px | 700 | Valeur d'indicateur clé |
-| `--text-h1` | 24 px | 700 | Titre d'écran |
-| `--text-h2` | 18 px | 600 | Titre de bloc |
-| `--text-h3` | 15 px | 600 | Sous-titre |
-| `--text-body` | 14 px | 400 | Texte courant |
-| `--text-small` | 13 px | 400 | Légendes, cellules de tableau dense |
-| `--text-meta` | 11 px | 500 | Horodatages, statuts, mentions |
-| `--text-label` | 11 px | 600 | Étiquettes, majuscules, interlettrage 0,08 em |
+| Jeton | Taille | Poids | Famille | Usage |
+|---|---|---|---|---|
+| `--text-display` | 32 px | 700 | `--font-titre` | Valeur d'indicateur clé |
+| `--text-h1` | 24 px | 700 | `--font-titre` | Titre d'écran |
+| `--text-h2` | 18 px | 600 | `--font-titre` | Titre de bloc |
+| `--text-h3` | 15 px | 600 | `--font-titre` | Sous-titre |
+| `--text-body` | 14 px | 400 | `--font-texte` | Texte courant |
+| `--text-small` | 13 px | 400 | `--font-texte` | Légendes, cellules de tableau dense |
+| `--text-meta` | 11 px | 500 | `--font-texte` | Horodatages, statuts, mentions |
+| `--text-label` | 11 px | 600 | `--font-texte` | Étiquettes, majuscules, interlettrage 0,08 em |
 
 Interligne : 1,5 pour le texte courant, 1,25 pour les titres, 1,4 pour les tableaux.
 

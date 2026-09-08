@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "titre": "Observatoire National de l'Hospitalité Guinéenne",
+    "accroche": "Mesurer l'offre. Comprendre la demande. Éclairer la décision.",
+    "sous_titre": "Accès réservé aux institutions partenaires.",
+    "email": "Adresse professionnelle",
+    "mot_de_passe": "Mot de passe",
+    "connexion": "Se connecter",
+    "code_verification": "Code de vérification",
+    "mot_de_passe_oublie": "Mot de passe oublié",
+    "pas_de_compte": "L'accès à l'Observatoire se fait sur invitation. Rapprochez-vous de votre point focal.",
+    "erreur": {
+      "identifiants": "Identifiants incorrects.",
+      "suspendu": "Votre accès est suspendu. Contactez votre administrateur.",
+      "expire": "Votre accès a expiré."
+    }
+  },
+  "app": {
+    "attribution": "Une infrastructure Simandou Séjour"
+  }
+}

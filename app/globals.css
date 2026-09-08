@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* Jetons de design, document 8. Aucune valeur visuelle en dur ailleurs dans le code. */
+:root {
+  /* Polices : Montserrat pour les titres, Arial pour le texte courant et les donnees */
+  --font-titre: "Montserrat", Arial, Helvetica, sans-serif;
+  --font-texte: Arial, Helvetica, sans-serif;
+
+  /* Palette de marque */
+  --color-primary: #0b3b66;
+  --color-success: #228c22;
+  --color-alert: #f34300;
+
+  /* Neutres */
+  --color-text: #000000;
+  --color-text-secondary: #3c4c5c;
+  --color-text-muted: #5a6b7b;
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f7f9fb;
+  --color-bg-panel: #f2f5f8;
+  --color-border: #d6dee6;
+  --color-border-strong: #b9c6d2;
+
+  /* Statuts de donnee */
+  --data-recense: #228c22;
+  --data-observe: #0b3b66;
+  --data-exprime: #6b4e9e;
+  --data-declare: #b8860b;
+  --data-estime: #8a9ba8;
+
+  /* Niveaux de fiabilite */
+  --fiab-consolide: #228c22;
+  --fiab-indicatif: #b8860b;
+  --fiab-signal: #8a9ba8;
+
+  /* Echelle typographique */
+  --text-display: 32px;
+  --text-h1: 24px;
+  --text-h2: 18px;
+  --text-h3: 15px;
+  --text-body: 14px;
+  --text-small: 13px;
+  --text-meta: 11px;
+  --text-label: 11px;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-texte);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+
+h1, h2, h3, .titre {
+  font-family: var(--font-titre);
+  line-height: 1.25;
+}

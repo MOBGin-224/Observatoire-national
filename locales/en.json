@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "titre": "National Observatory of Guinean Hospitality",
+    "accroche": "Measure supply. Understand demand. Inform decisions.",
+    "sous_titre": "Reserved for partner institutions.",
+    "email": "Work email address",
+    "mot_de_passe": "Password",
+    "connexion": "Sign in",
+    "code_verification": "Verification code",
+    "mot_de_passe_oublie": "Forgot password",
+    "pas_de_compte": "Access to the Observatory is by invitation. Please contact your focal point.",
+    "erreur": {
+      "identifiants": "Incorrect credentials.",
+      "suspendu": "Your access is suspended. Contact your administrator.",
+      "expire": "Your access has expired."
+    }
+  },
+  "app": {
+    "attribution": "A Simandou Séjour infrastructure"
+  }
+}
