@@ -48,5 +48,22 @@
     "m9": { "titre": "Synthèse institutionnelle", "court": "Synthèse" },
     "m10": { "titre": "Méthodologie", "court": "Méthodologie" },
     "m11": { "titre": "Administration", "court": "Administration" }
+  },
+  "state": {
+    "chargement": "Chargement des données",
+    "vide": {
+      "defaut": "Aucune donnée sur ce périmètre.",
+      "etablissements": "Aucun établissement recensé sur ce territoire.",
+      "subdivision": "Ce territoire n'a pas de subdivision référencée."
+    },
+    "masque": "Non publié : effectif insuffisant pour préserver la confidentialité des établissements.",
+    "masque_court": "Non publié",
+    "masque_aide": "Un agrégat de performance n'est publié que si l'échantillon comporte au moins trois établissements et qu'aucun n'y est prépondérant.",
+    "non_renseigne": "Non renseigné",
+    "erreur": {
+      "titre": "Les données n'ont pas pu être chargées.",
+      "action": "Réessayer",
+      "persistante": "Si le problème persiste, contactez votre administrateur."
+    }
   }
 }

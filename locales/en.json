@@ -48,5 +48,22 @@
     "m9": { "titre": "Institutional summary", "court": "Summary" },
     "m10": { "titre": "Methodology", "court": "Methodology" },
     "m11": { "titre": "Administration", "court": "Administration" }
+  },
+  "state": {
+    "chargement": "Loading data",
+    "vide": {
+      "defaut": "No data for this scope.",
+      "etablissements": "No establishment surveyed in this territory.",
+      "subdivision": "This territory has no recorded subdivision."
+    },
+    "masque": "Not published: sample size too small to protect establishment confidentiality.",
+    "masque_court": "Not published",
+    "masque_aide": "A performance aggregate is published only if the sample includes at least three establishments and none is predominant.",
+    "non_renseigne": "Not recorded",
+    "erreur": {
+      "titre": "Data could not be loaded.",
+      "action": "Try again",
+      "persistante": "If the problem persists, contact your administrator."
+    }
   }
 }
