@@ -855,7 +855,35 @@ Le libellé `module.m2.origine` reprend au caractère près l'intitulé imposé 
 
 `module.m3.conversion_lecture` reprend la mise en garde du document 9 quater, K.7. Elle est affichée sous le graphique, pas dans une infobulle : c'est la phrase qui empêche le chiffre d'être mal cité.
 
-### 17.3 États et légende
+### 17.3 `M4_TENSION`
+
+L'écran de la tension est le seul de l'outil dont les libellés nomment une responsabilité. Le document 9, D.3, associe à chaque état d'échec ce qui manque et qui doit agir. Ces trois colonnes sont reprises ici mot pour mot : elles ne sont pas un commentaire, elles sont la raison d'être de l'écran.
+
+`HORS_PERIMETRE` n'apparaît pas dans la table du document 9, D.3. Aucun libellé n'est inventé pour lui : ses deux colonnes affichent `state.non_renseigne`.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.m4.code` | M4 · Tension | M4 · Pressure |
+| `module.m4.question` | Où une demande s'exprime-t-elle sans trouver d'offre, et de quelle nature est le manque : absence d'établissements, absence de numérisation, ou saturation de la capacité existante. | Where does demand arise without finding supply, and what is the nature of the gap: no establishments, no digitalisation, or saturation of existing capacity. |
+| `module.m4.mesures` | Mesures de tension | Pressure measures |
+| `module.m4.nature` | Nature des recherches infructueuses | Nature of unsuccessful searches |
+| `module.m4.nature_aide` | Les quatre états d'échec restent distingués. Additionnés, ils ne désignent plus personne. | The four failure states stay distinct. Added together, they no longer point to anyone. |
+| `module.m4.lecture` | Trois manques, trois réponses. Une absence d'établissements appelle de l'investissement, une absence de numérisation appelle de l'appui aux opérateurs, une capacité saturée appelle de la capacité additionnelle. | Three gaps, three responses. Missing establishments call for investment, missing digitalisation calls for operator support, saturated capacity calls for additional capacity. |
+| `module.m4.colonne_etat` | État d'échec | Failure state |
+| `module.m4.colonne_manque` | Ce qui manque | What is missing |
+| `module.m4.colonne_agir` | Qui doit agir | Who must act |
+| `module.m4.colonne_recherches` | Recherches | Searches |
+| `module.m4.colonne_part` | Part | Share |
+| `module.m4.manque.AUCUNE_OFFRE` | Des établissements | Establishments |
+| `module.m4.agir.AUCUNE_OFFRE` | Investisseurs | Investors |
+| `module.m4.manque.NON_RESERVABLE` | De la numérisation | Digitalisation |
+| `module.m4.agir.NON_RESERVABLE` | Opérateurs et programmes d'appui | Operators and support programmes |
+| `module.m4.manque.OFFRE_INDISPONIBLE` | De la capacité additionnelle | Additional capacity |
+| `module.m4.agir.OFFRE_INDISPONIBLE` | Investisseurs et exploitants | Investors and operators |
+
+Aucun libellé d'atténuation n'est prévu pour un taux infructueux élevé, et il ne faut pas en ajouter : le document 9, D.8, l'interdit explicitement. Le chiffre s'affiche seul, quelle que soit sa valeur.
+
+### 17.4 États et légende
 
 | Clé | Français | Anglais |
 |---|---|---|
@@ -864,7 +892,7 @@ Le libellé `module.m2.origine` reprend au caractère près l'intitulé imposé 
 | `state.vide.conversion` | Moins de 100 recherches sur la période. | Fewer than 100 searches over the period. |
 | `carte.legende_bornes_generique` | de {min} à {max} | from {min} to {max} |
 
-### 17.4 Noms de pays
+### 17.5 Noms de pays
 
 Les noms de pays ne sont pas au catalogue. Les codes `ISO 3166-1 alpha-2` sont des codes normalisés internationaux, pas une énumération du document 2 : ils passent par les données de localisation d'`Intl`, comme les nombres et les dates, plutôt que par la recopie de deux cents libellés. Le code brut reste le repli si la locale ne connaît pas le pays.
 

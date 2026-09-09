@@ -286,7 +286,28 @@
       "volumes": "Volumes observés"
     },
     "m4": {
+      "agir": {
+        "AUCUNE_OFFRE": "Investisseurs",
+        "NON_RESERVABLE": "Opérateurs et programmes d'appui",
+        "OFFRE_INDISPONIBLE": "Investisseurs et exploitants"
+      },
+      "code": "M4 · Tension",
+      "colonne_agir": "Qui doit agir",
+      "colonne_etat": "État d'échec",
+      "colonne_manque": "Ce qui manque",
+      "colonne_part": "Part",
+      "colonne_recherches": "Recherches",
       "court": "Tension",
+      "lecture": "Trois manques, trois réponses. Une absence d'établissements appelle de l'investissement, une absence de numérisation appelle de l'appui aux opérateurs, une capacité saturée appelle de la capacité additionnelle.",
+      "manque": {
+        "AUCUNE_OFFRE": "Des établissements",
+        "NON_RESERVABLE": "De la numérisation",
+        "OFFRE_INDISPONIBLE": "De la capacité additionnelle"
+      },
+      "mesures": "Mesures de tension",
+      "nature": "Nature des recherches infructueuses",
+      "nature_aide": "Les quatre états d'échec restent distingués. Additionnés, ils ne désignent plus personne.",
+      "question": "Où une demande s'exprime-t-elle sans trouver d'offre, et de quelle nature est le manque : absence d'établissements, absence de numérisation, ou saturation de la capacité existante.",
       "titre": "Tension et déficit d'offre"
     },
     "m5": {

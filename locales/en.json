@@ -286,7 +286,28 @@
       "volumes": "Observed volumes"
     },
     "m4": {
+      "agir": {
+        "AUCUNE_OFFRE": "Investors",
+        "NON_RESERVABLE": "Operators and support programmes",
+        "OFFRE_INDISPONIBLE": "Investors and operators"
+      },
+      "code": "M4 · Pressure",
+      "colonne_agir": "Who must act",
+      "colonne_etat": "Failure state",
+      "colonne_manque": "What is missing",
+      "colonne_part": "Share",
+      "colonne_recherches": "Searches",
       "court": "Pressure",
+      "lecture": "Three gaps, three responses. Missing establishments call for investment, missing digitalisation calls for operator support, saturated capacity calls for additional capacity.",
+      "manque": {
+        "AUCUNE_OFFRE": "Establishments",
+        "NON_RESERVABLE": "Digitalisation",
+        "OFFRE_INDISPONIBLE": "Additional capacity"
+      },
+      "mesures": "Pressure measures",
+      "nature": "Nature of unsuccessful searches",
+      "nature_aide": "The four failure states stay distinct. Added together, they no longer point to anyone.",
+      "question": "Where does demand arise without finding supply, and what is the nature of the gap: no establishments, no digitalisation, or saturation of existing capacity.",
       "titre": "Pressure and supply gap"
     },
     "m5": {
