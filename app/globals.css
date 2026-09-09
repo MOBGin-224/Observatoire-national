@@ -251,15 +251,22 @@ h1, h2, h3, .titre {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--rayon);
-  color: var(--color-on-primary-faint);
+  color: var(--color-on-primary-muted);
+  background-color: var(--color-primary-700);
   transition: background-color var(--transition-douce), color var(--transition-douce);
 }
 .bouton-porte:hover {
-  background-color: var(--color-primary-700);
+  background-color: var(--color-primary-600);
   color: var(--color-on-primary);
+}
+
+.bouton-porte svg {
+  width: 22px !important;
+  height: 22px !important;
+  color: #ffffff;
 }
 
 /* Panneau documentaire. Survol tres retenu : le fond se teinte, le filet se

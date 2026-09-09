@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, cleServiceRolePresente } from "@/lib/supabase/admin";
 import { chargerMonCompte } from "@/lib/queries/compte";
 import { moduleAutorisePourProfil } from "@/lib/permissions/matrice";
 
@@ -92,6 +92,12 @@ export async function creerCompte(
   const modulesInvalides = modulesDemandes.filter((m) => !moduleAutorisePourProfil(profil, m));
   if (modulesInvalides.length > 0) {
     return { succes: false, erreurCle: "admin.erreur.module_non_autorise" };
+  }
+
+  // L'invitation passe par la cle service role. Si elle manque, le formulaire
+  // affiche une erreur de configuration au lieu de casser l'ecran.
+  if (!cleServiceRolePresente()) {
+    return { succes: false, erreurCle: "admin.erreur.cle_service_role" };
   }
 
   const admin = createAdminClient();
@@ -206,6 +212,13 @@ export async function renvoyerInvitation(email: string) {
 
   if (!compte) {
     throw new Error("Aucun compte associe a cette adresse.");
+  }
+
+  // Cette action ne rend pas de resultat a l'appelant (bouton en transition) :
+  // faute de surface d'affichage, une cle absente reste une exception, mais
+  // avec un message qui nomme la cause.
+  if (!cleServiceRolePresente()) {
+    throw new Error("SUPABASE_SERVICE_ROLE_KEY absente de l'environnement. Voir .env.local.");
   }
 
   const admin = createAdminClient();

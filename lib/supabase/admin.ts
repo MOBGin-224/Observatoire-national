@@ -22,3 +22,13 @@ export function createAdminClient() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
+
+/**
+ * Vrai si la cle service role est presente dans l'environnement. Permet a un
+ * appelant de renvoyer un message lisible au lieu de laisser createAdminClient
+ * lever au milieu du rendu : une cle absente est une erreur de configuration,
+ * pas un incident applicatif.
+ */
+export function cleServiceRolePresente(): boolean {
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+}

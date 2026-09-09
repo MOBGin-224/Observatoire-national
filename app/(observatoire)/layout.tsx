@@ -5,6 +5,7 @@ import { NavigationLaterale } from "@/components/chrome/NavigationLaterale";
 import { PiedImpression } from "@/components/chrome/PiedImpression";
 import { chargerMonCompte, chargerMesModules } from "@/lib/queries/compte";
 import { chargerPerimetre } from "@/lib/queries/perimetre";
+import { listerProfilsDev } from "@/lib/actions/dev-profil";
 
 /*
  * Chrome commun a tous les ecrans du tableau de bord (document 9, A.1) :
@@ -21,11 +22,17 @@ export default async function LayoutObservatoire({ children }: { children: React
     redirect("/");
   }
 
-  const [modulesActifs, perimetre] = await Promise.all([chargerMesModules(), chargerPerimetre()]);
+  // listerProfilsDev retourne une liste vide hors developpement : le selecteur
+  // de profil ne se rend alors jamais.
+  const [modulesActifs, perimetre, profilsDev] = await Promise.all([
+    chargerMesModules(),
+    chargerPerimetre(),
+    listerProfilsDev(),
+  ]);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <EnTete compte={compte} />
+      <EnTete compte={compte} profilsDev={profilsDev} />
       <div className="flex min-h-0 flex-1">
         <NavigationLaterale modulesActifs={modulesActifs} />
         <div className="flex min-w-0 flex-1 flex-col">

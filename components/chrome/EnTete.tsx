@@ -1,7 +1,10 @@
 import Image from "next/image";
-import logoEditeur from "@/public/simandou-sejour.svg";
+import Link from "next/link";
+import logoEditeur from "@/public/Logo réactualisé.svg";
 import { t } from "@/lib/i18n";
 import type { MonCompte } from "@/lib/queries/compte";
+import type { ValeurEnumeration } from "@/lib/enumerations";
+import { SelecteurProfilDev } from "@/components/chrome/SelecteurProfilDev";
 
 /*
  * En-tete de l'outil. La marque de l'editeur occupe le coin superieur gauche,
@@ -13,7 +16,13 @@ import type { MonCompte } from "@/lib/queries/compte";
  * fait partie du produit, au meme titre que la mention d'attribution du
  * document 8, section 10, et son libelle vient du catalogue, pas du composant.
  */
-export function EnTete({ compte }: { compte: MonCompte }) {
+export function EnTete({
+  compte,
+  profilsDev = [],
+}: {
+  compte: MonCompte;
+  profilsDev?: ValeurEnumeration[];
+}) {
   return (
     <header
       className="flex shrink-0 items-center justify-between"
@@ -25,13 +34,13 @@ export function EnTete({ compte }: { compte: MonCompte }) {
         borderBottom: "1px solid var(--color-border)",
       }}
     >
-      <div className="flex min-w-0 items-center" style={{ gap: "var(--space-4)" }}>
+      <Link href="/synthese" className="flex min-w-0 items-center" style={{ gap: "var(--space-4)" }}>
         <Image
           src={logoEditeur}
           alt={t("app.editeur")}
-          height={30}
+          height={40}
           priority
-          style={{ height: "30px", width: "auto" }}
+          style={{ height: "40px", width: "auto" }}
         />
         <span
           aria-hidden="true"
@@ -49,9 +58,12 @@ export function EnTete({ compte }: { compte: MonCompte }) {
         >
           {t("app.titre")}
         </span>
-      </div>
+      </Link>
 
       <div className="flex shrink-0 items-center" style={{ gap: "var(--space-5)" }}>
+        {profilsDev.length > 0 && (
+          <SelecteurProfilDev profilCourant={compte.profil} profils={profilsDev} />
+        )}
         {compte.institutionDenomination && (
           <span
             className="etiquette"

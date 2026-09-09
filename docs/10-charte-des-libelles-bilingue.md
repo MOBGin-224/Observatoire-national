@@ -634,6 +634,7 @@ Libellés du back-office de saisie, produits avec la fiche fonctionnelle du docu
 | `admin.erreur.expiration_obligatoire` | La date d'expiration est obligatoire. | Expiration date is required. |
 | `admin.erreur.module_non_autorise` | Ce module n'est pas autorisé pour le profil sélectionné. | This module is not authorised for the selected profile. |
 | `admin.erreur.email_deja_utilise` | Cette adresse est déjà associée à un compte. | This address is already associated with an account. |
+| `admin.erreur.cle_service_role` | Configuration serveur incomplète : la clé d'administration Supabase est absente. Aucune invitation ne peut être envoyée. | Incomplete server configuration: the Supabase admin key is missing. No invitation can be sent. |
 
 ### Import du recensement
 
@@ -870,3 +871,22 @@ Les noms de pays ne sont pas au catalogue. Les codes `ISO 3166-1 alpha-2` sont d
 ---
 
 *Document 10 sur 12. Document précédent : spécifications fonctionnelles par module. Document suivant : architecture technique et conventions de code.*
+
+---
+
+## 18. Outillage de développement, 9 septembre 2026
+
+Ces libellés n'appartiennent pas au produit livré. Ils n'apparaissent que lorsque l'application tourne en développement (`NODE_ENV`), et aucun d'eux n'existe dans une build de production. Ils figurent ici parce que la règle reste la même pour eux que pour le reste : aucune chaîne écrite en dur dans un composant, même temporaire.
+
+Le préfixe `dev.` est réservé à cet usage et ne doit jamais servir à un libellé destiné à un utilisateur institutionnel.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `auth.mfa.aide_developpement` | Développement uniquement : remplir le code courant | Development only: fill in the current code |
+| `dev.profil.etiquette` | Profil simulé | Simulated profile |
+| `dev.profil.infobulle` | Développement uniquement. Bascule le profil et les modules actifs du compte de test, sans contourner le contrôle d'accès. | Development only. Switches the test account's profile and active modules, without bypassing access control. |
+| `dev.profil.echec` | Bascule refusée | Switch refused |
+
+> `auth.mfa.aide_developpement` existait dans les fichiers de traduction depuis le 2026-09-08 sans être documentée ici. Elle est régularisée à l'occasion de l'ajout du sélecteur de profil, qui suit la même convention visuelle (bordure pointillée) et le même verrou (`NODE_ENV`).
+>
+> Le sélecteur de profil répond à un besoin de recette : vérifier ce que voit chaque profil du document 6 sans créer six comptes nominatifs ni enrôler six seconds facteurs. Il n'assouplit aucune règle. La bascule écrit réellement `compte_institutionnel.profil` et réécrit `compte_module` d'après la matrice du document 6, section 3, puis la sécurité de la base filtre normalement. `M8_RETOMBEES` reste éteint quel que soit le profil retenu, conformément au document 9 quater, section M.3.

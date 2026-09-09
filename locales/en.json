@@ -44,7 +44,8 @@
       "email_deja_utilise": "This address is already associated with an account.",
       "expiration_obligatoire": "Expiration date is required.",
       "module_non_autorise": "This module is not authorised for the selected profile.",
-      "nom_generique": "An account must be personal: enter the holder's first and last name."
+      "nom_generique": "An account must be personal: enter the holder's first and last name.",
+      "cle_service_role": "Incomplete server configuration: the Supabase admin key is missing. No invitation can be sent."
     },
     "import": {
       "deposer": "Upload a CSV file",
@@ -387,5 +388,12 @@
     "territoire": "Territory",
     "total": "Total",
     "verification": "Verification"
+  },
+  "dev": {
+    "profil": {
+      "etiquette": "Simulated profile",
+      "infobulle": "Development only. Switches the test account's profile and active modules, without bypassing access control.",
+      "echec": "Switch refused"
+    }
   }
 }
