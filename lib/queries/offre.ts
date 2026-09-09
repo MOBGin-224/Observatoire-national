@@ -14,6 +14,8 @@ export type LigneOffre = {
   offRepartitionGamme: Record<string, number>;
   offEcartListeAdmin: number;
   effectifEchantillon: number;
+  niveauFiabilite: string | null;
+  masque: boolean;
   calculeA: string;
 };
 
@@ -32,6 +34,8 @@ function versLigneOffre(d: Record<string, unknown>): LigneOffre {
     offRepartitionGamme: (d.off_repartition_gamme as Record<string, number>) ?? {},
     offEcartListeAdmin: d.off_ecart_liste_admin as number,
     effectifEchantillon: d.effectif_echantillon as number,
+    niveauFiabilite: (d.niveau_fiabilite as string) ?? null,
+    masque: (d.masque as boolean) ?? false,
     calculeA: d.calcule_a as string,
   };
 }

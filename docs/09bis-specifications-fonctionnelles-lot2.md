@@ -411,8 +411,8 @@ Neuf sections, dans cet ordre de priorité de réalisation.
 
 ## Points ouverts
 
-1. Format de fichier accepté pour l'import du recensement : tableur, valeurs séparées, ou les deux.
-2. Seuil de proximité géographique retenu pour la détection de doublons.
+1. ~~Format de fichier accepté pour l'import du recensement : tableur, valeurs séparées, ou les deux.~~ **Résolu (implémentation lot 1) : CSV, délimiteur point-virgule.**
+2. ~~Seuil de proximité géographique retenu pour la détection de doublons.~~ **Résolu (implémentation lot 1) : nom normalisé identique sur la même commune, ou coordonnées à moins de 300 m l'une de l'autre.** Valeur pragmatique, ajustable.
 3. Faut-il une fonction d'export de la base de recensement à usage interne, distincte des exports institutionnels interdits.
 4. Nombre maximal de lignes par import.
 

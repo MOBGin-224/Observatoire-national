@@ -40,3 +40,58 @@ export async function chargerDemandeNationale(): Promise<LigneDemande | null> {
     calculeA: data.calcule_a,
   };
 }
+
+export type PointSaisonnalite = {
+  mois: string;
+  demVolumeRecherches: number;
+  demDureeSejourRecherchee: number | null;
+  niveauFiabilite: string;
+};
+
+/*
+ * Z4, saisonnalite de l'intention (document 9, C.5). Serie continue par mois
+ * d'arrivee souhaitee : la vue produit un mois a zero plutot qu'un trou, sinon
+ * la courbe relierait deux points de part et d'autre d'une absence.
+ */
+export async function chargerDemandeSaisonnalite(): Promise<PointSaisonnalite[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("acces_demande_saisonnalite")
+    .select("mois, dem_volume_recherches, dem_duree_sejour_recherchee, niveau_fiabilite")
+    .order("mois", { ascending: true });
+
+  if (error || !data) return [];
+
+  return data.map((ligne) => ({
+    mois: ligne.mois,
+    demVolumeRecherches: ligne.dem_volume_recherches,
+    demDureeSejourRecherchee: ligne.dem_duree_sejour_recherchee,
+    niveauFiabilite: ligne.niveau_fiabilite,
+  }));
+}
+
+export type LigneDemandeTerritoire = {
+  codeTerritoire: string;
+  demVolumeRecherches: number;
+  demSessions: number;
+};
+
+/*
+ * Z2, destinations recherchees par territoire (document 9, C.5 et C.7).
+ * Construite sur la destination saisie puis normalisee, jamais sur le pays de
+ * la connexion : c'est le point de methode central du module.
+ */
+export async function chargerDemandeRegions(): Promise<LigneDemandeTerritoire[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("acces_demande_region")
+    .select("code_territoire, dem_volume_recherches, dem_sessions");
+
+  if (error || !data) return [];
+
+  return data.map((ligne) => ({
+    codeTerritoire: ligne.code_territoire,
+    demVolumeRecherches: ligne.dem_volume_recherches,
+    demSessions: ligne.dem_sessions,
+  }));
+}

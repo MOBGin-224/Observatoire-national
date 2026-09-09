@@ -1,72 +1,391 @@
 {
-  "auth": {
-    "titre": "Observatoire National de l'Hospitalité Guinéenne",
-    "accroche": "Mesurer l'offre. Comprendre la demande. Éclairer la décision.",
-    "sous_titre": "Accès réservé aux institutions partenaires.",
-    "email": "Adresse professionnelle",
-    "mot_de_passe": "Mot de passe",
-    "connexion": "Se connecter",
-    "code_verification": "Code de vérification",
-    "mot_de_passe_oublie": "Mot de passe oublié",
-    "pas_de_compte": "L'accès à l'Observatoire se fait sur invitation. Rapprochez-vous de votre point focal.",
+  "admin": {
+    "carte_import": {
+      "description": "Déposer un fichier de recensement, contrôler puis valider les lignes.",
+      "titre": "Import du recensement"
+    },
+    "carte_institutions": {
+      "description": "Créer une institution, inviter des comptes, gérer les accès.",
+      "titre": "Institutions et comptes"
+    },
+    "comptes": {
+      "action": {
+        "prolonger": "Prolonger l'expiration",
+        "reactiver": "Réactiver",
+        "renvoyer_invitation": "Renvoyer l'invitation",
+        "suspendre": "Suspendre"
+      },
+      "confirmation": {
+        "reactiver": "Réactiver ce compte ?",
+        "suspendre": "Suspendre ce compte ? L'accès cesse immédiatement."
+      },
+      "email": "Adresse professionnelle",
+      "expiration": "Date d'expiration",
+      "fonction": "Fonction",
+      "granularite": "Granularité maximale",
+      "invitation_envoyee": "Invitation envoyée.",
+      "inviter": "Envoyer l'invitation",
+      "langue": "Langue",
+      "modules": "Modules accessibles",
+      "nom": "Nom",
+      "nouveau": "Inviter un compte",
+      "perimetre": "Périmètre territorial",
+      "prenom": "Prénom",
+      "profil": "Profil",
+      "statut": {
+        "actif": "Actif",
+        "expire": "Expiré",
+        "suspendu": "Suspendu"
+      },
+      "titre": "Comptes",
+      "vide": "Aucun compte pour cette institution."
+    },
     "erreur": {
-      "identifiants": "Identifiants incorrects.",
-      "suspendu": "Votre accès est suspendu. Contactez votre administrateur.",
-      "expire": "Votre accès a expiré."
+      "email_deja_utilise": "Cette adresse est déjà associée à un compte.",
+      "expiration_obligatoire": "La date d'expiration est obligatoire.",
+      "module_non_autorise": "Ce module n'est pas autorisé pour le profil sélectionné.",
+      "nom_generique": "Un compte doit être nominatif : indiquez le nom et le prénom du titulaire."
+    },
+    "import": {
+      "deposer": "Déposer un fichier CSV",
+      "erreur": {
+        "champ_obligatoire_absent": "Champ obligatoire absent : {champ}",
+        "coordonnees_hors_bornes": "Coordonnées hors des limites de la Guinée",
+        "doublon_potentiel": "Doublon potentiel avec un établissement déjà recensé",
+        "territoire_non_resolu": "Territoire non reconnu : {valeur}",
+        "valeur_enumeration_invalide": "Valeur non reconnue pour {champ} : {valeur}"
+      },
+      "format": "Fichier CSV, délimiteur point-virgule.",
+      "historique": {
+        "date": "Date",
+        "fichier": "Fichier",
+        "lignes": "Lignes",
+        "titre": "Imports précédents",
+        "vide": "Aucun import réalisé."
+      },
+      "previsualiser": "Prévisualiser",
+      "rapport": {
+        "ligne": "Ligne {n}",
+        "lignes_erreur": "{n} lignes en erreur",
+        "lignes_valides": "{n} lignes valides",
+        "motif": "Motif",
+        "titre": "Rapport de contrôle"
+      },
+      "titre": "Import du recensement",
+      "valider": "Valider l'import"
+    },
+    "institutions": {
+      "convention_debut": "Début de convention",
+      "convention_fin": "Fin de convention",
+      "convention_reference": "Référence de convention",
+      "creation_reussie": "Institution créée.",
+      "creer": "Créer l'institution",
+      "denomination": "Dénomination",
+      "nouvelle": "Nouvelle institution",
+      "titre": "Institutions",
+      "type": "Type",
+      "vide": "Aucune institution enregistrée."
     }
   },
   "app": {
+    "attribution": "Une Infrastructure connectée à SIMANDOU SEJOUR",
+    "editeur": "SIMANDOU SEJOUR",
     "titre": "Observatoire National de l'Hospitalité Guinéenne",
-    "titre_court": "Observatoire",
-    "attribution": "Une infrastructure Simandou Séjour"
+    "titre_court": "Observatoire"
   },
-  "nav": {
-    "modules": "Modules",
-    "compte": "Mon compte",
-    "langue": "Langue",
-    "deconnexion": "Se déconnecter",
-    "aide": "Aide",
-    "methodologie": "Méthodologie"
+  "auth": {
+    "accroche": "Mesurer l'offre. Comprendre la demande. Éclairer la décision.",
+    "code_verification": "Code de vérification",
+    "connexion": "Se connecter",
+    "email": "Adresse professionnelle",
+    "erreur": {
+      "code_invalide": "Code incorrect. Réessayez.",
+      "expire": "Votre accès a expiré.",
+      "identifiants": "Identifiants incorrects.",
+      "suspendu": "Votre accès est suspendu. Contactez votre administrateur."
+    },
+    "mfa": {
+      "aide_developpement": "Développement uniquement : remplir le code courant",
+      "cle_secrete": "Vous ne pouvez pas scanner ce code ? Saisissez cette clé manuellement dans votre application :",
+      "instruction_inscription": "Second facteur obligatoire. Scannez ce code avec une application d'authentification, puis saisissez le code affiché.",
+      "instruction_verification": "Saisissez le code affiché dans votre application d'authentification.",
+      "titre_inscription": "Sécuriser votre compte",
+      "titre_verification": "Vérification en deux étapes",
+      "valider": "Vérifier"
+    },
+    "mot_de_passe": "Mot de passe",
+    "mot_de_passe_oublie": "Mot de passe oublié",
+    "pas_de_compte": "L'accès à l'Observatoire se fait sur invitation. Rapprochez-vous de votre point focal.",
+    "sous_titre": "Accès réservé aux institutions.",
+    "titre": "Observatoire National de l'Hospitalité Guinéenne"
   },
-  "perimetre": {
-    "titre": "Périmètre observé",
-    "etablissements": "{n} établissements recensés",
-    "partenaires": "dont {n} partenaires",
-    "couverture": "soit {p} de la capacité identifiée",
-    "date": "Données au {date}",
-    "avertissement": "Les indicateurs de conjoncture portent sur le périmètre observé et ne constituent pas une statistique nationale exhaustive."
+  "carte": {
+    "aucune_donnee": "Aucune donnée",
+    "legende_bornes": "de {min} à {max} établissements",
+    "legende_bornes_generique": "de {min} à {max}",
+    "legende_densite": "Densité",
+    "legende_hachure": "Sans donnée ({n})",
+    "legende_sans_echelle": "Échelle non établie, aucun établissement recensé",
+    "sans_contour": "Les contours du découpage administratif refondu le 20 août 2026 ne sont disponibles dans aucun fichier réutilisable. Les territoires sont ici représentés par une grille, sans géométrie."
+  },
+  "controle": {
+    "export": "Exporter",
+    "national": "National",
+    "niveau": "Niveau territorial"
+  },
+  "impression": {
+    "emis_par": "Émis par",
+    "reference": "Référence d'export"
+  },
+  "methodologie": {
+    "aucun_resultat": "Aucun indicateur ne correspond à cette recherche.",
+    "decimales": "décimale(s)",
+    "definition": "Définition",
+    "dictionnaire_aide": "{n} indicateurs documentés. Chaque fiche donne la formule, l'unité, le statut de donnée et le piège d'interprétation.",
+    "famille": "Famille",
+    "fiche_titre": "Fiche d'indicateur",
+    "formule": "Formule",
+    "frequence": "Fréquence",
+    "limites_connues": {
+      "texte": "L'Observatoire ne couvre à ce jour que le périmètre partenaire de SIMANDOU SEJOUR pour les indicateurs d'activité et de retombées. Son historique est encore court. Les données de conformité administrative dépendent d'une transmission de la tutelle qui n'a pas encore eu lieu. La géolocalisation fine des recherches n'est jamais publiée, seule l'origine par pays l'est. Aucun contour cartographique n'est disponible : les représentations territoriales se limitent à des centroïdes.",
+      "titre": "Limites connues"
+    },
+    "piege": "Piège d'interprétation.",
+    "principes_generaux": {
+      "texte": "L'Observatoire répond à trois questions : quelle est l'offre d'hébergement en Guinée, quelle est la demande exprimée et déclarée, et où se situe l'écart entre les deux. Il ne restitue jamais de donnée financière de SIMANDOU SEJOUR, jamais de donnée nominative par établissement, jamais de donnée personnelle de voyageur.",
+      "titre": "Principes généraux"
+    },
+    "rechercher": "Rechercher un indicateur",
+    "referentiel_territorial": {
+      "texte": "Le découpage administratif a été refondu le 20 août 2026 : 10 régions, 44 préfectures, environ 366 communes. Aucune source de données publique ne reflète encore ce découpage ; les contours géographiques des nouvelles régions et préfectures n'existent probablement dans aucun fichier réutilisable. Le référentiel de l'Observatoire est donc versionné, avec correspondance vers l'ancien découpage.",
+      "titre": "Référentiel territorial"
+    },
+    "regle_masquage": "Règle de masquage",
+    "regles_masquage": {
+      "aide": "Trois règles, appliquées par la base et jamais recalculées par l'application.",
+      "m0": "M0, volumes bruts. Toujours affichés, quel que soit l'effectif, y compris à zéro.",
+      "m0_corps": "Toujours affichés, quel que soit l'effectif, y compris à zéro.",
+      "m0_titre": "M0 · Volumes bruts",
+      "m1": "M1, confidentialité. Un agrégat de performance hôtelière n'est affiché que si l'échantillon comporte au moins 3 établissements et qu'aucun ne représente plus de la moitié des unités.",
+      "m1_corps": "Un agrégat de performance hôtelière n'est affiché que si l'échantillon comporte au moins 3 établissements et qu'aucun ne représente plus de la moitié des unités.",
+      "m1_titre": "M1 · Confidentialité",
+      "m2": "M2, très faible effectif. En dessous de 10 observations, un ratio s'affiche en effectifs, jamais en pourcentage.",
+      "m2_corps": "En dessous de 10 observations, un ratio s'affiche en effectifs, jamais en pourcentage.",
+      "m2_titre": "M2 · Très faible effectif",
+      "titre": "Règles de masquage"
+    },
+    "section": {
+      "cadre": "Cadre de lecture",
+      "dictionnaire": "Dictionnaire des indicateurs",
+      "masquage": "Règles de masquage"
+    },
+    "selectionner": "Sélectionnez un indicateur pour afficher sa fiche.",
+    "seuils_fiabilite": "Seuils de fiabilité",
+    "seuils_fiabilite_texte": "Consolidé à partir de {consolide}, indicatif à partir de {indicatif}.",
+    "sommaire": {
+      "indicateurs_famille": "Indicateurs par famille",
+      "limites_connues": "Limites connues",
+      "principes_generaux": "Principes généraux",
+      "referentiel_territorial": "Référentiel territorial",
+      "regles_masquage": "Règles de masquage",
+      "sources_canaux": "Sources et canaux"
+    },
+    "sources_canaux": {
+      "texte": "Quatre canaux alimentent l'Observatoire : le recensement de terrain mené par SIMANDOU SEJOUR, la saisie institutionnelle par les comptes invités, le flux de la plateforme de réservation, et la transmission administrative par les autorités compétentes.",
+      "titre": "Sources et canaux"
+    },
+    "statut_donnee": "Statut de donnée",
+    "unite": "Unité"
   },
   "module": {
-    "m1": { "titre": "Offre nationale d'hébergement", "court": "Offre" },
-    "m2": { "titre": "Demande exprimée", "court": "Demande" },
-    "m3": { "titre": "Activité observée", "court": "Activité" },
-    "m4": { "titre": "Tension et déficit d'offre", "court": "Tension" },
-    "m5": { "titre": "Conformité et classification", "court": "Conformité" },
-    "m6": { "titre": "Maturité numérique du secteur", "court": "Maturité numérique" },
-    "m7": { "titre": "Événementiel et pics de demande", "court": "Événementiel" },
-    "m8": { "titre": "Retombées économiques estimées", "court": "Retombées estimées" },
-    "m9": { "titre": "Synthèse institutionnelle", "court": "Synthèse" },
-    "m10": { "titre": "Méthodologie", "court": "Méthodologie" },
-    "m11": { "titre": "Administration", "court": "Administration" }
+    "m1": {
+      "code": "M1 · Offre",
+      "court": "Offre",
+      "ecart_admin_aide": "Établissements portés par une liste administrative et non retrouvés lors du recensement de terrain, ou l'inverse.",
+      "legende_etablissements": "Établissements",
+      "part_du_parc": "{p} du parc recensé",
+      "part_du_parc_effectifs": "{n} sur {d} établissements recensés",
+      "qualite_inventaire": "Qualité de l'inventaire",
+      "qualite_inventaire_aide": "Ce que l'Observatoire sait de l'offre, et ce qu'il ne sait pas encore.",
+      "question": "Quelle est l'offre d'hébergement existant en Guinée, de quelle nature, de quelle capacité, et quelle part en est réellement réservable en ligne ?",
+      "ratios": "Ratios d'inventaire",
+      "repartition_gamme": "Répartition par gamme",
+      "repartition_gamme_aide": "Positionnement tarifaire déclaré, de l'économique au haut de gamme.",
+      "repartition_typologie": "Répartition par typologie",
+      "repartition_typologie_aide": "Nature des établissements recensés.",
+      "structure": "Structure de l'offre",
+      "sur_cent": "sur 100",
+      "tableau_territorial": "Détail par territoire",
+      "tableau_territorial_aide": "Toutes les régions du référentiel, y compris celles sans établissement recensé.",
+      "territoires": "Lecture territoriale",
+      "territoires_repartition": "Répartition territoriale",
+      "territoires_repartition_aide": "Densité d'établissements recensés, une tuile par région.",
+      "titre": "Offre nationale d'hébergement",
+      "unites": "{n} unités",
+      "volumes": "Volumes recensés"
+    },
+    "m10": {
+      "code": "M10 · Méthodologie",
+      "court": "Méthodologie",
+      "question": "Comment chaque chiffre de l'Observatoire est produit, sur quel périmètre, avec quelle fiabilité, et ce qu'il ne dit pas.",
+      "titre": "Méthodologie"
+    },
+    "m11": {
+      "court": "Administration",
+      "titre": "Administration"
+    },
+    "m2": {
+      "appareil": "Répartition par appareil",
+      "appareil_aide": "Type d'appareil utilisé pour la recherche.",
+      "canal": "Répartition par canal",
+      "canal_aide": "Canal d'entrée de la recherche, dans l'ordre du référentiel.",
+      "code": "M2 · Demande",
+      "contexte": "Contexte d'usage",
+      "court": "Demande",
+      "destinations": "Destinations recherchées",
+      "destinations_aide": "Construite sur la destination saisie, jamais sur l'origine de la connexion.",
+      "geographie": "Où, et depuis où",
+      "hors_referentiel": "Signal",
+      "hors_referentiel_aide": "Localités recherchées qui ne correspondent à aucun territoire du référentiel. Chaque rectangle est proportionnel au nombre de recherches.",
+      "hors_referentiel_titre": "Destinations hors référentiel",
+      "intention": "Intention de séjour",
+      "legende_recherches": "Recherches",
+      "origine": "Origine des connexions",
+      "origine_aide": "Dix premiers pays. Aucune granularité inférieure au pays n'est publiée.",
+      "part_filtre_budget": "{p} des recherches ont utilisé le filtre budget",
+      "question": "Qui cherche à venir en Guinée, depuis quel pays, vers quelle destination, à quelles dates, pour quelle durée et avec quel budget.",
+      "saisonnalite": "Saisonnalité",
+      "saisonnalite_aide": "Recherches par mois d'arrivée souhaitée, et non par mois de recherche.",
+      "saisonnalite_titre": "Saisonnalité de l'intention",
+      "sessions": "{n} sessions",
+      "sparkline_volume": "Tendance sur douze mois",
+      "titre": "Demande exprimée"
+    },
+    "m3": {
+      "avertissement_perimetre": "Ce module porte sur le seul périmètre partenaire, soit {n} établissements. Il ne décrit pas le secteur, il décrit ce qui est commercialisé sur la plateforme.",
+      "code": "M3 · Activité",
+      "conversion": "Conversion",
+      "conversion_aide": "Les deux taux sont posés sur la même règle, jamais séparément.",
+      "conversion_lecture": "Un taux de conversion lu seul se comprend comme une contre-performance commerciale. Lu à côté du taux de couverture, il se comprend comme une conséquence mécanique de la part du parc réellement réservable en ligne.",
+      "conversion_titre": "De la recherche à la réservation",
+      "court": "Activité",
+      "evolution": "Évolution dans le temps",
+      "evolution_adr": "ADR, franc guinéen",
+      "evolution_occupation": "Taux d'occupation contractualisé",
+      "evolution_revpar": "RevPAR, franc guinéen",
+      "libelle_conversion": "Taux de conversion",
+      "libelle_couverture": "Taux de couverture plateforme",
+      "performance": "Performance hôtelière",
+      "question": "Que se passe-t-il réellement sur le périmètre commercialisé : combien de réservations, quel taux d'occupation, à quel prix moyen.",
+      "reservations_par_mois": "Réservations par mois d'arrivée",
+      "reservations_par_mois_aide": "Réservations non annulées, réparties sur le mois d'arrivée et non de réservation.",
+      "sparkline_nuitees": "Nuitées mois par mois",
+      "sparkline_reservations": "Réservations mois par mois",
+      "titre": "Activité observée",
+      "volumes": "Volumes observés"
+    },
+    "m4": {
+      "court": "Tension",
+      "titre": "Tension et déficit d'offre"
+    },
+    "m5": {
+      "court": "Conformité",
+      "titre": "Conformité et classification"
+    },
+    "m6": {
+      "court": "Maturité numérique",
+      "titre": "Maturité numérique du secteur"
+    },
+    "m7": {
+      "court": "Événementiel",
+      "decomposition_partenaires": "Partenaires disponibles : disponibilité réelle connue",
+      "decomposition_recenses": "Recensés non réservables : capacité théorique, disponibilité inconnue",
+      "titre": "Événementiel et pics de demande"
+    },
+    "m8": {
+      "court": "Retombées estimées",
+      "titre": "Retombées économiques estimées"
+    },
+    "m9": {
+      "court": "Synthèse",
+      "en_construction": "Module en construction.",
+      "titre": "Synthèse institutionnelle"
+    }
+  },
+  "nav": {
+    "aide": "Aide",
+    "compte": "Mon compte",
+    "deconnexion": "Se déconnecter",
+    "deplier": "Déplier la navigation",
+    "langue": "Langue",
+    "methodologie": "Méthodologie",
+    "modules": "Modules",
+    "replier": "Replier la navigation"
+  },
+  "perimetre": {
+    "avertissement": "Les indicateurs de conjoncture portent sur le périmètre observé et ne constituent pas une statistique nationale exhaustive.",
+    "couverture": "soit {p} de la capacité identifiée",
+    "date": "Données au {date}",
+    "etablissements": "{n} établissements recensés",
+    "label": {
+      "couverture": "Capacité couverte",
+      "etablissements": "Établissements recensés",
+      "observation": "Données au",
+      "partenaires": "dont partenaires"
+    },
+    "partenaires": "dont {n} partenaires",
+    "titre": "Périmètre observé"
   },
   "state": {
     "chargement": "Chargement des données",
-    "vide": {
-      "defaut": "Aucune donnée sur ce périmètre.",
-      "etablissements": "Aucun établissement recensé sur ce territoire.",
-      "subdivision": "Ce territoire n'a pas de subdivision référencée."
+    "erreur": {
+      "action": "Réessayer",
+      "persistante": "Si le problème persiste, contactez votre administrateur.",
+      "titre": "Les données n'ont pas pu être chargées."
     },
+    "estimation_non_produite": "Moins de 10 recherches en échec, estimation non produite.",
     "masque": "Non publié : effectif insuffisant pour préserver la confidentialité des établissements.",
+    "masque_aide": "Un agrégat de performance n'est publié que si l'échantillon comporte au moins trois établissements et qu'aucun n'y est prépondérant.",
     "masque_budget": "Non publié : moins de 10 recherches avec filtre budget sur la période.",
     "masque_court": "Non publié",
-    "masque_aide": "Un agrégat de performance n'est publié que si l'échantillon comporte au moins trois établissements et qu'aucun n'y est prépondérant.",
     "non_renseigne": "Non renseigné",
     "tension_indefinie": "Capacité réservable nulle sur ce territoire.",
-    "estimation_non_produite": "Moins de 10 recherches en échec, estimation non produite.",
-    "erreur": {
-      "titre": "Les données n'ont pas pu être chargées.",
-      "action": "Réessayer",
-      "persistante": "Si le problème persiste, contactez votre administrateur."
+    "vide": {
+      "budget": "Aucune recherche avec filtre budget sur la période.",
+      "carte": "Aucune donnée cartographique sur ce périmètre.",
+      "conformite": "Aucune donnée de conformité transmise à ce jour.",
+      "conversion": "Moins de 100 recherches sur la période.",
+      "defaut": "Aucune donnée sur ce périmètre.",
+      "deficit": "Aucun territoire en déficit sur la période.",
+      "demande_institutionnelle": "Aucune demande institutionnelle sur cette fenêtre.",
+      "ecart_terrain": "Aucun écart constaté sur ce territoire.",
+      "echecs": "Aucune recherche infructueuse sur la période.",
+      "estimation_retombees": "Estimation non produite en l'absence de dépense observée.",
+      "etablissements": "Aucun établissement recensé sur ce territoire.",
+      "evaluation": "Aucun établissement à évaluer.",
+      "evenement": "Aucun événement enregistré. Sélectionnez des dates libres.",
+      "evolution": "Pas encore assez de réservations pour tracer une évolution.",
+      "hors_referentiel": "Aucune destination hors référentiel sur la période.",
+      "inventaire": "Inventaire quotidien non alimenté : ce taux n'est pas calculable.",
+      "mediane": "Pas encore assez de recherches pour calculer une médiane.",
+      "recherches": "Aucune recherche enregistrée sur la période.",
+      "repartition": "Aucun établissement à répartir.",
+      "reservations": "Aucune réservation sur la période.",
+      "saisonnalite": "L'historique est encore trop court pour dégager une saisonnalité.",
+      "salles": "Aucune salle de réunion recensée sur ce territoire.",
+      "saturation": "Aucune fenêtre de saturation détectée.",
+      "subdivision": "Ce territoire n'a pas de subdivision référencée."
     }
+  },
+  "tableau": {
+    "capacite": "Capacité",
+    "couverture": "Couverture",
+    "etablissements": "Établ.",
+    "numerisation": "Numérisation",
+    "partenaires": "Partenaires",
+    "reservabilite": "Réservabilité",
+    "territoire": "Territoire",
+    "total": "Total",
+    "verification": "Vérification"
   }
 }

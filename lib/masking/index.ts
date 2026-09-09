@@ -1,7 +1,7 @@
 /**
  * Document 11, section 6.3 : applique le verdict de masquage deja rendu par la
  * vue materialisee (colonnes masque, effectif_echantillon). Ne recalcule jamais
- * un seuil — document 4, section 1 et document 3, section 12.
+ * un seuil : document 4, section 1 et document 3, section 12.
  */
 export type ValeurAffichable<T> =
   | { type: "donnee"; valeur: T }

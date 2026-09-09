@@ -1,72 +1,391 @@
 {
-  "auth": {
-    "titre": "National Observatory of Guinean Hospitality",
-    "accroche": "Measure supply. Understand demand. Inform decisions.",
-    "sous_titre": "Reserved for partner institutions.",
-    "email": "Work email address",
-    "mot_de_passe": "Password",
-    "connexion": "Sign in",
-    "code_verification": "Verification code",
-    "mot_de_passe_oublie": "Forgot password",
-    "pas_de_compte": "Access to the Observatory is by invitation. Please contact your focal point.",
+  "admin": {
+    "carte_import": {
+      "description": "Upload a survey file, review then validate rows.",
+      "titre": "Survey import"
+    },
+    "carte_institutions": {
+      "description": "Create an institution, invite accounts, manage access.",
+      "titre": "Institutions and accounts"
+    },
+    "comptes": {
+      "action": {
+        "prolonger": "Extend expiration",
+        "reactiver": "Reactivate",
+        "renvoyer_invitation": "Resend invitation",
+        "suspendre": "Suspend"
+      },
+      "confirmation": {
+        "reactiver": "Reactivate this account?",
+        "suspendre": "Suspend this account? Access ends immediately."
+      },
+      "email": "Work email address",
+      "expiration": "Expiration date",
+      "fonction": "Role",
+      "granularite": "Maximum granularity",
+      "invitation_envoyee": "Invitation sent.",
+      "inviter": "Send invitation",
+      "langue": "Language",
+      "modules": "Accessible modules",
+      "nom": "Last name",
+      "nouveau": "Invite an account",
+      "perimetre": "Territorial scope",
+      "prenom": "First name",
+      "profil": "Profile",
+      "statut": {
+        "actif": "Active",
+        "expire": "Expired",
+        "suspendu": "Suspended"
+      },
+      "titre": "Accounts",
+      "vide": "No account for this institution."
+    },
     "erreur": {
-      "identifiants": "Incorrect credentials.",
-      "suspendu": "Your access is suspended. Contact your administrator.",
-      "expire": "Your access has expired."
+      "email_deja_utilise": "This address is already associated with an account.",
+      "expiration_obligatoire": "Expiration date is required.",
+      "module_non_autorise": "This module is not authorised for the selected profile.",
+      "nom_generique": "An account must be personal: enter the holder's first and last name."
+    },
+    "import": {
+      "deposer": "Upload a CSV file",
+      "erreur": {
+        "champ_obligatoire_absent": "Required field missing: {champ}",
+        "coordonnees_hors_bornes": "Coordinates outside Guinea's boundaries",
+        "doublon_potentiel": "Potential duplicate of an already surveyed establishment",
+        "territoire_non_resolu": "Territory not recognised: {valeur}",
+        "valeur_enumeration_invalide": "Unrecognised value for {champ}: {valeur}"
+      },
+      "format": "CSV file, semicolon delimiter.",
+      "historique": {
+        "date": "Date",
+        "fichier": "File",
+        "lignes": "Rows",
+        "titre": "Previous imports",
+        "vide": "No import performed yet."
+      },
+      "previsualiser": "Preview",
+      "rapport": {
+        "ligne": "Row {n}",
+        "lignes_erreur": "{n} rows with errors",
+        "lignes_valides": "{n} valid rows",
+        "motif": "Reason",
+        "titre": "Control report"
+      },
+      "titre": "Survey import",
+      "valider": "Validate import"
+    },
+    "institutions": {
+      "convention_debut": "Agreement start",
+      "convention_fin": "Agreement end",
+      "convention_reference": "Agreement reference",
+      "creation_reussie": "Institution created.",
+      "creer": "Create institution",
+      "denomination": "Name",
+      "nouvelle": "New institution",
+      "titre": "Institutions",
+      "type": "Type",
+      "vide": "No institution recorded."
     }
   },
   "app": {
+    "attribution": "A SIMANDOU SEJOUR infrastructure",
+    "editeur": "SIMANDOU SEJOUR",
     "titre": "National Observatory of Guinean Hospitality",
-    "titre_court": "Observatory",
-    "attribution": "A Simandou Séjour infrastructure"
+    "titre_court": "Observatory"
   },
-  "nav": {
-    "modules": "Modules",
-    "compte": "My account",
-    "langue": "Language",
-    "deconnexion": "Sign out",
-    "aide": "Help",
-    "methodologie": "Methodology"
+  "auth": {
+    "accroche": "Measure supply. Understand demand. Inform decisions.",
+    "code_verification": "Verification code",
+    "connexion": "Sign in",
+    "email": "Work email address",
+    "erreur": {
+      "code_invalide": "Incorrect code. Try again.",
+      "expire": "Your access has expired.",
+      "identifiants": "Incorrect credentials.",
+      "suspendu": "Your access is suspended. Contact your administrator."
+    },
+    "mfa": {
+      "aide_developpement": "Development only: fill in the current code",
+      "cle_secrete": "Can't scan this code? Enter this key manually in your app:",
+      "instruction_inscription": "Second factor required. Scan this code with an authenticator app, then enter the code shown.",
+      "instruction_verification": "Enter the code shown in your authenticator app.",
+      "titre_inscription": "Secure your account",
+      "titre_verification": "Two-step verification",
+      "valider": "Verify"
+    },
+    "mot_de_passe": "Password",
+    "mot_de_passe_oublie": "Forgot password",
+    "pas_de_compte": "Access to the Observatory is by invitation. Please contact your focal point.",
+    "sous_titre": "Reserved for partner institutions.",
+    "titre": "National Observatory of Guinean Hospitality"
   },
-  "perimetre": {
-    "titre": "Observed scope",
-    "etablissements": "{n} establishments surveyed",
-    "partenaires": "including {n} partners",
-    "couverture": "representing {p} of identified capacity",
-    "date": "Data as of {date}",
-    "avertissement": "Market indicators cover the observed scope only and do not constitute exhaustive national statistics."
+  "carte": {
+    "aucune_donnee": "No data",
+    "legende_bornes": "from {min} to {max} establishments",
+    "legende_bornes_generique": "from {min} to {max}",
+    "legende_densite": "Density",
+    "legende_hachure": "No data ({n})",
+    "legende_sans_echelle": "Scale not established, no establishment recorded",
+    "sans_contour": "Boundaries for the administrative division redrawn on 20 August 2026 are not available in any reusable file. Territories are shown here as a grid, without geometry."
+  },
+  "controle": {
+    "export": "Export",
+    "national": "National",
+    "niveau": "Territorial level"
+  },
+  "impression": {
+    "emis_par": "Issued by",
+    "reference": "Export reference"
+  },
+  "methodologie": {
+    "aucun_resultat": "No indicator matches this search.",
+    "decimales": "decimal(s)",
+    "definition": "Definition",
+    "dictionnaire_aide": "{n} documented indicators. Each entry gives the formula, the unit, the data status and the interpretation pitfall.",
+    "famille": "Family",
+    "fiche_titre": "Indicator entry",
+    "formule": "Formula",
+    "frequence": "Frequency",
+    "limites_connues": {
+      "texte": "The Observatory currently only covers SIMANDOU SEJOUR's partner scope for activity and spend indicators. Its history is still short. Administrative compliance data depends on a transmission from the supervising authority that has not yet occurred. Fine-grained search geolocation is never published, only country-level origin is. No map outline is available: territorial representations are limited to centroids.",
+      "titre": "Known limitations"
+    },
+    "piege": "Interpretation pitfall.",
+    "principes_generaux": {
+      "texte": "The Observatory answers three questions: what is the accommodation supply in Guinea, what is the expressed and declared demand, and where is the gap between the two. It never restitutes financial data of SIMANDOU SEJOUR, nominative data per establishment, or personal traveller data.",
+      "titre": "General principles"
+    },
+    "rechercher": "Search an indicator",
+    "referentiel_territorial": {
+      "texte": "The administrative division was reorganised on 20 August 2026: 10 regions, 44 prefectures, about 366 communes. No public data source reflects this division yet; the geographic boundaries of the new regions and prefectures likely exist in no reusable file. The Observatory's reference is therefore versioned, with a mapping to the previous division.",
+      "titre": "Territorial reference"
+    },
+    "regle_masquage": "Masking rule",
+    "regles_masquage": {
+      "aide": "Three rules, applied by the database and never recomputed by the application.",
+      "m0": "M0, raw volumes. Always displayed, whatever the sample size, including zero.",
+      "m0_corps": "Always displayed, whatever the count, including zero.",
+      "m0_titre": "M0 · Raw volumes",
+      "m1": "M1, confidentiality. A hotel performance aggregate is only displayed if the sample includes at least 3 establishments and none represents more than half of the units.",
+      "m1_corps": "A hotel performance aggregate is displayed only if the sample contains at least 3 establishments and none accounts for more than half the units.",
+      "m1_titre": "M1 · Confidentiality",
+      "m2": "M2, very small sample. Below 10 observations, a ratio is shown as counts, never as a percentage.",
+      "m2_corps": "Below 10 observations, a ratio is displayed as counts, never as a percentage.",
+      "m2_titre": "M2 · Very small counts",
+      "titre": "Masking rules"
+    },
+    "section": {
+      "cadre": "Reading framework",
+      "dictionnaire": "Indicator dictionary",
+      "masquage": "Masking rules"
+    },
+    "selectionner": "Select an indicator to display its sheet.",
+    "seuils_fiabilite": "Reliability thresholds",
+    "seuils_fiabilite_texte": "Consolidated from {consolide}, indicative from {indicatif}.",
+    "sommaire": {
+      "indicateurs_famille": "Indicators by family",
+      "limites_connues": "Known limitations",
+      "principes_generaux": "General principles",
+      "referentiel_territorial": "Territorial reference",
+      "regles_masquage": "Masking rules",
+      "sources_canaux": "Sources and channels"
+    },
+    "sources_canaux": {
+      "texte": "Four channels feed the Observatory: the field survey conducted by SIMANDOU SEJOUR, institutional input by invited accounts, the booking platform feed, and administrative transmission by the competent authorities.",
+      "titre": "Sources and channels"
+    },
+    "statut_donnee": "Data status",
+    "unite": "Unit"
   },
   "module": {
-    "m1": { "titre": "National accommodation supply", "court": "Supply" },
-    "m2": { "titre": "Expressed demand", "court": "Demand" },
-    "m3": { "titre": "Observed activity", "court": "Activity" },
-    "m4": { "titre": "Pressure and supply gap", "court": "Pressure" },
-    "m5": { "titre": "Compliance and classification", "court": "Compliance" },
-    "m6": { "titre": "Sector digital maturity", "court": "Digital maturity" },
-    "m7": { "titre": "Events and demand peaks", "court": "Events" },
-    "m8": { "titre": "Estimated economic impact", "court": "Estimated impact" },
-    "m9": { "titre": "Institutional summary", "court": "Summary" },
-    "m10": { "titre": "Methodology", "court": "Methodology" },
-    "m11": { "titre": "Administration", "court": "Administration" }
+    "m1": {
+      "code": "M1 · Supply",
+      "court": "Supply",
+      "ecart_admin_aide": "Establishments listed by an administrative register and not found during field recording, or the reverse.",
+      "legende_etablissements": "Establishments",
+      "part_du_parc": "{p} of the recorded stock",
+      "part_du_parc_effectifs": "{n} of {d} recorded establishments",
+      "qualite_inventaire": "Inventory quality",
+      "qualite_inventaire_aide": "What the Observatory knows about supply, and what it does not know yet.",
+      "question": "What accommodation supply exists in Guinea, of what kind, of what capacity, and what share of it is genuinely bookable online?",
+      "ratios": "Inventory ratios",
+      "repartition_gamme": "Breakdown by price range",
+      "repartition_gamme_aide": "Declared price positioning, from budget to upscale.",
+      "repartition_typologie": "Breakdown by type",
+      "repartition_typologie_aide": "Type of the recorded establishments.",
+      "structure": "Structure of supply",
+      "sur_cent": "out of 100",
+      "tableau_territorial": "Breakdown by territory",
+      "tableau_territorial_aide": "Every region in the reference list, including those with no recorded establishment.",
+      "territoires": "Territorial reading",
+      "territoires_repartition": "Territorial distribution",
+      "territoires_repartition_aide": "Density of recorded establishments, one tile per region.",
+      "titre": "National accommodation supply",
+      "unites": "{n} units",
+      "volumes": "Recorded volumes"
+    },
+    "m10": {
+      "code": "M10 · Methodology",
+      "court": "Methodology",
+      "question": "How each figure in the Observatory is produced, over what scope, with what reliability, and what it does not say.",
+      "titre": "Methodology"
+    },
+    "m11": {
+      "court": "Administration",
+      "titre": "Administration"
+    },
+    "m2": {
+      "appareil": "Breakdown by device",
+      "appareil_aide": "Type of device used for the search.",
+      "canal": "Breakdown by channel",
+      "canal_aide": "Entry channel of the search, in reference-list order.",
+      "code": "M2 · Demand",
+      "contexte": "Usage context",
+      "court": "Demand",
+      "destinations": "Destinations searched",
+      "destinations_aide": "Built on the destination entered, never on the origin of the connection.",
+      "geographie": "Where to, and where from",
+      "hors_referentiel": "Signal",
+      "hors_referentiel_aide": "Localities searched that match no territory in the reference list. Each rectangle is proportional to the number of searches.",
+      "hors_referentiel_titre": "Destinations outside the reference list",
+      "intention": "Intent to travel",
+      "legende_recherches": "Searches",
+      "origine": "Origin of connections",
+      "origine_aide": "Top ten countries. No granularity below country level is published.",
+      "part_filtre_budget": "{p} of searches used the budget filter",
+      "question": "Who is looking to come to Guinea, from which country, to which destination, on what dates, for how long and on what budget.",
+      "saisonnalite": "Seasonality",
+      "saisonnalite_aide": "Searches by intended month of arrival, not by month of search.",
+      "saisonnalite_titre": "Seasonality of intent",
+      "sessions": "{n} sessions",
+      "sparkline_volume": "Twelve-month trend",
+      "titre": "Expressed demand"
+    },
+    "m3": {
+      "avertissement_perimetre": "This module covers the partner scope only, that is {n} establishments. It does not describe the sector, it describes what is sold on the platform.",
+      "code": "M3 · Activity",
+      "conversion": "Conversion",
+      "conversion_aide": "Both rates are placed on the same scale, never separately.",
+      "conversion_lecture": "A conversion rate read on its own reads as commercial underperformance. Read next to the platform coverage rate, it reads as a mechanical consequence of the share of stock that is genuinely bookable online.",
+      "conversion_titre": "From search to booking",
+      "court": "Activity",
+      "evolution": "Change over time",
+      "evolution_adr": "ADR, Guinean franc",
+      "evolution_occupation": "Occupancy on contracted capacity",
+      "evolution_revpar": "RevPAR, Guinean franc",
+      "libelle_conversion": "Conversion rate",
+      "libelle_couverture": "Platform coverage rate",
+      "performance": "Hotel performance",
+      "question": "What actually happens across the commercialised scope: how many bookings, what occupancy rate, at what average price.",
+      "reservations_par_mois": "Bookings by month of arrival",
+      "reservations_par_mois_aide": "Non-cancelled bookings, allocated to the month of arrival rather than of booking.",
+      "sparkline_nuitees": "Room nights month by month",
+      "sparkline_reservations": "Bookings month by month",
+      "titre": "Observed activity",
+      "volumes": "Observed volumes"
+    },
+    "m4": {
+      "court": "Pressure",
+      "titre": "Pressure and supply gap"
+    },
+    "m5": {
+      "court": "Compliance",
+      "titre": "Compliance and classification"
+    },
+    "m6": {
+      "court": "Digital maturity",
+      "titre": "Sector digital maturity"
+    },
+    "m7": {
+      "court": "Events",
+      "decomposition_partenaires": "Available partners: actual availability known",
+      "decomposition_recenses": "Recorded non-bookable: theoretical capacity, availability unknown",
+      "titre": "Events and demand peaks"
+    },
+    "m8": {
+      "court": "Estimated impact",
+      "titre": "Estimated economic impact"
+    },
+    "m9": {
+      "court": "Summary",
+      "en_construction": "Module under construction.",
+      "titre": "Institutional summary"
+    }
+  },
+  "nav": {
+    "aide": "Help",
+    "compte": "My account",
+    "deconnexion": "Sign out",
+    "deplier": "Expand navigation",
+    "langue": "Language",
+    "methodologie": "Methodology",
+    "modules": "Modules",
+    "replier": "Collapse navigation"
+  },
+  "perimetre": {
+    "avertissement": "Market indicators cover the observed scope only and do not constitute exhaustive national statistics.",
+    "couverture": "representing {p} of identified capacity",
+    "date": "Data as of {date}",
+    "etablissements": "{n} establishments surveyed",
+    "label": {
+      "couverture": "Capacity covered",
+      "etablissements": "Establishments recorded",
+      "observation": "Data as of",
+      "partenaires": "of which partners"
+    },
+    "partenaires": "including {n} partners",
+    "titre": "Observed scope"
   },
   "state": {
     "chargement": "Loading data",
-    "vide": {
-      "defaut": "No data for this scope.",
-      "etablissements": "No establishment surveyed in this territory.",
-      "subdivision": "This territory has no recorded subdivision."
+    "erreur": {
+      "action": "Try again",
+      "persistante": "If the problem persists, contact your administrator.",
+      "titre": "Data could not be loaded."
     },
+    "estimation_non_produite": "Fewer than 10 failed searches, estimate not produced.",
     "masque": "Not published: sample size too small to protect establishment confidentiality.",
+    "masque_aide": "A performance aggregate is published only if the sample includes at least three establishments and none is predominant.",
     "masque_budget": "Not published: fewer than 10 searches with a budget filter for this period.",
     "masque_court": "Not published",
-    "masque_aide": "A performance aggregate is published only if the sample includes at least three establishments and none is predominant.",
     "non_renseigne": "Not recorded",
     "tension_indefinie": "No bookable capacity in this territory.",
-    "estimation_non_produite": "Fewer than 10 failed searches, estimate not produced.",
-    "erreur": {
-      "titre": "Data could not be loaded.",
-      "action": "Try again",
-      "persistante": "If the problem persists, contact your administrator."
+    "vide": {
+      "budget": "No searches with a budget filter for this period.",
+      "carte": "No map data for this scope.",
+      "conformite": "No compliance data provided to date.",
+      "conversion": "Fewer than 100 searches over the period.",
+      "defaut": "No data for this scope.",
+      "deficit": "No territory with a supply gap for this period.",
+      "demande_institutionnelle": "No institutional request for this window.",
+      "ecart_terrain": "No discrepancy found in this territory.",
+      "echecs": "No unsuccessful searches for this period.",
+      "estimation_retombees": "Estimate not produced in the absence of observed spend.",
+      "etablissements": "No establishment surveyed in this territory.",
+      "evaluation": "No establishment to assess.",
+      "evenement": "No event recorded. Select free dates.",
+      "evolution": "Not enough bookings yet to plot a trend.",
+      "hors_referentiel": "No destination outside the reference list for this period.",
+      "inventaire": "Daily inventory not supplied: this rate cannot be computed.",
+      "mediane": "Not enough searches yet to compute a median.",
+      "recherches": "No searches recorded for this period.",
+      "repartition": "No establishment to break down.",
+      "reservations": "No reservation for this period.",
+      "saisonnalite": "The history is still too short to identify seasonality.",
+      "salles": "No meeting room surveyed in this territory.",
+      "saturation": "No saturation window detected.",
+      "subdivision": "This territory has no recorded subdivision."
     }
+  },
+  "tableau": {
+    "capacite": "Capacity",
+    "couverture": "Coverage",
+    "etablissements": "Estab.",
+    "numerisation": "Digitisation",
+    "partenaires": "Partners",
+    "reservabilite": "Bookability",
+    "territoire": "Territory",
+    "total": "Total",
+    "verification": "Verification"
   }
 }

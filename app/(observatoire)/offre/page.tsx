@@ -1,14 +1,20 @@
+import { BarreControle } from "@/components/chrome/BarreControle";
+import { EnTeteModule } from "@/components/chrome/EnTeteModule";
+import { Panneau } from "@/components/chrome/Panneau";
+import { TitreSection } from "@/components/chrome/TitreSection";
 import { BlocIndicateurCle } from "@/components/indicators/BlocIndicateurCle";
-import { Repartition } from "@/components/modules/Repartition";
+import { PartDuParc } from "@/components/modules/offre/PartDuParc";
+import { QualiteInventaire } from "@/components/modules/offre/QualiteInventaire";
+import { RepartitionTerritoriale } from "@/components/modules/offre/RepartitionTerritoriale";
+import { StructureOffre } from "@/components/modules/offre/StructureOffre";
 import { TableauTerritorial } from "@/components/modules/offre/TableauTerritorial";
 import { EtatVide } from "@/components/states/EtatVide";
 import { t } from "@/lib/i18n";
 import { chargerOffreNationale, chargerOffreRegions } from "@/lib/queries/offre";
+import { chargerTerritoiresEnfants } from "@/lib/queries/territoire";
 
-const INDICATEURS_CLES = [
-  "OFF_ETAB_RECENSES",
-  "OFF_CAPACITE_RECENSEE",
-  "OFF_ETAB_PARTENAIRES",
+/* Les cinq taux de la zone Z1, lus en jauge sur une echelle fixe de zero a cent. */
+const RATIOS = [
   "OFF_TAUX_COUVERTURE",
   "OFF_TAUX_NUMERISATION",
   "OFF_TAUX_RESERVABILITE",
@@ -17,97 +23,181 @@ const INDICATEURS_CLES = [
 ] as const;
 
 /*
- * Ecran M1_OFFRE (document 9, partie B). Zone Z2 (carte de densite) volontairement
- * absente de cette version : ni bibliotheque de cartographie retenue (document 11,
- * point ouvert 16.2), ni referentiel geographique charge (document 2, point ouvert
- * 20.1) pour lui donner du contenu. Les quatre autres zones sont completes.
+ * Ecran M1_OFFRE (document 9, partie B).
+ *
+ * Les cinq zones de la maquette B.5 sont presentes. Z1 est scindee en deux
+ * lignes de lecture, trois volumes puis cinq ratios : ce sont les huit memes
+ * indicateurs, mais un volume et un taux ne se lisent pas de la meme facon, et
+ * les aligner sur une seule rangee de huit blocs identiques obligeait l'oeil a
+ * refaire le tri a chaque consultation.
+ *
+ * Z2 se rabat sur une grille de tuiles tant qu'aucun contour du decoupage refondu
+ * en aout 2026 n'est disponible (document 8, section 5.7 : l'ecran doit rester
+ * utilisable sans aucun contour, ce qui est la situation du lancement).
+ *
+ * Reste a construire : les trois filtres de module du document 9, B.6 (typologie,
+ * gamme, statut de relation). Ils supposent une agregation filtrable cote base ;
+ * les vues materialisees actuelles sont pre-agregees au niveau territorial.
  */
 export default async function Offre() {
-  const national = await chargerOffreNationale();
-  const regions = await chargerOffreRegions();
+  const [national, regions, territoires] = await Promise.all([
+    chargerOffreNationale(),
+    chargerOffreRegions(),
+    chargerTerritoiresEnfants(null, "REGION"),
+  ]);
 
   if (!national) {
     return (
-      <div className="p-8">
+      <div style={{ padding: "var(--space-8)" }}>
         <EtatVide />
       </div>
     );
   }
 
+  /* Le referentiel donne la liste complete des territoires, la vue donne leurs
+     valeurs. Un territoire sans etablissement reste dans le tableau, a zero
+     (document 9, critere d'acceptation B.10.1). */
+  const parCode = new Map(regions.map((ligne) => [ligne.codeTerritoire, ligne]));
+  const lignesTerritoriales = territoires.map((territoire) => {
+    const valeurs = parCode.get(territoire.code);
+    return {
+      code: territoire.code,
+      libelle: territoire.libelle,
+      etablissements: valeurs?.offEtabRecenses ?? 0,
+      capacite: valeurs?.offCapaciteRecensee ?? 0,
+      partenaires: valeurs?.offEtabPartenaires ?? 0,
+      couverture: valeurs?.offTauxCouverture ?? null,
+      numerisation: valeurs?.offTauxNumerisation ?? null,
+      reservabilite: valeurs?.offTauxReservabilite ?? null,
+      verification: valeurs?.offTauxVerification ?? null,
+    };
+  });
+
+  const statutDonnee = "RECENSE";
+  const valeursRatios: Record<string, number | null> = {
+    OFF_TAUX_COUVERTURE: national.offTauxCouverture,
+    OFF_TAUX_NUMERISATION: national.offTauxNumerisation,
+    OFF_TAUX_RESERVABILITE: national.offTauxReservabilite,
+    OFF_TAUX_VERIFICATION: national.offTauxVerification,
+    OFF_COMPLETUDE_FICHE: national.offCompletudeFiche,
+  };
+
   return (
-    <div className="flex flex-1 flex-col gap-8 p-8">
-      <h1 style={{ fontFamily: "var(--font-titre)", fontSize: "var(--text-h1)", fontWeight: 700 }}>
-        {t("module.m1.titre")}
-      </h1>
+    <>
+      <BarreControle
+        echelons={[{ code: "NATIONAL", libelle: t("controle.national") }]}
+      />
 
-      {/* Z1, blocs cles */}
-      <div className="grid grid-cols-4 gap-3">
-        {INDICATEURS_CLES.map((code) => (
-          <BlocIndicateurCle
-            key={code}
-            code={code}
-            valeur={
-              {
-                OFF_ETAB_RECENSES: national.offEtabRecenses,
-                OFF_CAPACITE_RECENSEE: national.offCapaciteRecensee,
-                OFF_ETAB_PARTENAIRES: national.offEtabPartenaires,
-                OFF_TAUX_COUVERTURE: national.offTauxCouverture,
-                OFF_TAUX_NUMERISATION: national.offTauxNumerisation,
-                OFF_TAUX_RESERVABILITE: national.offTauxReservabilite,
-                OFF_TAUX_VERIFICATION: national.offTauxVerification,
-                OFF_COMPLETUDE_FICHE: national.offCompletudeFiche,
-              }[code]
-            }
-            calculeA={national.calculeA}
-          />
-        ))}
-      </div>
-
-      {/* Z3, repartitions (Z2 carte reportee, voir commentaire ci-dessus) */}
-      <div className="grid grid-cols-2 gap-8">
-        <Repartition
-          titre="Répartition par typologie"
-          domaine="TYPOLOGIE"
-          valeurs={national.offRepartitionTypologie}
+      <div
+        className="mx-auto flex flex-col"
+        style={{ maxWidth: "1680px", gap: "var(--space-8)", padding: "var(--space-8)" }}
+      >
+        <EnTeteModule
+          code={t("module.m1.code")}
+          titre={t("module.m1.titre")}
+          question={t("module.m1.question")}
         />
-        <Repartition
-          titre="Répartition par gamme"
-          domaine="GAMME"
-          valeurs={national.offRepartitionGamme}
-        />
-      </div>
 
-      {/* Z4, tableau des territoires enfants */}
-      <div className="flex flex-col gap-2">
-        <h2 style={{ fontFamily: "var(--font-titre)", fontSize: "var(--text-h2)", fontWeight: 600 }}>
-          Territoires
-        </h2>
-        <TableauTerritorial lignes={regions} />
-      </div>
+        {/* Z1a, volumes recenses */}
+        <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
+          <TitreSection numero="01" titre={t("module.m1.volumes")} />
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "var(--space-5)" }}>
+            <BlocIndicateurCle
+              code="OFF_ETAB_RECENSES"
+              valeur={national.offEtabRecenses}
+              calculeA={national.calculeA}
+              niveauFiabilite={national.niveauFiabilite ?? undefined}
+              variante="volume"
+              accent
+            />
+            <BlocIndicateurCle
+              code="OFF_CAPACITE_RECENSEE"
+              valeur={national.offCapaciteRecensee}
+              calculeA={national.calculeA}
+              niveauFiabilite={national.niveauFiabilite ?? undefined}
+              variante="volume"
+              accent
+            />
+            <BlocIndicateurCle
+              code="OFF_ETAB_PARTENAIRES"
+              valeur={national.offEtabPartenaires}
+              calculeA={national.calculeA}
+              niveauFiabilite={national.niveauFiabilite ?? undefined}
+              variante="volume"
+              accent
+              pied={
+                <PartDuParc
+                  partenaires={national.offEtabPartenaires}
+                  recenses={national.offEtabRecenses}
+                />
+              }
+            />
+          </div>
+        </section>
 
-      {/* Z5, qualite de l'inventaire */}
-      <div className="flex flex-col gap-3">
-        <h2 style={{ fontFamily: "var(--font-titre)", fontSize: "var(--text-h2)", fontWeight: 600 }}>
-          Qualité de l&rsquo;inventaire
-        </h2>
-        <div className="grid grid-cols-3 gap-3">
-          <BlocIndicateurCle
-            code="OFF_TAUX_VERIFICATION"
-            valeur={national.offTauxVerification}
-            calculeA={national.calculeA}
+        {/* Z1b, ratios d'inventaire */}
+        <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
+          <TitreSection numero="02" titre={t("module.m1.ratios")} />
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
+            style={{ gap: "var(--space-5)" }}
+          >
+            {RATIOS.map((code) => (
+              <BlocIndicateurCle
+                key={code}
+                code={code}
+                valeur={valeursRatios[code]}
+                calculeA={national.calculeA}
+                niveauFiabilite={national.niveauFiabilite ?? undefined}
+                variante="jauge"
+                libelleVide={t("state.vide.etablissements")}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Z3, structure de l'offre */}
+        <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
+          <TitreSection numero="03" titre={t("module.m1.structure")} />
+          <StructureOffre
+            typologie={national.offRepartitionTypologie}
+            gamme={national.offRepartitionGamme}
+            statutDonnee={statutDonnee}
+            niveauFiabilite={national.niveauFiabilite}
           />
-          <BlocIndicateurCle
-            code="OFF_COMPLETUDE_FICHE"
-            valeur={national.offCompletudeFiche}
-            calculeA={national.calculeA}
+        </section>
+
+        {/* Z2 et Z4, lecture territoriale */}
+        <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
+          <TitreSection numero="04" titre={t("module.m1.territoires")} />
+          <RepartitionTerritoriale
+            cellules={lignesTerritoriales.map((ligne) => ({
+              code: ligne.code,
+              libelle: ligne.libelle,
+              etablissements: ligne.etablissements,
+              capacite: ligne.capacite,
+            }))}
+            statutDonnee={statutDonnee}
           />
-          <BlocIndicateurCle
-            code="OFF_ECART_LISTE_ADMIN"
-            valeur={national.offEcartListeAdmin}
-            calculeA={national.calculeA}
+          <Panneau
+            titre={t("module.m1.tableau_territorial")}
+            soustitre={t("module.m1.tableau_territorial_aide")}
+          >
+            <TableauTerritorial lignes={lignesTerritoriales} />
+          </Panneau>
+        </section>
+
+        {/* Z5, qualite de l'inventaire */}
+        <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
+          <TitreSection numero="05" titre={t("module.m1.qualite_inventaire")} />
+          <QualiteInventaire
+            tauxVerification={national.offTauxVerification}
+            completudeFiche={national.offCompletudeFiche}
+            ecartListeAdmin={national.offEcartListeAdmin}
+            statutDonnee={statutDonnee}
           />
-        </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 }

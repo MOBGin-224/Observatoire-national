@@ -1,12 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { t } from "@/lib/i18n";
 
+/*
+ * Formulaire d'identifiants, premiere etape de l'ecran de connexion unique
+ * (document 9, A.0).
+ *
+ * Les libelles sont de vraies etiquettes au-dessus des champs, et non des
+ * textes de substitution. Un texte de substitution disparait des que
+ * l'utilisateur commence a saisir : il ne reste alors aucun moyen de savoir ce
+ * que contient le champ, ce qui pose surtout probleme au moment de corriger une
+ * erreur. Les deux libelles viennent du catalogue, inchanges.
+ */
 export function LoginForm() {
   const router = useRouter();
+  const identifiantEmail = useId();
+  const identifiantMotDePasse = useId();
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [erreur, setErreur] = useState<string | null>(null);
@@ -30,53 +42,78 @@ export function LoginForm() {
       return;
     }
 
-    router.push("/synthese");
+    router.push("/");
     router.refresh();
   }
 
   return (
-    <form onSubmit={seConnecter} className="flex w-full max-w-xs flex-col gap-3">
-      <input
-        type="email"
-        required
-        autoComplete="username"
-        placeholder={t("auth.email")}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="rounded border px-3 py-2 text-[length:var(--text-body)]"
-        style={{ borderColor: "var(--color-border-strong)" }}
-      />
-      <input
-        type="password"
-        required
-        autoComplete="current-password"
-        placeholder={t("auth.mot_de_passe")}
-        value={motDePasse}
-        onChange={(e) => setMotDePasse(e.target.value)}
-        className="rounded border px-3 py-2 text-[length:var(--text-body)]"
-        style={{ borderColor: "var(--color-border-strong)" }}
-      />
+    <form onSubmit={seConnecter} className="flex w-full flex-col" style={{ gap: "var(--space-5)" }}>
+      <div className="flex flex-col" style={{ gap: "var(--space-2)" }}>
+        <label htmlFor={identifiantEmail} className="etiquette-champ">
+          {t("auth.email")}
+          <span style={{ color: "var(--color-alert)", marginLeft: "4px" }}>*</span>
+        </label>
+        <input
+          id={identifiantEmail}
+          type="email"
+          required
+          autoComplete="username"
+          autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="champ-saisie"
+        />
+      </div>
+
+      <div className="flex flex-col" style={{ gap: "var(--space-2)" }}>
+        <label htmlFor={identifiantMotDePasse} className="etiquette-champ">
+          {t("auth.mot_de_passe")}
+          <span style={{ color: "var(--color-alert)", marginLeft: "4px" }}>*</span>
+        </label>
+        <input
+          id={identifiantMotDePasse}
+          type="password"
+          required
+          autoComplete="current-password"
+          value={motDePasse}
+          onChange={(e) => setMotDePasse(e.target.value)}
+          className="champ-saisie"
+        />
+      </div>
 
       {erreur && (
-        <p style={{ color: "var(--color-alert)", fontSize: "var(--text-small)" }}>{erreur}</p>
+        <p role="alert" className="message-erreur">
+          {erreur}
+        </p>
       )}
 
-      <button
-        type="submit"
-        disabled={enCours}
-        className="rounded py-2 font-semibold text-white disabled:opacity-60"
-        style={{ backgroundColor: "var(--color-primary)", fontFamily: "var(--font-titre)" }}
-      >
+      <button type="submit" disabled={enCours} className="bouton-principal">
         {t("auth.connexion")}
       </button>
 
-      <a
-        href="/auth/reinitialisation"
-        className="text-center underline"
-        style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-small)" }}
+      <div
+        className="flex flex-col"
+        style={{
+          gap: "var(--space-3)",
+          paddingTop: "var(--space-4)",
+          borderTop: "1px solid var(--color-border-faint)",
+        }}
       >
-        {t("auth.mot_de_passe_oublie")}
-      </a>
+        <a
+          href="/auth/reinitialisation"
+          className="lien-sobre"
+          style={{ fontSize: "var(--text-small)", fontWeight: 700 }}
+        >
+          {t("auth.mot_de_passe_oublie")}
+        </a>
+        {/* Document 9, A.0 : la mention renvoie au point focal, jamais a un
+            formulaire d'inscription. Aucun lien ne quitte cet ecran. */}
+        <p
+          style={{ fontSize: "var(--text-meta)", lineHeight: 1.5, color: "#000000" }}
+        >
+          {t("auth.pas_de_compte")}
+        </p>
+      </div>
     </form>
   );
 }

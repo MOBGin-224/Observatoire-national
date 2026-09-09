@@ -42,7 +42,25 @@
 
 ### Écran de connexion
 
-Écran unique, centré, sobre. Fond clair. Aucune image d'illustration, aucune animation, aucun contenu descriptif du produit.
+**Révisé le 9 septembre 2026.** La prescription d'origine (« écran unique, centré, sobre, fond clair, aucune image d'illustration ») produisait un écran sans qualité, et la maîtrise d'ouvrage a demandé sa refonte. Ce qui change et ce qui ne change pas :
+
+| | |
+|---|---|
+| **Change** | Composition en deux volets. Volet de marque à gauche, sur aplat `--color-primary-900`, portant le titre, l'accroche et une composition graphique. Volet clair à droite, portant le formulaire |
+| **Ne change pas** | Le contenu, au mot près. Titre, accroche, mention d'accès réservé, formulaire, mot de passe oublié, mention d'attribution. **Rien n'a été ajouté** |
+| **Ne change pas** | Aucune animation |
+| **Ne change pas** | Aucun lien ne quitte l'écran, hormis la réinitialisation de mot de passe |
+| **Ne change pas** | Aucune partie publique, aucun contenu descriptif ou marketing du produit |
+
+**La composition est tracée en SVG, jamais une photographie.** Trois raisons, aucune n'est esthétique : le poids d'une image pénalise la connexion à faible débit visée par la section 9 du document 8 ; une photographie pose une question de droits sur un outil destiné à des institutions ; et un tracé vectoriel reste net à toutes les tailles et se recolore par les jetons de la charte.
+
+Sujet retenu : quatre plans de relief sous un ciel de courbes de niveau et d'une trame de points de mesure. **La deuxième crête porte ses points de mesure et son sommet marqué** : on lit un paysage, puis on reconnaît une courbe. C'est ce que fait l'Observatoire, regarder un territoire et en tirer une mesure.
+
+Deux voiles dégradés, posés sur le volet et non dans le tracé, garantissent la lisibilité du titre en haut et de l'accroche en bas quelle que soit la hauteur de la fenêtre. Posés dans le tracé, ils suivraient le recadrage et rateraient leur cible.
+
+En dessous de 1024 px, le volet de marque disparaît et le titre revient au-dessus du formulaire : le document 8 borne l'outil à l'ordinateur et à la tablette, et un volet décoratif empilé au-dessus d'un formulaire ne sert personne.
+
+La maquette ci-dessous reste la référence du **contenu** ; elle ne décrit plus la disposition.
 
 ```
 +----------------------------------------------------------+
@@ -54,7 +72,7 @@
 |            Comprendre la demande.                        |
 |            Éclairer la décision.                         |
 |                                                          |
-|            Accès réservé aux institutions partenaires.   |
+|            Accès réservé aux institutions.   |
 |                                                          |
 |            [ Adresse professionnelle          ]          |
 |            [ Mot de passe                     ]          |

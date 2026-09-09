@@ -1,5 +1,11 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { t } from "@/lib/i18n";
+import { BoutonDeconnexion } from "./BoutonDeconnexion";
+import { Icone, type NomIcone } from "./Icone";
 
 const ORDRE_MODULES = [
   "M9_SYNTHESE",
@@ -29,70 +35,236 @@ const CLE_LIBELLE: Record<string, string> = {
   M11_ADMIN: "module.m11.titre",
 };
 
+/* Une icône par module, utilisée uniquement quand le rail est replié. */
+const ICONE: Record<string, NomIcone> = {
+  M1_OFFRE: "offre",
+  M2_DEMANDE: "demande",
+  M3_ACTIVITE: "activite",
+  M4_TENSION: "tension",
+  M5_CONFORMITE: "conformite",
+  M6_MATURITE: "maturite",
+  M7_EVENEMENTIEL: "evenementiel",
+  M8_RETOMBEES: "retombees",
+  M9_SYNTHESE: "synthese",
+  M10_METHODO: "methodologie",
+  M11_ADMIN: "administration",
+};
+
 /* Ecrans reellement construits a ce jour. Un module actif sans ecran reste visible, non cliquable. */
 const ROUTES_CONSTRUITES: Record<string, string> = {
   M9_SYNTHESE: "/synthese",
   M1_OFFRE: "/offre",
   M2_DEMANDE: "/demande",
+  M3_ACTIVITE: "/activite",
   M4_TENSION: "/tension",
+  M5_CONFORMITE: "/conformite",
+  M6_MATURITE: "/maturite",
+  M7_EVENEMENTIEL: "/evenementiel",
+  M8_RETOMBEES: "/retombees",
+  M10_METHODO: "/methodologie",
+  M11_ADMIN: "/administration",
 };
 
-export function NavigationLaterale({
-  modulesActifs,
-  moduleCourant,
-}: {
-  modulesActifs: string[];
-  moduleCourant?: string;
-}) {
+const CLE_STOCKAGE = "observatoire.navigation.repliee";
+
+/*
+ * Le choix de repli vit dans le stockage du navigateur, qui est une source
+ * exterieure a React : on le lit avec useSyncExternalStore plutot qu'en
+ * recopiant sa valeur dans un etat local. Deux onglets ouverts sur l'outil
+ * restent ainsi d'accord, grace a l'evenement `storage`.
+ *
+ * La mise en page, elle, ne depend pas de cet etat React : elle est decidee par
+ * l'attribut `data-rail` de la racine du document, pose par un script synchrone
+ * (voir app/layout.tsx) avant la premiere peinture. Sans cela, le serveur rend
+ * toujours le rail deplie et le client le replie apres hydratation : le rail se
+ * retracte sous les yeux a chaque rechargement. L'etat React ne sert donc plus
+ * qu'aux attributs d'accessibilite et aux infobulles, ou un decalage d'une image
+ * ne se voit pas.
+ */
+const abonnes = new Set<() => void>();
+
+function souscrire(rappel: () => void) {
+  abonnes.add(rappel);
+  window.addEventListener("storage", rappel);
+  return () => {
+    abonnes.delete(rappel);
+    window.removeEventListener("storage", rappel);
+  };
+}
+
+function lireRepli(): boolean {
+  try {
+    return window.localStorage.getItem(CLE_STOCKAGE) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function ecrireRepli(valeur: boolean) {
+  document.documentElement.dataset.rail = valeur ? "replie" : "";
+  try {
+    window.localStorage.setItem(CLE_STOCKAGE, valeur ? "1" : "0");
+  } catch {
+    /* Sans stockage, le choix ne survit pas au rechargement. */
+  }
+  for (const rappel of abonnes) rappel();
+}
+
+/* Numerotation affichee a gauche de chaque entree, tiree du code du module. */
+function numeroModule(code: string): string {
+  return code.replace(/^M(\d+)_.*$/, "$1").padStart(2, "0");
+}
+
+/*
+ * Navigation laterale permanente (document 8, section 4), repliable depuis le
+ * 8 septembre 2026.
+ *
+ * Repliee, elle passe de 240 a 60 px et les libelles cedent la place aux
+ * icones. C'est la seule zone de l'outil ou une icone est admise : le libelle
+ * n'y a plus la place de s'ecrire, donc l'icone n'est pas decorative, elle est
+ * le dernier porteur d'information. Chaque entree conserve son `title` et son
+ * `aria-label` avec le libelle exact.
+ *
+ * "Permanente" au sens du document 8 veut dire jamais escamotee toute seule :
+ * le rail ne disparait jamais, il se resserre, et le module courant reste
+ * visible dans les deux etats, marque par son filet vert et son fond plus clair.
+ */
+export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] }) {
+  const chemin = usePathname();
+  const replie = useSyncExternalStore(souscrire, lireRepli, () => false);
+
   return (
     <nav
-      className="flex w-[240px] shrink-0 flex-col gap-1 border-r px-3 py-4"
-      style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-bg)" }}
+      data-impression="masquer"
+      aria-label={t("nav.modules")}
+      className="flex shrink-0 flex-col justify-between"
+      style={{
+        width: "var(--largeur-rail)",
+        backgroundColor: "var(--color-primary-900)",
+        paddingBottom: "var(--space-3)",
+        transition: "width var(--transition-douce)",
+        overflow: "hidden",
+      }}
     >
-      <span
-        className="px-2 pb-2"
-        style={{
-          fontFamily: "var(--font-texte)",
-          fontSize: "var(--text-label)",
-          fontWeight: 600,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "var(--color-text-muted)",
-        }}
-      >
-        {t("nav.modules")}
-      </span>
-
-      {ORDRE_MODULES.filter((code) => modulesActifs.includes(code)).map((code) => {
-        const route = ROUTES_CONSTRUITES[code];
-        const actif = moduleCourant === code;
-
-        const style = {
-          fontFamily: "var(--font-texte)",
-          fontSize: "var(--text-body)",
-          color: actif ? "var(--color-primary)" : "var(--color-text)",
-          backgroundColor: actif ? "var(--color-bg-subtle)" : "transparent",
-          fontWeight: actif ? 600 : 400,
-        } as const;
-
-        if (!route) {
-          return (
-            <span
-              key={code}
-              className="rounded px-2 py-1.5"
-              style={{ ...style, color: "var(--color-text-muted)" }}
-            >
-              {t(CLE_LIBELLE[code])}
+      <div className="flex flex-col">
+        <div
+          className="rail-entete flex items-center justify-between"
+          style={{ gap: "var(--space-2)", padding: "var(--space-5) var(--space-3) var(--space-4)" }}
+        >
+          <span
+            className="rail-deplie"
+            style={{
+              paddingLeft: "var(--space-1)",
+              fontFamily: "var(--font-texte)",
+              fontSize: "var(--text-h3)",
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              color: "var(--color-on-primary)",
+            }}
+          >
+            {t("nav.modules")}
+          </span>
+          <button
+            type="button"
+            onClick={() => ecrireRepli(!replie)}
+            className="bouton-porte"
+            aria-expanded={!replie}
+            title={replie ? t("nav.deplier") : t("nav.replier")}
+            aria-label={replie ? t("nav.deplier") : t("nav.replier")}
+          >
+            <span className="rail-deplie flex">
+              <Icone nom="replier" taille={18} />
             </span>
-          );
-        }
+            <span className="rail-replie flex">
+              <Icone nom="deplier" taille={18} />
+            </span>
+          </button>
+        </div>
 
-        return (
-          <Link key={code} href={route} className="rounded px-2 py-1.5" style={style}>
-            {t(CLE_LIBELLE[code])}
-          </Link>
-        );
-      })}
+        {ORDRE_MODULES.filter((code) => modulesActifs.includes(code)).map((code) => {
+          const route = ROUTES_CONSTRUITES[code];
+          const actif = route !== undefined && chemin.startsWith(route);
+          const libelle = t(CLE_LIBELLE[code]);
+
+          /* Les deux versions sont rendues, le CSS choisit laquelle s'affiche.
+             C'est ce qui evite que le rail se reconfigure apres hydratation. */
+          const contenu = (
+            <>
+              <span className="rail-replie flex">
+                <Icone nom={ICONE[code]} />
+              </span>
+              <span
+                className="rail-deplie chiffres-tabulaires shrink-0"
+                style={{
+                  width: "1.4rem",
+                  fontSize: "var(--text-meta)",
+                  fontWeight: 600,
+                  color: actif ? "var(--color-on-primary-muted)" : "var(--color-on-primary-faint)",
+                }}
+              >
+                {numeroModule(code)}
+              </span>
+              <span className="rail-deplie truncate">{libelle}</span>
+            </>
+          );
+
+          const styleCommun = {
+            borderLeftColor: actif ? "var(--color-success)" : "transparent",
+            backgroundColor: actif ? "var(--color-primary-700)" : "transparent",
+            color: actif ? "var(--color-on-primary)" : "var(--color-on-primary-muted)",
+            fontWeight: actif ? 600 : 400,
+          } as const;
+
+          if (!route) {
+            return (
+              <span
+                key={code}
+                className="entree-navigation"
+                style={{ ...styleCommun, color: "var(--color-on-primary-faint)", cursor: "default" }}
+                title={libelle}
+              >
+                {contenu}
+              </span>
+            );
+          }
+
+          return (
+            <Link
+              key={code}
+              href={route}
+              aria-current={actif ? "page" : undefined}
+              aria-label={libelle}
+              title={libelle}
+              className="entree-navigation"
+              style={styleCommun}
+            >
+              {contenu}
+            </Link>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col" style={{ gap: "var(--space-3)" }}>
+        <BoutonDeconnexion />
+
+        {/* Document 8, section 11 : la mention d'attribution ne se masque pas.
+            Repliee, la colonne n'a plus la largeur de l'ecrire ; elle reparait
+            avec le rail, et l'export la porte de toute facon en pied de page. */}
+        <span
+          className="rail-deplie"
+          style={{
+            margin: "0 var(--space-4)",
+            paddingTop: "var(--space-3)",
+            borderTop: "1px solid var(--color-primary-800)",
+            fontSize: "var(--text-meta)",
+            lineHeight: 1.4,
+            color: "var(--color-on-primary-faint)",
+          }}
+        >
+          {t("app.attribution")}
+        </span>
+      </div>
     </nav>
   );
 }

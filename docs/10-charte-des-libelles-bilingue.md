@@ -81,6 +81,7 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 | `app.titre` | Observatoire National de l'Hospitalité Guinéenne | National Observatory of Guinean Hospitality |
 | `app.titre_court` | Observatoire | Observatory |
 | `app.attribution` | Une infrastructure Simandou Séjour | A Simandou Séjour infrastructure |
+| `app.editeur` | Simandou Séjour | Simandou Séjour |
 | `nav.modules` | Modules | Modules |
 | `nav.compte` | Mon compte | My account |
 | `nav.langue` | Langue | Language |
@@ -107,6 +108,10 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 |---|---|---|
 | `module.m1.titre` | Offre nationale d'hébergement | National accommodation supply |
 | `module.m1.court` | Offre | Supply |
+| `module.m1.territoires` | Lecture territoriale | Territorial reading |
+| `module.m1.qualite_inventaire` | Qualité de l'inventaire | Inventory quality |
+| `module.m1.repartition_typologie` | Répartition par typologie | Breakdown by type |
+| `module.m1.repartition_gamme` | Répartition par gamme | Breakdown by price range |
 | `module.m2.titre` | Demande exprimée | Expressed demand |
 | `module.m2.court` | Demande | Demand |
 | `module.m3.titre` | Activité observée | Observed activity |
@@ -123,8 +128,15 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 | `module.m8.court` | Retombées estimées | Estimated impact |
 | `module.m9.titre` | Synthèse institutionnelle | Institutional summary |
 | `module.m9.court` | Synthèse | Summary |
+| `module.m9.en_construction` | Module en construction. | Module under construction. |
 | `module.m10.titre` | Méthodologie | Methodology |
 | `module.m11.titre` | Administration | Administration |
+| `module.m7.decomposition_partenaires` | Partenaires disponibles : disponibilité réelle connue | Available partners: actual availability known |
+| `module.m7.decomposition_recenses` | Recensés non réservables : capacité théorique, disponibilité inconnue | Recorded non-bookable: theoretical capacity, availability unknown |
+
+> Trois clés ajoutées le 2026-09-08 : `module.m9.en_construction` (écran d'atterrissage provisoire) et les deux libellés de la zone de décomposition de la capacité de `M7_EVENEMENTIEL` (document 9 quater, partie J.8/J.10), qui étaient codés en dur sans être documentés ici.
+>
+> Quatre clés supplémentaires ajoutées le 2026-09-08, lors de la refonte visuelle « Rapport d'État » : `module.m1.territoires`, `module.m1.qualite_inventaire` (titres de zone Z4/Z5, document 9 partie B), `module.m1.repartition_typologie` et `module.m1.repartition_gamme` (titres de la zone Z3), également codés en dur jusqu'ici.
 
 ---
 
@@ -462,6 +474,8 @@ Clé de forme `kpi.<code>.libelle` et `kpi.<code>.aide`.
 
 ### État 3, données vides
 
+> Sept clés ajoutées le 2026-09-08 pour la construction des modules `M3_ACTIVITE`, `M5_CONFORMITE`, `M6_MATURITE`, `M7_EVENEMENTIEL` et `M8_RETOMBEES` : `reservations`, `ecart_terrain`, `evaluation`, `evenement`, `salles`, `demande_institutionnelle`, `estimation_retombees`. Libellés repris mot pour mot des fiches fonctionnelles correspondantes (document 9 ter, parties I et J ; document 9 quater, parties K, L et M).
+
 | Clé | Français | Anglais |
 |---|---|---|
 | `state.vide.defaut` | Aucune donnée sur ce périmètre. | No data for this scope. |
@@ -477,6 +491,13 @@ Clé de forme `kpi.<code>.libelle` et `kpi.<code>.aide`.
 | `state.vide.subdivision` | Ce territoire n'a pas de subdivision référencée. | This territory has no recorded subdivision. |
 | `state.vide.carte` | Aucune donnée cartographique sur ce périmètre. | No map data for this scope. |
 | `state.vide.conformite` | Aucune donnée de conformité transmise à ce jour. | No compliance data provided to date. |
+| `state.vide.reservations` | Aucune réservation sur la période. | No reservation for this period. |
+| `state.vide.ecart_terrain` | Aucun écart constaté sur ce territoire. | No discrepancy found in this territory. |
+| `state.vide.evaluation` | Aucun établissement à évaluer. | No establishment to assess. |
+| `state.vide.evenement` | Aucun événement enregistré. Sélectionnez des dates libres. | No event recorded. Select free dates. |
+| `state.vide.salles` | Aucune salle de réunion recensée sur ce territoire. | No meeting room surveyed in this territory. |
+| `state.vide.demande_institutionnelle` | Aucune demande institutionnelle sur cette fenêtre. | No institutional request for this window. |
+| `state.vide.estimation_retombees` | Estimation non produite en l'absence de dépense observée. | Estimate not produced in the absence of observed spend. |
 
 ### État 4, données masquées
 
@@ -530,7 +551,7 @@ Libellé invariable, jamais reformulé.
 |---|---|---|
 | `auth.titre` | Observatoire National de l'Hospitalité Guinéenne | National Observatory of Guinean Hospitality |
 | `auth.accroche` | Mesurer l'offre. Comprendre la demande. Éclairer la décision. | Measure supply. Understand demand. Inform decisions. |
-| `auth.sous_titre` | Accès réservé aux institutions partenaires. | Reserved for partner institutions. |
+| `auth.sous_titre` | Accès réservé aux institutions. | Reserved for institutions. |
 | `auth.email` | Adresse professionnelle | Work email address |
 | `auth.mot_de_passe` | Mot de passe | Password |
 | `auth.connexion` | Se connecter | Sign in |
@@ -543,6 +564,103 @@ Libellé invariable, jamais reformulé.
 | `compte.profil` | Profil | Profile |
 | `compte.institution` | Institution | Institution |
 | `compte.expiration` | Accès valable jusqu'au {date} | Access valid until {date} |
+| `auth.mfa.titre_inscription` | Sécuriser votre compte | Secure your account |
+| `auth.mfa.instruction_inscription` | Second facteur obligatoire. Scannez ce code avec une application d'authentification, puis saisissez le code affiché. | Second factor required. Scan this code with an authenticator app, then enter the code shown. |
+| `auth.mfa.cle_secrete` | Vous ne pouvez pas scanner ce code ? Saisissez cette clé manuellement dans votre application : | Can't scan this code? Enter this key manually in your app: |
+| `auth.mfa.titre_verification` | Vérification en deux étapes | Two-step verification |
+| `auth.mfa.instruction_verification` | Saisissez le code affiché dans votre application d'authentification. | Enter the code shown in your authenticator app. |
+| `auth.mfa.valider` | Vérifier | Verify |
+| `auth.erreur.code_invalide` | Code incorrect. Réessayez. | Incorrect code. Try again. |
+
+> Sept clés ajoutées le 2026-09-08 pour l'inscription et la vérification du second facteur d'authentification (document 7, section 10 : "Second facteur obligatoire pour tous les comptes"), jusque là non implémenté. Modalité retenue : TOTP via une application d'authentification, en utilisant le support natif de Supabase Auth MFA. Ces écrans restent une étape du flux de l'écran de connexion unique (document 9, A.0), pas une nouvelle surface applicative.
+
+---
+
+## 12 bis. Administration (`M11_ADMIN`)
+
+Libellés du back-office de saisie, produits avec la fiche fonctionnelle du document 9bis, partie H. Couvre le lot 1 : institutions et comptes, import du recensement. Les sections suivantes de M11 (fiche établissement, retours terrain, demande institutionnelle, calendrier, accessibilité, référentiels, journal/exports) complèteront cette liste à leur tour.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `admin.carte_institutions.titre` | Institutions et comptes | Institutions and accounts |
+| `admin.carte_institutions.description` | Créer une institution, inviter des comptes, gérer les accès. | Create an institution, invite accounts, manage access. |
+| `admin.carte_import.titre` | Import du recensement | Survey import |
+| `admin.carte_import.description` | Déposer un fichier de recensement, contrôler puis valider les lignes. | Upload a survey file, review then validate rows. |
+
+### Institutions
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `admin.institutions.titre` | Institutions | Institutions |
+| `admin.institutions.nouvelle` | Nouvelle institution | New institution |
+| `admin.institutions.denomination` | Dénomination | Name |
+| `admin.institutions.type` | Type | Type |
+| `admin.institutions.convention_reference` | Référence de convention | Agreement reference |
+| `admin.institutions.convention_debut` | Début de convention | Agreement start |
+| `admin.institutions.convention_fin` | Fin de convention | Agreement end |
+| `admin.institutions.creer` | Créer l'institution | Create institution |
+| `admin.institutions.creation_reussie` | Institution créée. | Institution created. |
+| `admin.institutions.vide` | Aucune institution enregistrée. | No institution recorded. |
+
+### Comptes
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `admin.comptes.titre` | Comptes | Accounts |
+| `admin.comptes.nouveau` | Inviter un compte | Invite an account |
+| `admin.comptes.nom` | Nom | Last name |
+| `admin.comptes.prenom` | Prénom | First name |
+| `admin.comptes.fonction` | Fonction | Role |
+| `admin.comptes.email` | Adresse professionnelle | Work email address |
+| `admin.comptes.profil` | Profil | Profile |
+| `admin.comptes.perimetre` | Périmètre territorial | Territorial scope |
+| `admin.comptes.granularite` | Granularité maximale | Maximum granularity |
+| `admin.comptes.langue` | Langue | Language |
+| `admin.comptes.expiration` | Date d'expiration | Expiration date |
+| `admin.comptes.modules` | Modules accessibles | Accessible modules |
+| `admin.comptes.inviter` | Envoyer l'invitation | Send invitation |
+| `admin.comptes.invitation_envoyee` | Invitation envoyée. | Invitation sent. |
+| `admin.comptes.statut.actif` | Actif | Active |
+| `admin.comptes.statut.suspendu` | Suspendu | Suspended |
+| `admin.comptes.statut.expire` | Expiré | Expired |
+| `admin.comptes.action.suspendre` | Suspendre | Suspend |
+| `admin.comptes.action.reactiver` | Réactiver | Reactivate |
+| `admin.comptes.action.prolonger` | Prolonger l'expiration | Extend expiration |
+| `admin.comptes.action.renvoyer_invitation` | Renvoyer l'invitation | Resend invitation |
+| `admin.comptes.confirmation.suspendre` | Suspendre ce compte ? L'accès cesse immédiatement. | Suspend this account? Access ends immediately. |
+| `admin.comptes.confirmation.reactiver` | Réactiver ce compte ? | Reactivate this account? |
+| `admin.comptes.vide` | Aucun compte pour cette institution. | No account for this institution. |
+| `admin.erreur.nom_generique` | Un compte doit être nominatif : indiquez le nom et le prénom du titulaire. | An account must be personal: enter the holder's first and last name. |
+| `admin.erreur.expiration_obligatoire` | La date d'expiration est obligatoire. | Expiration date is required. |
+| `admin.erreur.module_non_autorise` | Ce module n'est pas autorisé pour le profil sélectionné. | This module is not authorised for the selected profile. |
+| `admin.erreur.email_deja_utilise` | Cette adresse est déjà associée à un compte. | This address is already associated with an account. |
+
+### Import du recensement
+
+**Décision (point ouvert 9bis résolu) :** format accepté = CSV, délimiteur point-virgule. **Décision (point ouvert 9bis résolu) :** doublon potentiel = nom normalisé identique sur la même commune, ou coordonnées à moins de 300 m l'une de l'autre.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `admin.import.titre` | Import du recensement | Survey import |
+| `admin.import.deposer` | Déposer un fichier CSV | Upload a CSV file |
+| `admin.import.format` | Fichier CSV, délimiteur point-virgule. | CSV file, semicolon delimiter. |
+| `admin.import.previsualiser` | Prévisualiser | Preview |
+| `admin.import.valider` | Valider l'import | Validate import |
+| `admin.import.rapport.titre` | Rapport de contrôle | Control report |
+| `admin.import.rapport.lignes_valides` | {n} lignes valides | {n} valid rows |
+| `admin.import.rapport.lignes_erreur` | {n} lignes en erreur | {n} rows with errors |
+| `admin.import.rapport.ligne` | Ligne {n} | Row {n} |
+| `admin.import.rapport.motif` | Motif | Reason |
+| `admin.import.historique.titre` | Imports précédents | Previous imports |
+| `admin.import.historique.vide` | Aucun import réalisé. | No import performed yet. |
+| `admin.import.historique.fichier` | Fichier | File |
+| `admin.import.historique.date` | Date | Date |
+| `admin.import.historique.lignes` | Lignes | Rows |
+| `admin.import.erreur.champ_obligatoire_absent` | Champ obligatoire absent : {champ} | Required field missing: {champ} |
+| `admin.import.erreur.valeur_enumeration_invalide` | Valeur non reconnue pour {champ} : {valeur} | Unrecognised value for {champ}: {valeur} |
+| `admin.import.erreur.territoire_non_resolu` | Territoire non reconnu : {valeur} | Territory not recognised: {valeur} |
+| `admin.import.erreur.coordonnees_hors_bornes` | Coordonnées hors des limites de la Guinée | Coordinates outside Guinea's boundaries |
+| `admin.import.erreur.doublon_potentiel` | Doublon potentiel avec un établissement déjà recensé | Potential duplicate of an already surveyed establishment |
 
 ---
 
@@ -581,9 +699,173 @@ Aucune de ces notions n'apparaît dans l'interface, sous aucune forme, dans aucu
 ## 15. Points ouverts
 
 1. Traduction anglaise à faire relire par une personne connaissant la terminologie hôtelière.
-2. Libellés du module `M11_ADMIN`, à produire avec sa fiche fonctionnelle.
+2. Libellés du module `M11_ADMIN`, à produire avec sa fiche fonctionnelle. **Résolu pour le lot 1** (institutions et comptes, import du recensement) : voir §12 bis. Les sept autres sections du module restent à documenter à leur tour.
 3. Textes d'aide contextuelle par indicateur, dérivés des définitions du document 4.
 4. Formulation du courriel d'invitation à un compte institutionnel.
+
+---
+
+## 16. Libellés ajoutés par la refonte visuelle du 8 septembre 2026
+
+Ces clés accompagnent la direction « Rapport d'État » du document 8, révision du 8 septembre 2026, appliquée d'abord à l'écran `M1_OFFRE`.
+
+### 16.1 Bandeau de périmètre, présentation en couples étiquette/valeur
+
+Le bandeau passe de quatre phrases à quatre couples étiquette/valeur, seule forme lisible en projection à trois mètres. Les clés en phrase (`perimetre.etablissements`, `perimetre.partenaires`, `perimetre.couverture`, `perimetre.date`) restent en catalogue : elles servent l'export et les textes courants.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `perimetre.label.etablissements` | Établissements recensés | Establishments recorded |
+| `perimetre.label.partenaires` | dont partenaires | of which partners |
+| `perimetre.label.couverture` | Capacité couverte | Capacity covered |
+| `perimetre.label.observation` | Données au | Data as of |
+
+### 16.2 Barre de contrôle
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `controle.niveau` | Niveau territorial | Territorial level |
+| `controle.national` | National | National |
+| `controle.export` | Exporter | Export |
+
+### 16.3 Écran `M1_OFFRE`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.m1.code` | M1 · Offre | M1 · Supply |
+| `module.m1.question` | Quelle est l'offre d'hébergement existant en Guinée, de quelle nature, de quelle capacité, et quelle part en est réellement réservable en ligne ? | What accommodation supply exists in Guinea, of what kind, of what capacity, and what share of it is genuinely bookable online? |
+| `module.m1.volumes` | Volumes recensés | Recorded volumes |
+| `module.m1.ratios` | Ratios d'inventaire | Inventory ratios |
+| `module.m1.structure` | Structure de l'offre | Structure of supply |
+| `module.m1.territoires_repartition` | Répartition territoriale | Territorial distribution |
+| `module.m1.territoires_repartition_aide` | Densité d'établissements recensés, une tuile par région. | Density of recorded establishments, one tile per region. |
+| `module.m1.tableau_territorial` | Détail par territoire | Breakdown by territory |
+| `module.m1.tableau_territorial_aide` | Toutes les régions du référentiel, y compris celles sans établissement recensé. | Every region in the reference list, including those with no recorded establishment. |
+| `module.m1.repartition_typologie_aide` | Nature des établissements recensés. | Type of the recorded establishments. |
+| `module.m1.repartition_gamme_aide` | Positionnement tarifaire déclaré, de l'économique au haut de gamme. | Declared price positioning, from budget to upscale. |
+| `module.m1.legende_etablissements` | Établissements | Establishments |
+| `module.m1.unites` | {n} unités | {n} units |
+| `module.m1.part_du_parc` | {p} du parc recensé | {p} of the recorded stock |
+| `module.m1.part_du_parc_effectifs` | {n} sur {d} établissements recensés | {n} of {d} recorded establishments |
+| `module.m1.qualite_inventaire_aide` | Ce que l'Observatoire sait de l'offre, et ce qu'il ne sait pas encore. | What the Observatory knows about supply, and what it does not know yet. |
+| `module.m1.sur_cent` | sur 100 | out of 100 |
+| `module.m1.ecart_admin_aide` | Établissements portés par une liste administrative et non retrouvés lors du recensement de terrain, ou l'inverse. | Establishments listed by an administrative register and not found during field recording, or the reverse. |
+
+### 16.4 Représentation territoriale
+
+Employés par la grille de tuiles qui remplace la carte de densité tant qu'aucun contour du découpage refondu le 20 août 2026 n'est disponible (document 8, section 5.7).
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `carte.aucune_donnee` | Aucune donnée | No data |
+| `carte.legende_densite` | Densité | Density |
+| `carte.legende_bornes` | de {min} à {max} établissements | from {min} to {max} establishments |
+| `carte.legende_sans_echelle` | Échelle non établie, aucun établissement recensé | Scale not established, no establishment recorded |
+| `carte.legende_hachure` | Sans donnée ({n}) | No data ({n}) |
+| `carte.sans_contour` | Les contours du découpage administratif refondu le 20 août 2026 ne sont disponibles dans aucun fichier réutilisable. Les territoires sont ici représentés par une grille, sans géométrie. | Boundaries for the administrative division redrawn on 20 August 2026 are not available in any reusable file. Territories are shown here as a grid, without geometry. |
+
+### 16.5 En-têtes de tableau territorial
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `tableau.territoire` | Territoire | Territory |
+| `tableau.etablissements` | Établ. | Estab. |
+| `tableau.capacite` | Capacité | Capacity |
+| `tableau.partenaires` | Partenaires | Partners |
+| `tableau.couverture` | Couverture | Coverage |
+| `tableau.numerisation` | Numérisation | Digitisation |
+| `tableau.reservabilite` | Réservabilité | Bookability |
+| `tableau.verification` | Vérification | Verification |
+| `tableau.total` | Total | Total |
+
+### 16.6 États et export
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `state.vide.repartition` | Aucun établissement à répartir. | No establishment to break down. |
+| `impression.emis_par` | Émis par | Issued by |
+| `impression.reference` | Référence d'export | Export reference |
+
+`impression.reference` est en catalogue mais pas encore affichée : la référence unique d'export doit être enregistrée pour être opposable, donc produite côté serveur et non tirée au rendu.
+
+---
+
+
+
+---
+
+## 17. Libellés des écrans `M2_DEMANDE` et `M3_ACTIVITE`, 9 septembre 2026
+
+Ajoutés avec la refonte de ces deux écrans et l'ouverture des zones Z2 et Z4 du module `M2` et de la zone Z2 du module `M3`, par les vues `mv_demande_region`, `mv_demande_saisonnalite` et `mv_activite_evolution`.
+
+### 17.1 `M2_DEMANDE`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.m2.code` | M2 · Demande | M2 · Demand |
+| `module.m2.question` | Qui cherche à venir en Guinée, depuis quel pays, vers quelle destination, à quelles dates, pour quelle durée et avec quel budget. | Who is looking to come to Guinea, from which country, to which destination, on what dates, for how long and on what budget. |
+| `module.m2.intention` | Intention de séjour | Intent to travel |
+| `module.m2.saisonnalite` | Saisonnalité | Seasonality |
+| `module.m2.saisonnalite_titre` | Saisonnalité de l'intention | Seasonality of intent |
+| `module.m2.saisonnalite_aide` | Recherches par mois d'arrivée souhaitée, et non par mois de recherche. | Searches by intended month of arrival, not by month of search. |
+| `module.m2.geographie` | Où, et depuis où | Where to, and where from |
+| `module.m2.destinations` | Destinations recherchées | Destinations searched |
+| `module.m2.destinations_aide` | Construite sur la destination saisie, jamais sur l'origine de la connexion. | Built on the destination entered, never on the origin of the connection. |
+| `module.m2.origine` | Origine des connexions | Origin of connections |
+| `module.m2.origine_aide` | Dix premiers pays. Aucune granularité inférieure au pays n'est publiée. | Top ten countries. No granularity below country level is published. |
+| `module.m2.contexte` | Contexte d'usage | Usage context |
+| `module.m2.appareil` | Répartition par appareil | Breakdown by device |
+| `module.m2.appareil_aide` | Type d'appareil utilisé pour la recherche. | Type of device used for the search. |
+| `module.m2.canal` | Répartition par canal | Breakdown by channel |
+| `module.m2.canal_aide` | Canal d'entrée de la recherche, dans l'ordre du référentiel. | Entry channel of the search, in reference-list order. |
+| `module.m2.hors_referentiel` | Signal | Signal |
+| `module.m2.hors_referentiel_titre` | Destinations hors référentiel | Destinations outside the reference list |
+| `module.m2.hors_referentiel_aide` | Localités recherchées qui ne correspondent à aucun territoire du référentiel. Chaque rectangle est proportionnel au nombre de recherches. | Localities searched that match no territory in the reference list. Each rectangle is proportional to the number of searches. |
+| `module.m2.legende_recherches` | Recherches | Searches |
+| `module.m2.sessions` | {n} sessions | {n} sessions |
+| `module.m2.sparkline_volume` | Tendance sur douze mois | Twelve-month trend |
+| `module.m2.part_filtre_budget` | {p} des recherches ont utilisé le filtre budget | {p} of searches used the budget filter |
+
+Le libellé `module.m2.origine` reprend au caractère près l'intitulé imposé par le document 9, C.7 : « Origine des connexions », jamais « Origine des voyageurs ».
+
+### 17.2 `M3_ACTIVITE`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.m3.code` | M3 · Activité | M3 · Activity |
+| `module.m3.question` | Que se passe-t-il réellement sur le périmètre commercialisé : combien de réservations, quel taux d'occupation, à quel prix moyen. | What actually happens across the commercialised scope: how many bookings, what occupancy rate, at what average price. |
+| `module.m3.avertissement_perimetre` | Ce module porte sur le seul périmètre partenaire, soit {n} établissements. Il ne décrit pas le secteur, il décrit ce qui est commercialisé sur la plateforme. | This module covers the partner scope only, that is {n} establishments. It does not describe the sector, it describes what is sold on the platform. |
+| `module.m3.volumes` | Volumes observés | Observed volumes |
+| `module.m3.performance` | Performance hôtelière | Hotel performance |
+| `module.m3.evolution` | Évolution dans le temps | Change over time |
+| `module.m3.evolution_occupation` | Taux d'occupation contractualisé | Occupancy on contracted capacity |
+| `module.m3.evolution_adr` | ADR, franc guinéen | ADR, Guinean franc |
+| `module.m3.evolution_revpar` | RevPAR, franc guinéen | RevPAR, Guinean franc |
+| `module.m3.reservations_par_mois` | Réservations par mois d'arrivée | Bookings by month of arrival |
+| `module.m3.reservations_par_mois_aide` | Réservations non annulées, réparties sur le mois d'arrivée et non de réservation. | Non-cancelled bookings, allocated to the month of arrival rather than of booking. |
+| `module.m3.sparkline_reservations` | Réservations mois par mois | Bookings month by month |
+| `module.m3.sparkline_nuitees` | Nuitées mois par mois | Room nights month by month |
+| `module.m3.conversion` | Conversion | Conversion |
+| `module.m3.conversion_titre` | De la recherche à la réservation | From search to booking |
+| `module.m3.conversion_aide` | Les deux taux sont posés sur la même règle, jamais séparément. | Both rates are placed on the same scale, never separately. |
+| `module.m3.conversion_lecture` | Un taux de conversion lu seul se comprend comme une contre-performance commerciale. Lu à côté du taux de couverture, il se comprend comme une conséquence mécanique de la part du parc réellement réservable en ligne. | A conversion rate read on its own reads as commercial underperformance. Read next to the platform coverage rate, it reads as a mechanical consequence of the share of stock that is genuinely bookable online. |
+| `module.m3.libelle_conversion` | Taux de conversion | Conversion rate |
+| `module.m3.libelle_couverture` | Taux de couverture plateforme | Platform coverage rate |
+
+`module.m3.conversion_lecture` reprend la mise en garde du document 9 quater, K.7. Elle est affichée sous le graphique, pas dans une infobulle : c'est la phrase qui empêche le chiffre d'être mal cité.
+
+### 17.3 États et légende
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `state.vide.evolution` | Pas encore assez de réservations pour tracer une évolution. | Not enough bookings yet to plot a trend. |
+| `state.vide.inventaire` | Inventaire quotidien non alimenté : ce taux n'est pas calculable. | Daily inventory not supplied: this rate cannot be computed. |
+| `state.vide.conversion` | Moins de 100 recherches sur la période. | Fewer than 100 searches over the period. |
+| `carte.legende_bornes_generique` | de {min} à {max} | from {min} to {max} |
+
+### 17.4 Noms de pays
+
+Les noms de pays ne sont pas au catalogue. Les codes `ISO 3166-1 alpha-2` sont des codes normalisés internationaux, pas une énumération du document 2 : ils passent par les données de localisation d'`Intl`, comme les nombres et les dates, plutôt que par la recopie de deux cents libellés. Le code brut reste le repli si la locale ne connaît pas le pays.
 
 ---
 

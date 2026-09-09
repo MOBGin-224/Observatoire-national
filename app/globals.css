@@ -1,15 +1,42 @@
 @import "tailwindcss";
 
-/* Jetons de design, document 8. Aucune valeur visuelle en dur ailleurs dans le code. */
+/*
+ * Jetons de design, document 8. Aucune valeur visuelle en dur ailleurs dans le code.
+ *
+ * Revision 2026-09-08, direction "Rapport d'Etat" :
+ * la hierarchie visuelle est portee par l'echelle typographique, la densite et
+ * les rampes sequentielles de couleur. Toujours aucune ombre portee, aucune
+ * icone, aucun angle tres arrondi (document 8, sections 4 et 12.1).
+ */
 :root {
-  /* Polices : Montserrat pour les titres, Arial pour le texte courant et les donnees */
-  --font-titre: "Montserrat", Arial, Helvetica, sans-serif;
-  --font-texte: Arial, Helvetica, sans-serif;
+  /* Polices. Montserrat pour les titres, Inter pour le texte courant et les
+     donnees. Les deux sont auto-hebergees par next/font (document 8, section 9 :
+     jamais d'appel a un service tiers au moment de l'affichage). Les valeurs
+     ci-dessous sont les replis : app/layout.tsx redefinit les deux variables. */
+  --font-titre: "Montserrat", "Segoe UI", Arial, sans-serif;
+  --font-texte: "Inter", "Segoe UI", Arial, sans-serif;
 
   /* Palette de marque */
   --color-primary: #0b3b66;
   --color-success: #228c22;
   --color-alert: #f34300;
+
+  /* Declinaisons du bleu structurant. Derivees du primaire, aucune teinte nouvelle. */
+  --color-primary-900: #072a4a;
+  --color-primary-800: #09335a;
+  --color-primary-700: #0b3b66;
+  --color-primary-600: #14507f;
+  --color-primary-500: #2c6291;
+  --color-primary-200: #b8cbdc;
+  --color-primary-100: #dfe8f0;
+  --color-primary-050: #f2f6fa;
+  --color-on-primary: #ffffff;
+  --color-on-primary-muted: #9db8d1;
+  --color-on-primary-faint: #5b7d9c;
+
+  /* Declinaisons du vert de marque, reservees aux volumes recenses et partenaires */
+  --color-success-700: #1a6d1a;
+  --color-success-100: #dcecdc;
 
   /* Neutres */
   --color-text: #000000;
@@ -20,6 +47,7 @@
   --color-bg-panel: #f2f5f8;
   --color-border: #d6dee6;
   --color-border-strong: #b9c6d2;
+  --color-border-faint: #e6ecf2;
 
   /* Statuts de donnee */
   --data-recense: #228c22;
@@ -33,7 +61,36 @@
   --fiab-indicatif: #b8860b;
   --fiab-signal: #8a9ba8;
 
+  /* Rampe sequentielle bleue, six paliers du plus clair au plus fonce.
+     Sert aux repartitions, aux anneaux et aux echelles cartographiques
+     (document 8, section 2.5). Aucune palette categorielle : une repartition
+     se lit du plus gros au plus petit, donc du plus fonce au plus clair. */
+  --seq-1: #cfdae4;
+  --seq-2: #a2b9cc;
+  --seq-3: #7599b5;
+  --seq-4: #4e7a9e;
+  --seq-5: #2c5a82;
+  --seq-6: #0b3b66;
+
+  /* Voile de l'ecran de connexion. Assombrit le haut et le bas de la composition
+     pour que le titre et l'accroche restent lisibles par-dessus le relief, quelle
+     que soit la hauteur de la fenetre. Cale sur le volet, pas sur le trace :
+     un voile pose dans le SVG suivrait le recadrage et raterait sa cible. */
+  --voile-connexion: linear-gradient(
+    to bottom,
+    rgba(4, 24, 43, 0.92) 0%,
+    rgba(4, 24, 43, 0.34) 26%,
+    rgba(4, 24, 43, 0.1) 44%,
+    rgba(4, 24, 43, 0.62) 78%,
+    rgba(4, 24, 43, 0.95) 100%
+  );
+
+  /* Trame des territoires sans donnee. Jamais une couleur claire de l'echelle. */
+  --hachure-trait: #b9c6d2;
+  --hachure-fond: #f7f9fb;
+
   /* Echelle typographique */
+  --text-display-xl: 44px;
   --text-display: 32px;
   --text-h1: 24px;
   --text-h2: 18px;
@@ -42,17 +99,344 @@
   --text-small: 13px;
   --text-meta: 11px;
   --text-label: 11px;
+
+  /* Interlettrage. Un grand nombre se resserre, une petite capitale s'ouvre. */
+  --tracking-display: -0.022em;
+  --tracking-titre: -0.01em;
+  --tracking-label: 0.09em;
+
+  /* Echelle d'espacement, base 4px */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Structure */
+  --rayon: 4px;
+  --largeur-navigation: 240px;
+  --largeur-navigation-repliee: 60px;
+  --hauteur-entete: 72px;
+  --filet-accent: 3px;
+  --transition-douce: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Document 8, section 3 : chiffres tabulaires partout ou des nombres s'alignent en colonne. */
+.chiffres-tabulaires {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 body {
-  background: var(--color-bg);
+  background: var(--color-bg-subtle);
   color: var(--color-text);
   font-family: var(--font-texte);
   font-size: var(--text-body);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, .titre {
   font-family: var(--font-titre);
   line-height: 1.25;
+  letter-spacing: var(--tracking-titre);
+}
+
+/* Etiquette en petites capitales, motif recurrent de toute l'interface. */
+.etiquette {
+  font-family: var(--font-texte);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Valeur d'indicateur. Le resserrement evite l'effet "chiffres qui flottent". */
+.valeur-cle {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  letter-spacing: var(--tracking-display);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--color-primary-700);
+}
+
+/* Surface de bloc. Hierarchie par le fond et le filet, jamais par une ombre. */
+.surface {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--rayon);
+}
+
+/* Filet d'accent superieur des blocs de premier rang. */
+.surface-accent {
+  border-top: var(--filet-accent) solid var(--color-primary-700);
+}
+
+.surface-accent-vert {
+  border-top: var(--filet-accent) solid var(--color-success);
+}
+
+/* ---------------------------------------------------------------------------
+ * Interactions.
+ *
+ * Le document 8 interdit les animations d'entree : un graphique ne doit pas se
+ * construire sous les yeux d'une salle. Une transition declenchee par un geste
+ * de l'utilisateur, elle, est un accuse de reception, pas un effet. Toutes sont
+ * courtes et se coupent des que le systeme demande moins de mouvement.
+ * ------------------------------------------------------------------------- */
+
+/* Entree de navigation laterale, depliee ou repliee. */
+.entree-navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  border-left: var(--filet-accent) solid transparent;
+  text-align: left;
+  transition: background-color var(--transition-douce), color var(--transition-douce);
+}
+.entree-navigation:hover {
+  background-color: var(--color-primary-800);
+  color: var(--color-on-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Etat replie du rail.
+ *
+ * Il est porte par un attribut sur la racine du document, pose par un script
+ * synchrone avant le premier rendu, et non par l'etat React. Sans cela, le
+ * serveur rend toujours le rail deplie et le client le replie apres hydratation :
+ * le rail se retracte sous les yeux a chaque rechargement de page. Ici, la
+ * largeur et le contenu sont decides par le CSS avant la premiere peinture, et
+ * React ne fait plus que suivre.
+ * ------------------------------------------------------------------------- */
+:root {
+  --largeur-rail: var(--largeur-navigation);
+}
+:root[data-rail="replie"] {
+  --largeur-rail: var(--largeur-navigation-repliee);
+}
+
+/* Le rail rend toujours les deux versions de chaque entree ; le CSS choisit. */
+:root[data-rail="replie"] .rail-deplie {
+  display: none !important;
+}
+:root:not([data-rail="replie"]) .rail-replie {
+  display: none !important;
+}
+
+/* Le filet d'accent de gauche decalerait l'icone du centre optique de la
+   colonne. On le compense a droite plutot que de le retirer, sinon le module
+   courant perdrait son marqueur des que le rail se resserre. */
+:root[data-rail="replie"] .entree-navigation {
+  justify-content: center;
+  padding-left: var(--space-2);
+  padding-right: calc(var(--space-2) + var(--filet-accent));
+}
+:root[data-rail="replie"] .rail-entete {
+  justify-content: center;
+}
+
+/* Bouton de repli du rail, la "porte". */
+.bouton-porte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--rayon);
+  color: var(--color-on-primary-faint);
+  transition: background-color var(--transition-douce), color var(--transition-douce);
+}
+.bouton-porte:hover {
+  background-color: var(--color-primary-700);
+  color: var(--color-on-primary);
+}
+
+/* Panneau documentaire. Survol tres retenu : le fond se teinte, le filet se
+   precise. Aucun deplacement, aucune ombre, aucun changement de taille. */
+.carte-douce {
+  transition: background-color var(--transition-douce), border-color var(--transition-douce);
+}
+.carte-douce:hover {
+  background-color: var(--color-primary-050);
+  border-color: var(--color-primary-200);
+}
+
+/* Entree d'une liste selectionnable. Le filet gauche est le seul marqueur qui
+   bouge ; la couleur seule ne porte jamais la selection. */
+.item-liste {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-left: 2px solid transparent;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  transition: background-color var(--transition-douce), border-color var(--transition-douce),
+    color var(--transition-douce);
+}
+.item-liste:hover {
+  background-color: var(--color-bg-subtle);
+  border-left-color: var(--color-primary-200);
+}
+.item-liste[aria-current="true"] {
+  background-color: var(--color-primary-050);
+  border-left-color: var(--color-primary-700);
+  color: var(--color-primary-700);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entree-navigation,
+  .bouton-porte,
+  .carte-douce,
+  .item-liste,
+  [data-rail] {
+    transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Champs de saisie et boutons.
+ * Un seul jeu de styles pour l'ecran de connexion, le second facteur et les
+ * formulaires d'administration : trois traitements differents pour un meme
+ * champ, c'est le defaut le plus visible d'une application assemblee par bouts.
+ * ------------------------------------------------------------------------- */
+.champ-saisie {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--rayon);
+  background-color: var(--color-bg);
+  font-family: var(--font-texte);
+  font-size: var(--text-body);
+  color: var(--color-text);
+  transition: border-color var(--transition-douce), box-shadow var(--transition-douce);
+}
+.champ-saisie::placeholder {
+  color: var(--color-text-muted);
+}
+.champ-saisie:hover {
+  border-color: var(--color-primary-200);
+}
+.champ-saisie:focus {
+  outline: none;
+  border-color: var(--color-primary-700);
+  /* Halo plutot qu'un contour epais : le champ ne bouge pas d'un pixel au focus. */
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.etiquette-champ {
+  font-family: var(--font-texte);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.bouton-principal {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--rayon);
+  background-color: var(--color-primary-700);
+  color: var(--color-on-primary);
+  font-family: var(--font-texte);
+  font-size: var(--text-body);
+  font-weight: 600;
+  transition: background-color var(--transition-douce);
+}
+.bouton-principal:hover:not(:disabled) {
+  background-color: var(--color-primary-900);
+}
+.bouton-principal:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* Message d'erreur de formulaire.
+   Pas d'orange : le document 8, section 2.2, le reserve aux signaux de tension
+   et de deficit d'offre, et sa raretee est ce qui le rend lisible sur la carte
+   du module M4. Ici, c'est le filet epais et la graisse qui portent l'alerte. */
+.message-erreur {
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--filet-accent) solid var(--color-text);
+  background-color: var(--color-bg-panel);
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .champ-saisie,
+  .bouton-principal {
+    transition: none !important;
+  }
+}
+
+/* Lien sobre, souligne au survol seulement. */
+.lien-sobre {
+  color: var(--color-primary-700);
+  text-decoration: none;
+}
+.lien-sobre:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Document 8, section 10 : "le PDF n'est pas une capture d'ecran".
+ * L'export du navigateur passe par cette feuille : format A4 paysage, navigation
+ * et controles retires, bandeau de perimetre et mention d'attribution conserves,
+ * graphiques rendus en vectoriel puisqu'ils sont deja en SVG.
+ *
+ * Restent a construire cote serveur : le filigrane au nom du compte emetteur et
+ * la reference unique d'export.
+ */
+@page {
+  size: A4 landscape;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background: var(--color-bg);
+  }
+
+  /* Navigation, barre de controle, bouton d'export : hors export. */
+  [data-impression="masquer"] {
+    display: none !important;
+  }
+
+  main {
+    overflow: visible !important;
+  }
+
+  /* Le bandeau de perimetre est reproduit, mais il ne colle plus. */
+  .sticky {
+    position: static !important;
+  }
+
+  .surface,
+  table,
+  section {
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  a[href]::after {
+    content: none;
+  }
 }

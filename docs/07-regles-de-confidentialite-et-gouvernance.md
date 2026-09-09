@@ -329,7 +329,7 @@ Trois règles pour un agent de développement confronté à une situation non pr
 1. Durée de conservation des enregistrements de recherche.
 2. Durée de conservation du journal d'accès.
 3. Vérification de conformité au cadre guinéen de protection des données.
-4. Modalité de second facteur retenue.
+4. ~~Modalité de second facteur retenue.~~ **Résolu le 2026-09-08 :** TOTP (application d'authentification), implémenté via le support natif de Supabase Auth MFA. Enrôlement obligatoire au premier accès, vérification à chaque connexion, appliqué au niveau du routage (session refusée si le niveau d'authentification `aal2` n'est pas atteint).
 5. Formulation définitive des clauses de propriété intellectuelle et de réversibilité, à faire relire par un juriste.
 
 ---

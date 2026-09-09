@@ -1,5 +1,6 @@
 import { BlocIndicateurCle } from "@/components/indicators/BlocIndicateurCle";
 import { chargerPerimetre } from "@/lib/queries/perimetre";
+import { t } from "@/lib/i18n";
 
 /*
  * Ecran d'atterrissage M9_SYNTHESE apres connexion (document 11, section 1).
@@ -13,7 +14,7 @@ export default async function Synthese() {
   return (
     <div className="flex flex-1 flex-col gap-6 p-8">
       <p style={{ fontFamily: "var(--font-titre)", fontSize: "var(--text-h2)" }}>
-        M9_SYNTHESE — module en construction.
+        {t("module.m9.titre")} : {t("module.m9.en_construction")}
       </p>
 
       <div className="grid max-w-xs">
