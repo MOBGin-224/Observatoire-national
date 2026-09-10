@@ -14,13 +14,17 @@ L'entreprise se positionne comme l'infrastructure numérique de l'hospitalité g
 
 ## État actuel du projet
 
-**Mise à jour : 9 septembre 2026.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
+**Mise à jour : 10 septembre 2026.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
 
-**En base** (Supabase, projet `Observatoire`, schéma `observatoire`) : 29 tables, 14 vues matérialisées `mv_*`, 14 vues d'accès `acces_*`, 3 vues métier. RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 143 énumérations, 51 indicateurs. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
+**En base** (Supabase, projet `Observatoire`, schéma `observatoire`, migrations versionnées dans `/supabase/migrations`) : 30 tables, 14 vues matérialisées `mv_*`, 14 vues d'accès `acces_*`, 3 vues métier. RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 143 énumérations, 51 indicateurs. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
 
-**Construit** : authentification avec second facteur TOTP obligatoire, intergiciel en liste blanche, **deux compteurs d'expiration de session** (inactivité selon profil, plafond absolu, retour sur l'écran consulté), chrome commun, bandeau de périmètre, couches transverses (`queries`, `masking`, `indicators`, `format`, `i18n`, `permissions`, `csv`, `config`, `taches`), bibliothèque des cinq états, dix composants graphiques, les onze écrans de module, `M11_ADMIN` sur deux sections (institutions et comptes, import du recensement), et **trois routes de tâches planifiées** protégées par secret (`/api/taches/*`, déclarées dans `vercel.json`).
+**Construit** : authentification avec second facteur TOTP obligatoire, intergiciel en liste blanche, **deux compteurs d'expiration de session** (inactivité selon profil, plafond absolu, retour sur l'écran consulté), chrome commun, **bandeau de périmètre à deux variantes** (institutionnelle et interne, document 15 section 6), **`M9_SYNTHESE` en phase 1 nationale**, couches transverses (`queries`, `masking`, `indicators`, `format`, `i18n`, `permissions`, `csv`, `config`, `taches`), bibliothèque des cinq états, dix composants graphiques, les onze écrans de module, `M11_ADMIN` sur deux sections (institutions et comptes, import du recensement), et **trois routes de tâches planifiées** protégées par secret (`/api/taches/*`, déclarées dans `vercel.json`).
 
-**Reste à construire** : les sept autres sections de `M11_ADMIN`, le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, et la zone 5 de `M4_TENSION`.
+**Reste à construire** : les sept autres sections de `M11_ADMIN`, la prévisualisation « Voir comme » du profil `ADMIN` (document 9 bis, F.4 ter), le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, et la zone 5 de `M4_TENSION`.
+
+**Phase 2 de `M9_SYNTHESE`**, sélecteurs de période et de niveau géographique : subordonnée à la reprise des vues matérialisées pour leur donner ces deux dimensions. Chantier qui touche les huit modules et **se décide pour lui-même**, pas comme préalable à un écran.
+
+**Trois blocs de la synthèse s'affichent en état vide**, aucun n'est simulé : `INS_DEFICIT` (normal, aucune demande institutionnelle saisie), `TEN_FENETRES_SATURATION` (seuil arrêté, vue à construire) et `CTX_RECENSEMENT_PROGRESSION` (**bloqué : `etablissement` n'a pas de date de création**, il faut une colonne `cree_a` et un amendement au document 3).
 
 **En attente d'arbitrage technique** : le transport de courriel de la notification d'expiration. Voir `lib/taches/courriel.ts`. Les échéances sont relevées et conservées, rien n'est envoyé.
 
@@ -58,7 +62,8 @@ Toute fonctionnalité doit servir l'une de ces trois questions. Sinon elle est h
 | 11 | Architecture technique et conventions | Pile, structure, nommage |
 | 12 | Plan de recette | Critères d'acceptation |
 | 13 | Décisions arbitrées | Paramètres tranchés, points ouverts restants |
-| 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
+| 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
+| 15 | Synthèse et bandeau de périmètre | **Amende les documents 3, 4, 6, 7, 8, 9 bis, 10 et 12** |
 
 **Tous les paramètres chiffrés arbitrés sont dans `/lib/config`**, jamais dans un composant ni dans une requête. Document 13 section 13, document 14 section 5.3.
 

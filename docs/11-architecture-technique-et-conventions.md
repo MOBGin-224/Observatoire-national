@@ -135,6 +135,10 @@ Toutes les tables dans un schéma applicatif dédié nommé `observatoire`. Jama
 
 Fichiers SQL numérotés, jamais modifiés après application. Une migration corrige une migration, elle ne la réécrit pas.
 
+**Elles vivent dans le dépôt, sous `/supabase/migrations`**, un fichier par migration nommé `<version>_<nom>.sql`, l'ordre alphabétique étant l'ordre d'application. Voir `/supabase/README.md`.
+
+**Toute migration appliquée au projet Supabase est reportée dans le dépôt dans la foulée.** Une migration appliquée en base et absente du dépôt rend le dépôt incapable de reconstruire son propre socle : le code y est, le schéma qu'il interroge n'y est pas. Ce n'est plus une sauvegarde.
+
 Ordre d'application initial :
 
 | Rang | Migration |
