@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/taches/notification-expiration",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/taches/rafraichir-agregats",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/taches/purge-mensuelle",
+      "schedule": "0 4 1 * *"
+    }
+  ]
+}

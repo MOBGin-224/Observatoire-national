@@ -1,9 +1,33 @@
 import { t } from "@/lib/i18n";
+import { IMPORT } from "@/lib/config";
 import type { RapportImport } from "@/lib/csv/parseRecensement";
 
 /* Document 9bis H.4.1 : rapport de controle avant validation, motif ligne par ligne. */
 export function RapportControleImport({ rapport }: { rapport: RapportImport }) {
   const nbDoublons = rapport.lignesValides.filter((l) => l.doublonPotentiel).length;
+
+  /*
+   * Document 13, section 4 : au-dela du plafond, aucun rapport ligne a ligne
+   * n'est produit. Un rapport de dix mille lignes se valide en aveugle, ce qui
+   * revient a supprimer le controle.
+   */
+  if (rapport.plafondDepasse) {
+    return (
+      <div className="flex flex-col gap-3">
+        <h3
+          style={{ fontFamily: "var(--font-titre)", fontSize: "var(--text-h3)", fontWeight: 600 }}
+        >
+          {t("admin.import.rapport.titre")}
+        </h3>
+        <p style={{ color: "var(--color-alert)", fontSize: "var(--text-body)", fontWeight: 600 }}>
+          {t("admin.import.erreur.plafond_depasse", {
+            lignes: rapport.nbLignesTotal,
+            plafond: IMPORT.plafondLignes,
+          })}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-3">

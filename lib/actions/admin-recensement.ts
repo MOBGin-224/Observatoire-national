@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { IMPORT } from "@/lib/config";
 import { chargerMonCompte } from "@/lib/queries/compte";
 import {
   parserRecensement,
@@ -99,6 +100,14 @@ export async function validerImport(
   } = await supabase.auth.getUser();
 
   const rapport = await previsualiserImport(contenuCsv);
+
+  // Document 13, section 4 : le plafond est un controle serveur, pas une regle
+  // d'affichage. Un appel direct a l'action ne doit pas le contourner.
+  if (rapport.plafondDepasse) {
+    throw new Error(
+      `Plafond d'import depasse : ${rapport.nbLignesTotal} lignes, ${IMPORT.plafondLignes} au maximum.`
+    );
+  }
 
   // Les doublons potentiels sont signales dans l'apercu (document 9bis H.4.1 :
   // "signalement, jamais fusion automatique") mais restent importables : le

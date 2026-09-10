@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logoEditeur from "@/public/Logo réactualisé.svg";
+import iconeEditeur from "@/public/Icône.svg";
 import { t } from "@/lib/i18n";
 import type { MonCompte } from "@/lib/queries/compte";
 import type { ValeurEnumeration } from "@/lib/enumerations";
@@ -18,34 +19,46 @@ import { SelecteurProfilDev } from "@/components/chrome/SelecteurProfilDev";
  */
 export function EnTete({
   compte,
+  profilLibelle,
   profilsDev = [],
 }: {
   compte: MonCompte;
+  /* Libelle du profil, resolu depuis la table enumeration (document 11, section 8). */
+  profilLibelle: string;
   profilsDev?: ValeurEnumeration[];
 }) {
   return (
     <header
-      className="flex shrink-0 items-center justify-between"
+      className="entete-outil flex shrink-0 items-center"
       style={{
         height: "var(--hauteur-entete)",
-        padding: "0 var(--space-6)",
-        gap: "var(--space-5)",
         backgroundColor: "var(--color-bg)",
-        borderBottom: "1px solid var(--color-border)",
       }}
     >
-      <Link href="/synthese" className="flex min-w-0 items-center" style={{ gap: "var(--space-4)" }}>
+      <Link
+        href="/synthese"
+        className="entete-marque flex shrink-0 items-center justify-center"
+        aria-label={t("app.editeur")}
+      >
         <Image
           src={logoEditeur}
           alt={t("app.editeur")}
-          height={40}
+          className="logo-editeur-deplie"
+          height={34}
           priority
-          style={{ height: "40px", width: "auto" }}
         />
         <span
+          className="logo-editeur-replie"
           aria-hidden="true"
-          style={{ width: "1px", height: "28px", backgroundColor: "var(--color-border)" }}
-        />
+        >
+          <Image src={iconeEditeur} alt="" width={30} height={32} priority />
+        </span>
+      </Link>
+
+      <div
+        className="entete-contenu flex min-w-0 flex-1 items-center justify-between"
+        style={{ padding: "0 var(--space-6)", gap: "var(--space-5)" }}
+      >
         <span
           className="truncate"
           style={{
@@ -58,28 +71,24 @@ export function EnTete({
         >
           {t("app.titre")}
         </span>
-      </Link>
 
-      <div className="flex shrink-0 items-center" style={{ gap: "var(--space-5)" }}>
+        <div className="flex shrink-0 items-center" style={{ gap: "var(--space-5)" }}>
         {profilsDev.length > 0 && (
           <SelecteurProfilDev profilCourant={compte.profil} profils={profilsDev} />
         )}
-        {compte.institutionDenomination && (
-          <span
-            className="etiquette"
-            style={{ color: "var(--color-text-muted)" }}
-            title={compte.institutionDenomination}
-          >
-            {compte.institutionDenomination}
-          </span>
-        )}
-        <span
-          aria-hidden="true"
-          style={{ width: "1px", height: "18px", backgroundColor: "var(--color-border)" }}
-        />
-        <span style={{ fontSize: "var(--text-small)", fontWeight: 500, color: "var(--color-text)" }}>
-          {compte.prenom} {compte.nom}
+        {/*
+         * Le profil seul, sans nom de personne ni denomination d'institution.
+         * L'utilisateur sait qui il est et pour qui il travaille ; ce qui lui
+         * est utile en permanence, c'est le point de vue depuis lequel il lit
+         * les chiffres, puisqu'il conditionne les modules et le perimetre.
+         *
+         * C'est aussi ce qui evite qu'une capture d'ecran de l'outil circule
+         * en portant le nom d'un agent.
+         */}
+        <span className="etiquette" style={{ color: "var(--color-text-secondary)" }}>
+          {profilLibelle}
         </span>
+        </div>
       </div>
     </header>
   );

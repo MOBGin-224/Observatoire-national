@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { t } from "@/lib/i18n";
+import { executerAction } from "@/lib/erreurs";
 
 /*
  * Formulaire d'identifiants, premiere etape de l'ecran de connexion unique
@@ -29,15 +30,21 @@ export function LoginForm() {
     setErreur(null);
     setEnCours(true);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password: motDePasse,
+    const issue = await executerAction(async () => {
+      const supabase = createClient();
+      return supabase.auth.signInWithPassword({ email, password: motDePasse });
     });
 
     setEnCours(false);
 
-    if (error) {
+    /* Panne d'appel : ne jamais l'annoncer comme des identifiants incorrects,
+       l'utilisateur reessaierait indefiniment un mot de passe pourtant juste. */
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      return;
+    }
+
+    if (issue.valeur.error) {
       setErreur(t("auth.erreur.identifiants"));
       return;
     }

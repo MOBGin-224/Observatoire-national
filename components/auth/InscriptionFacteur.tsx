@@ -4,6 +4,7 @@ import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { t } from "@/lib/i18n";
+import { executerAction } from "@/lib/erreurs";
 import { Squelette } from "@/components/states/Squelette";
 
 /*
@@ -42,7 +43,7 @@ export function InscriptionFacteur() {
       if (annule) return;
 
       if (error || !data) {
-        setErreur(t("auth.erreur.code_invalide"));
+        setErreur(t("state.erreur.action_echouee"));
         return;
       }
 
@@ -52,7 +53,11 @@ export function InscriptionFacteur() {
       setPret(true);
     }
 
-    preparerEnrolement();
+    /* Un rejet ici passerait en rejet non gere, sans un mot a l'ecran : le
+       titulaire resterait devant un cadre vide sans savoir quoi faire. */
+    preparerEnrolement().catch(() => {
+      if (!annule) setErreur(t("state.erreur.action_echouee"));
+    });
     return () => {
       annule = true;
     };
@@ -64,12 +69,19 @@ export function InscriptionFacteur() {
     setErreur(null);
     setEnCours(true);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId, code });
+    const issue = await executerAction(async () => {
+      const supabase = createClient();
+      return supabase.auth.mfa.challengeAndVerify({ factorId, code });
+    });
 
     setEnCours(false);
 
-    if (error) {
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      return;
+    }
+
+    if (issue.valeur.error) {
       setErreur(t("auth.erreur.code_invalide"));
       return;
     }

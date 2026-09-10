@@ -7,6 +7,21 @@ import type { Perimetre } from "@/lib/queries/perimetre";
  * apres defilement. Document 4, regle M0 : les volumes bruts s'affichent
  * toujours, y compris a zero.
  *
+ * Deux variantes, document 15 section 6, determinees par le profil du compte
+ * et par lui seul, jamais par un choix d'utilisateur.
+ *
+ * La variante institutionnelle ne porte aucune donnee du portefeuille
+ * commercial de Simandou Sejour : le nombre de partenaires et la capacite
+ * couverte decrivent l'entreprise, pas le secteur. La numerisation du parc est
+ * mesuree a la place par le nombre d'etablissements reservables en ligne,
+ * toutes plateformes confondues, et la representativite par la part du pays
+ * que l'inventaire couvre.
+ *
+ * Trois elements ne sont jamais conditionnels, dans aucune variante : la
+ * taille du perimetre recense, la date et l'heure d'observation, et la mention
+ * de non-exhaustivite. Ils ne dependent d'aucune propriete. C'est la fonction
+ * meme du bandeau : la probite, pas la decoration.
+ *
  * Presentation en couples etiquette/valeur plutot qu'en phrase courante : c'est
  * la seule forme qui reste lisible en projection a trois metres, et c'est aussi
  * celle qui se transpose telle quelle dans l'export PDF (document 8, section 10).
@@ -41,7 +56,16 @@ function Separateur() {
   );
 }
 
-export function BandeauPerimetre({ perimetre }: { perimetre: Perimetre | null }) {
+export function BandeauPerimetre({
+  perimetre,
+  profil,
+}: {
+  perimetre: Perimetre | null;
+  /* Code de profil du compte. La variante interne est reservee a ADMIN. */
+  profil: string;
+}) {
+  const varianteInterne = profil === "ADMIN";
+
   return (
     <div
       className="sticky top-0 z-10 flex flex-wrap items-center"
@@ -64,18 +88,44 @@ export function BandeauPerimetre({ perimetre }: { perimetre: Perimetre | null })
             etiquette={t("perimetre.label.etablissements")}
             valeur={formatNombre(perimetre.etablissementsRecenses)}
           />
-          <Mesure
-            etiquette={t("perimetre.label.partenaires")}
-            valeur={formatNombre(perimetre.partenaires)}
-          />
-          <Mesure
-            etiquette={t("perimetre.label.couverture")}
-            valeur={
-              perimetre.tauxCouverture !== null
-                ? formatPourcentage(perimetre.tauxCouverture)
-                : t("state.non_renseigne")
-            }
-          />
+          {varianteInterne ? (
+            <>
+              <Mesure
+                etiquette={t("perimetre.label.partenaires")}
+                valeur={formatNombre(perimetre.partenaires)}
+              />
+              <Mesure
+                etiquette={t("perimetre.label.couverture")}
+                valeur={
+                  perimetre.tauxCouverture !== null
+                    ? formatPourcentage(perimetre.tauxCouverture)
+                    : t("state.non_renseigne")
+                }
+              />
+              <Mesure
+                etiquette={t("perimetre.label.verifiees")}
+                valeur={
+                  perimetre.tauxVerification !== null
+                    ? formatPourcentage(perimetre.tauxVerification)
+                    : t("state.non_renseigne")
+                }
+              />
+            </>
+          ) : (
+            <>
+              <Mesure
+                etiquette={t("perimetre.label.reservables")}
+                valeur={formatNombre(perimetre.reservablesEnLigne)}
+              />
+              <Mesure
+                etiquette={t("perimetre.label.territoires")}
+                valeur={t("perimetre.valeur.rapport", {
+                  n: formatNombre(perimetre.territoiresCouverts),
+                  total: formatNombre(perimetre.territoiresTotal),
+                })}
+              />
+            </>
+          )}
           <Separateur />
           <Mesure
             etiquette={t("perimetre.label.observation")}

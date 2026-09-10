@@ -3,6 +3,7 @@
 import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { basculerProfilDev } from "@/lib/actions/dev-profil";
+import { executerAction } from "@/lib/erreurs";
 import type { ValeurEnumeration } from "@/lib/enumerations";
 import { t } from "@/lib/i18n";
 
@@ -32,11 +33,20 @@ export function SelecteurProfilDev({
     if (profil === profilCourant) return;
     setMotifEchec(null);
     demarrer(async () => {
-      const resultat = await basculerProfilDev(profil);
-      if (!resultat.succes) {
+      const issue = await executerAction(() => basculerProfilDev(profil));
+
+      // Une action qui n'a pas abouti du tout : session fermee, ou panne. Le
+      // rafraichissement tranche, en redirigeant vers la connexion si besoin.
+      if (!issue.ok) {
+        setMotifEchec(t(issue.cle));
+        router.refresh();
+        return;
+      }
+
+      if (!issue.valeur.succes) {
         // Le motif technique reste visible en survol : sans lui, un refus de
         // bascule oblige a fouiller les journaux du serveur pour rien.
-        setMotifEchec(resultat.motif ?? "inconnu");
+        setMotifEchec(issue.valeur.motif ?? "inconnu");
         return;
       }
       router.refresh();

@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import { DOUBLON, IMPORT } from "@/lib/config";
 
 /**
  * Document 9bis H.4.1 + document 5 section 3. Parsing et validation pures :
@@ -7,6 +8,9 @@ import Papa from "papaparse";
  *
  * Decision (point ouvert 9bis resolu, voir document 10 section 12 bis) :
  * format CSV, delimiteur point-virgule.
+ *
+ * Les parametres chiffres (separateur, plafond de lignes, distance de doublon)
+ * viennent de lib/config, jamais d'une valeur ecrite ici. Document 14, section 5.3.
  */
 
 const CHAMPS_OBLIGATOIRES = [
@@ -74,6 +78,12 @@ export type RapportImport = {
   nbLignesTotal: number;
   lignesValides: LigneValidee[];
   lignesErreur: LigneEnErreur[];
+  /**
+   * Document 13, section 4 : au-dela du plafond, le fichier n'est pas traite du
+   * tout. Le rapport ligne a ligne deviendrait illisible, donc invalide en
+   * aveugle. L'operateur scinde son fichier.
+   */
+  plafondDepasse: boolean;
 };
 
 function normaliser(texte: string): string {
@@ -97,7 +107,7 @@ function distanceMetres(lat1: number, lon1: number, lat2: number, lon2: number):
 
 /**
  * Decision (point ouvert 9bis resolu) : doublon potentiel = nom normalise
- * identique sur la meme commune, ou coordonnees a moins de 300 m.
+ * identique sur la meme commune, ou coordonnees rapprochees.
  */
 function estDoublonPotentiel(
   ligne: { nom: string; codeCommune: string; latitude: number; longitude: number },
@@ -109,7 +119,8 @@ function estDoublonPotentiel(
     const memeLieu =
       e.latitude !== null &&
       e.longitude !== null &&
-      distanceMetres(ligne.latitude, ligne.longitude, e.latitude, e.longitude) < 300;
+      distanceMetres(ligne.latitude, ligne.longitude, e.latitude, e.longitude) <
+        DOUBLON.distanceMetres;
     return memeNom || memeLieu;
   });
 }
@@ -122,10 +133,20 @@ export function parserRecensement(
 ): RapportImport {
   const resultat = Papa.parse<LigneRecensementBrute>(contenuCsv, {
     header: true,
-    delimiter: ";",
+    delimiter: IMPORT.separateur,
     skipEmptyLines: true,
     transformHeader: (h) => h.trim().toLowerCase(),
   });
+
+  // Document 13, section 4 : controle avant traitement, jamais apres.
+  if (resultat.data.length > IMPORT.plafondLignes) {
+    return {
+      nbLignesTotal: resultat.data.length,
+      lignesValides: [],
+      lignesErreur: [],
+      plafondDepasse: true,
+    };
+  }
 
   const lignesValides: LigneValidee[] = [];
   const lignesErreur: LigneEnErreur[] = [];
@@ -254,5 +275,6 @@ export function parserRecensement(
     nbLignesTotal: resultat.data.length,
     lignesValides,
     lignesErreur,
+    plafondDepasse: false,
   };
 }

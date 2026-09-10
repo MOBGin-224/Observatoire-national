@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { previsualiserImport, validerImport } from "@/lib/actions/admin-recensement";
 import { RapportControleImport } from "@/components/administration/RapportControleImport";
 import { t } from "@/lib/i18n";
+import { IMPORT } from "@/lib/config";
 import type { RapportImport } from "@/lib/csv/parseRecensement";
 
 /* Document 9bis H.4.1 : previsualisation obligatoire, jamais d'import direct. */
@@ -59,7 +60,8 @@ export function ZoneImportCSV() {
           <input type="file" accept=".csv,text/csv" onChange={surDepot} className="hidden" />
         </label>
         <p style={{ fontSize: "var(--text-meta)", color: "var(--color-text-muted)" }}>
-          {t("admin.import.format")}
+          {t("admin.import.format")}{" "}
+          {t("admin.import.plafond", { plafond: IMPORT.plafondLignes })}
         </p>
         {nomFichier && (
           <p style={{ fontSize: "var(--text-small)", marginTop: "var(--space-1)" }}>{nomFichier}</p>

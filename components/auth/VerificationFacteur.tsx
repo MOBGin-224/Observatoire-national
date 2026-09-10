@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { t } from "@/lib/i18n";
 import { obtenirCodeTotpDev } from "@/lib/actions/dev-mfa";
+import { executerAction } from "@/lib/erreurs";
 
 /*
  * Verification du second facteur a chaque connexion (document 7, section 10),
@@ -30,8 +31,13 @@ export function VerificationFacteur({
   const [enCours, setEnCours] = useState(false);
 
   async function remplirCodeDev() {
-    const codeDev = await obtenirCodeTotpDev();
-    if (codeDev) setCode(codeDev);
+    setErreur(null);
+    const issue = await executerAction(() => obtenirCodeTotpDev());
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      return;
+    }
+    if (issue.valeur) setCode(issue.valeur);
   }
 
   async function verifier(evenement: React.FormEvent) {
@@ -39,12 +45,20 @@ export function VerificationFacteur({
     setErreur(null);
     setEnCours(true);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId, code });
+    const issue = await executerAction(async () => {
+      const supabase = createClient();
+      return supabase.auth.mfa.challengeAndVerify({ factorId, code });
+    });
 
     setEnCours(false);
 
-    if (error) {
+    /* Panne d'appel : ni code juste, ni code faux, on ne dit pas "code incorrect". */
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      return;
+    }
+
+    if (issue.valeur.error) {
       setErreur(t("auth.erreur.code_invalide"));
       return;
     }

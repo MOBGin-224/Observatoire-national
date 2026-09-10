@@ -54,7 +54,8 @@
         "coordonnees_hors_bornes": "Coordonnées hors des limites de la Guinée",
         "doublon_potentiel": "Doublon potentiel avec un établissement déjà recensé",
         "territoire_non_resolu": "Territoire non reconnu : {valeur}",
-        "valeur_enumeration_invalide": "Valeur non reconnue pour {champ} : {valeur}"
+        "valeur_enumeration_invalide": "Valeur non reconnue pour {champ} : {valeur}",
+        "plafond_depasse": "Fichier trop volumineux : {lignes} lignes détectées, {plafond} au maximum. Scindez le fichier en plusieurs lots."
       },
       "format": "Fichier CSV, délimiteur point-virgule.",
       "historique": {
@@ -73,7 +74,8 @@
         "titre": "Rapport de contrôle"
       },
       "titre": "Import du recensement",
-      "valider": "Valider l'import"
+      "valider": "Valider l'import",
+      "plafond": "Fichier de {plafond} lignes au maximum."
     },
     "institutions": {
       "convention_debut": "Début de convention",
@@ -89,7 +91,7 @@
     }
   },
   "app": {
-    "attribution": "Une Infrastructure connectée à SIMANDOU SEJOUR",
+    "attribution": "By SIMANDOU SEJOUR",
     "editeur": "SIMANDOU SEJOUR",
     "titre": "Observatoire National de l'Hospitalité Guinéenne",
     "titre_court": "Observatoire"
@@ -132,7 +134,8 @@
   "controle": {
     "export": "Exporter",
     "national": "National",
-    "niveau": "Niveau territorial"
+    "niveau": "Niveau territorial",
+    "vue_nationale": "Vue nationale"
   },
   "impression": {
     "emis_par": "Émis par",
@@ -196,7 +199,8 @@
       "titre": "Sources et canaux"
     },
     "statut_donnee": "Statut de donnée",
-    "unite": "Unité"
+    "unite": "Unité",
+    "nb_indicateurs": "{n} indicateurs"
   },
   "module": {
     "m1": {
@@ -223,17 +227,20 @@
       "territoires_repartition_aide": "Densité d'établissements recensés, une tuile par région.",
       "titre": "Offre nationale d'hébergement",
       "unites": "{n} unités",
-      "volumes": "Volumes recensés"
+      "volumes": "Volumes recensés",
+      "description": "Ce que la Guinée compte en établissements d'hébergement, où, de quelle capacité, et quelle part en est réservable en ligne."
     },
     "m10": {
       "code": "M10 · Méthodologie",
       "court": "Méthodologie",
       "question": "Comment chaque chiffre de l'Observatoire est produit, sur quel périmètre, avec quelle fiabilité, et ce qu'il ne dit pas.",
-      "titre": "Méthodologie"
+      "titre": "Méthodologie",
+      "description": "Comment chaque chiffre est produit, sur quel périmètre, avec quelles limites."
     },
     "m11": {
       "court": "Administration",
-      "titre": "Administration"
+      "titre": "Administration",
+      "description": "Saisie des données, gestion des accès et journal d'activité."
     },
     "m2": {
       "appareil": "Répartition par appareil",
@@ -260,7 +267,8 @@
       "saisonnalite_titre": "Saisonnalité de l'intention",
       "sessions": "{n} sessions",
       "sparkline_volume": "Tendance sur douze mois",
-      "titre": "Demande exprimée"
+      "titre": "Demande exprimée",
+      "description": "Qui cherche à venir en Guinée, depuis quel pays, vers quelle destination, à quelles dates et avec quel budget."
     },
     "m3": {
       "avertissement_perimetre": "Ce module porte sur le seul périmètre partenaire, soit {n} établissements. Il ne décrit pas le secteur, il décrit ce qui est commercialisé sur la plateforme.",
@@ -283,7 +291,8 @@
       "sparkline_nuitees": "Nuitées mois par mois",
       "sparkline_reservations": "Réservations mois par mois",
       "titre": "Activité observée",
-      "volumes": "Volumes observés"
+      "volumes": "Volumes observés",
+      "description": "Ce qui se passe après la recherche : réservations, nuitées, taux d'occupation et prix moyens sur le périmètre commercialisé."
     },
     "m4": {
       "agir": {
@@ -308,30 +317,42 @@
       "nature": "Nature des recherches infructueuses",
       "nature_aide": "Les quatre états d'échec restent distingués. Additionnés, ils ne désignent plus personne.",
       "question": "Où une demande s'exprime-t-elle sans trouver d'offre, et de quelle nature est le manque : absence d'établissements, absence de numérisation, ou saturation de la capacité existante.",
-      "titre": "Tension et déficit d'offre"
+      "titre": "Tension et déficit d'offre",
+      "description": "Où la demande s'exprime sans trouver d'offre, et de quelle nature est le manque."
     },
     "m5": {
       "court": "Conformité",
-      "titre": "Conformité et classification"
+      "titre": "Conformité et classification",
+      "description": "L'état d'enregistrement et de classification du parc d'hébergement."
     },
     "m6": {
       "court": "Maturité numérique",
-      "titre": "Maturité numérique du secteur"
+      "titre": "Maturité numérique du secteur",
+      "description": "Le degré de numérisation du secteur, établissement par établissement et territoire par territoire."
     },
     "m7": {
       "court": "Événementiel",
       "decomposition_partenaires": "Partenaires disponibles : disponibilité réelle connue",
       "decomposition_recenses": "Recensés non réservables : capacité théorique, disponibilité inconnue",
-      "titre": "Événementiel et pics de demande"
+      "titre": "Événementiel et pics de demande",
+      "description": "La capacité d'accueil mobilisable sur les dates d'un événement, et l'écart avec les besoins annoncés."
     },
     "m8": {
       "court": "Retombées estimées",
-      "titre": "Retombées économiques estimées"
+      "titre": "Retombées économiques estimées",
+      "description": "Estimation des retombées économiques de l'activité d'hébergement, méthode et coefficient publiés."
     },
     "m9": {
       "court": "Synthèse",
       "en_construction": "Module en construction.",
-      "titre": "Synthèse institutionnelle"
+      "titre": "Synthèse institutionnelle",
+      "description": "L'essentiel du secteur en un écran, adapté à votre mandat.",
+      "code": "M9 · Synthèse",
+      "blocs_cles": "Blocs clés",
+      "carte": "Carte du périmètre",
+      "carte_aide": "Densité d'établissements recensés, par région",
+      "evolution": "Évolution des recherches",
+      "acces": "Accès aux modules"
     }
   },
   "nav": {
@@ -345,7 +366,7 @@
     "replier": "Replier la navigation"
   },
   "perimetre": {
-    "avertissement": "Les indicateurs de conjoncture portent sur le périmètre observé et ne constituent pas une statistique nationale exhaustive.",
+    "avertissement": "Les données portent sur le périmètre recensé ci-dessus et ne constituent pas une statistique nationale exhaustive.",
     "couverture": "soit {p} de la capacité identifiée",
     "date": "Données au {date}",
     "etablissements": "{n} établissements recensés",
@@ -353,17 +374,28 @@
       "couverture": "Capacité couverte",
       "etablissements": "Établissements recensés",
       "observation": "Données au",
-      "partenaires": "dont partenaires"
+      "partenaires": "dont partenaires",
+      "reservables": "dont réservables en ligne",
+      "territoires": "Territoires couverts",
+      "verifiees": "Fiches vérifiées"
     },
     "partenaires": "dont {n} partenaires",
-    "titre": "Périmètre observé"
+    "titre": "Périmètre observé",
+    "reservables": "dont réservables en ligne : {n}",
+    "territoires": "Territoires couverts : {n} sur {total}",
+    "verifiees": "Fiches vérifiées : {p}",
+    "valeur": {
+      "rapport": "{n} sur {total}"
+    }
   },
   "state": {
     "chargement": "Chargement des données",
     "erreur": {
       "action": "Réessayer",
       "persistante": "Si le problème persiste, contactez votre administrateur.",
-      "titre": "Les données n'ont pas pu être chargées."
+      "titre": "Les données n'ont pas pu être chargées.",
+      "action_echouee": "L'action n'a pas abouti. Réessayez.",
+      "session_expiree": "Votre session a expiré. Reconnectez-vous pour continuer."
     },
     "estimation_non_produite": "Moins de 10 recherches en échec, estimation non produite.",
     "masque": "Non publié : effectif insuffisant pour préserver la confidentialité des établissements.",

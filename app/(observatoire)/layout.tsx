@@ -6,6 +6,7 @@ import { PiedImpression } from "@/components/chrome/PiedImpression";
 import { chargerMonCompte, chargerMesModules } from "@/lib/queries/compte";
 import { chargerPerimetre } from "@/lib/queries/perimetre";
 import { listerProfilsDev } from "@/lib/actions/dev-profil";
+import { resoudreLibelleEnumeration } from "@/lib/enumerations";
 
 /*
  * Chrome commun a tous les ecrans du tableau de bord (document 9, A.1) :
@@ -24,19 +25,24 @@ export default async function LayoutObservatoire({ children }: { children: React
 
   // listerProfilsDev retourne une liste vide hors developpement : le selecteur
   // de profil ne se rend alors jamais.
-  const [modulesActifs, perimetre, profilsDev] = await Promise.all([
+  const [modulesActifs, perimetre, profilsDev, profilLibelle] = await Promise.all([
     chargerMesModules(),
     chargerPerimetre(),
     listerProfilsDev(),
+    resoudreLibelleEnumeration("PROFIL", compte.profil),
   ]);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <EnTete compte={compte} profilsDev={profilsDev} />
+      <EnTete
+        compte={compte}
+        profilLibelle={profilLibelle ?? compte.profil}
+        profilsDev={profilsDev}
+      />
       <div className="flex min-h-0 flex-1">
         <NavigationLaterale modulesActifs={modulesActifs} />
         <div className="flex min-w-0 flex-1 flex-col">
-          <BandeauPerimetre perimetre={perimetre} />
+          <BandeauPerimetre perimetre={perimetre} profil={compte.profil} />
           <main className="min-w-0 flex-1">{children}</main>
           <PiedImpression
             emetteur={`${compte.prenom} ${compte.nom}`}

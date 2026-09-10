@@ -54,7 +54,8 @@
         "coordonnees_hors_bornes": "Coordinates outside Guinea's boundaries",
         "doublon_potentiel": "Potential duplicate of an already surveyed establishment",
         "territoire_non_resolu": "Territory not recognised: {valeur}",
-        "valeur_enumeration_invalide": "Unrecognised value for {champ}: {valeur}"
+        "valeur_enumeration_invalide": "Unrecognised value for {champ}: {valeur}",
+        "plafond_depasse": "File too large: {lignes} rows detected, {plafond} maximum. Split the file into several batches."
       },
       "format": "CSV file, semicolon delimiter.",
       "historique": {
@@ -73,7 +74,8 @@
         "titre": "Control report"
       },
       "titre": "Survey import",
-      "valider": "Validate import"
+      "valider": "Validate import",
+      "plafond": "{plafond} rows maximum per file."
     },
     "institutions": {
       "convention_debut": "Agreement start",
@@ -89,7 +91,7 @@
     }
   },
   "app": {
-    "attribution": "A SIMANDOU SEJOUR infrastructure",
+    "attribution": "By SIMANDOU SEJOUR",
     "editeur": "SIMANDOU SEJOUR",
     "titre": "National Observatory of Guinean Hospitality",
     "titre_court": "Observatory"
@@ -132,7 +134,8 @@
   "controle": {
     "export": "Export",
     "national": "National",
-    "niveau": "Territorial level"
+    "niveau": "Territorial level",
+    "vue_nationale": "National view"
   },
   "impression": {
     "emis_par": "Issued by",
@@ -196,7 +199,8 @@
       "titre": "Sources and channels"
     },
     "statut_donnee": "Data status",
-    "unite": "Unit"
+    "unite": "Unit",
+    "nb_indicateurs": "{n} indicators"
   },
   "module": {
     "m1": {
@@ -223,17 +227,20 @@
       "territoires_repartition_aide": "Density of recorded establishments, one tile per region.",
       "titre": "National accommodation supply",
       "unites": "{n} units",
-      "volumes": "Recorded volumes"
+      "volumes": "Recorded volumes",
+      "description": "What Guinea has in accommodation establishments, where, at what capacity, and how much of it is bookable online."
     },
     "m10": {
       "code": "M10 · Methodology",
       "court": "Methodology",
       "question": "How each figure in the Observatory is produced, over what scope, with what reliability, and what it does not say.",
-      "titre": "Methodology"
+      "titre": "Methodology",
+      "description": "How each figure is produced, over what scope, and with what limitations."
     },
     "m11": {
       "court": "Administration",
-      "titre": "Administration"
+      "titre": "Administration",
+      "description": "Data entry, access management and activity log."
     },
     "m2": {
       "appareil": "Breakdown by device",
@@ -260,7 +267,8 @@
       "saisonnalite_titre": "Seasonality of intent",
       "sessions": "{n} sessions",
       "sparkline_volume": "Twelve-month trend",
-      "titre": "Expressed demand"
+      "titre": "Expressed demand",
+      "description": "Who is looking to come to Guinea, from which country, to which destination, on what dates and with what budget."
     },
     "m3": {
       "avertissement_perimetre": "This module covers the partner scope only, that is {n} establishments. It does not describe the sector, it describes what is sold on the platform.",
@@ -283,7 +291,8 @@
       "sparkline_nuitees": "Room nights month by month",
       "sparkline_reservations": "Bookings month by month",
       "titre": "Observed activity",
-      "volumes": "Observed volumes"
+      "volumes": "Observed volumes",
+      "description": "What happens after the search: bookings, room nights, occupancy and average rates across the commercialised scope."
     },
     "m4": {
       "agir": {
@@ -308,30 +317,42 @@
       "nature": "Nature of unsuccessful searches",
       "nature_aide": "The four failure states stay distinct. Added together, they no longer point to anyone.",
       "question": "Where does demand arise without finding supply, and what is the nature of the gap: no establishments, no digitalisation, or saturation of existing capacity.",
-      "titre": "Pressure and supply gap"
+      "titre": "Pressure and supply gap",
+      "description": "Where demand goes unmet, and what kind of gap lies behind it."
     },
     "m5": {
       "court": "Compliance",
-      "titre": "Compliance and classification"
+      "titre": "Compliance and classification",
+      "description": "Registration and classification status of the accommodation stock."
     },
     "m6": {
       "court": "Digital maturity",
-      "titre": "Sector digital maturity"
+      "titre": "Sector digital maturity",
+      "description": "The sector's level of digitalisation, establishment by establishment and territory by territory."
     },
     "m7": {
       "court": "Events",
       "decomposition_partenaires": "Available partners: actual availability known",
       "decomposition_recenses": "Recorded non-bookable: theoretical capacity, availability unknown",
-      "titre": "Events and demand peaks"
+      "titre": "Events and demand peaks",
+      "description": "Accommodation capacity that can be mobilised for an event's dates, and the gap with declared needs."
     },
     "m8": {
       "court": "Estimated impact",
-      "titre": "Estimated economic impact"
+      "titre": "Estimated economic impact",
+      "description": "Estimated economic impact of accommodation activity, with published method and multiplier."
     },
     "m9": {
       "court": "Summary",
       "en_construction": "Module under construction.",
-      "titre": "Institutional summary"
+      "titre": "Institutional summary",
+      "description": "The sector's essentials on one screen, tailored to your mandate.",
+      "code": "M9 · Summary",
+      "blocs_cles": "Key figures",
+      "carte": "Scope map",
+      "carte_aide": "Density of surveyed establishments, by region",
+      "evolution": "Search volume over time",
+      "acces": "Module access"
     }
   },
   "nav": {
@@ -345,7 +366,7 @@
     "replier": "Collapse navigation"
   },
   "perimetre": {
-    "avertissement": "Market indicators cover the observed scope only and do not constitute exhaustive national statistics.",
+    "avertissement": "The data covers the surveyed scope above and does not constitute exhaustive national statistics.",
     "couverture": "representing {p} of identified capacity",
     "date": "Data as of {date}",
     "etablissements": "{n} establishments surveyed",
@@ -353,17 +374,28 @@
       "couverture": "Capacity covered",
       "etablissements": "Establishments recorded",
       "observation": "Data as of",
-      "partenaires": "of which partners"
+      "partenaires": "of which partners",
+      "reservables": "of which bookable online",
+      "territoires": "Territories covered",
+      "verifiees": "Verified records"
     },
     "partenaires": "including {n} partners",
-    "titre": "Observed scope"
+    "titre": "Observed scope",
+    "reservables": "of which bookable online: {n}",
+    "territoires": "Territories covered: {n} of {total}",
+    "verifiees": "Verified records: {p}",
+    "valeur": {
+      "rapport": "{n} of {total}"
+    }
   },
   "state": {
     "chargement": "Loading data",
     "erreur": {
       "action": "Try again",
       "persistante": "If the problem persists, contact your administrator.",
-      "titre": "Data could not be loaded."
+      "titre": "Data could not be loaded.",
+      "action_echouee": "The action did not complete. Try again.",
+      "session_expiree": "Your session has expired. Sign in again to continue."
     },
     "estimation_non_produite": "Fewer than 10 failed searches, estimate not produced.",
     "masque": "Not published: sample size too small to protect establishment confidentiality.",

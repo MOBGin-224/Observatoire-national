@@ -17,8 +17,16 @@ export function BoutonDeconnexion() {
   const router = useRouter();
 
   async function seDeconnecter() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    /*
+     * L'echec de signOut ne doit rien empecher : si le jeton est deja invalide
+     * ou le reseau coupe, l'utilisateur doit tout de meme quitter l'ecran. Le
+     * proxy refusera la session au prochain passage.
+     */
+    try {
+      await createClient().auth.signOut();
+    } catch {
+      /* Session deja fermee cote serveur : le retour a l'accueil suffit. */
+    }
     router.push("/");
     router.refresh();
   }

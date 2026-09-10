@@ -110,9 +110,9 @@ function ecrireRepli(valeur: boolean) {
   for (const rappel of abonnes) rappel();
 }
 
-/* Numerotation affichee a gauche de chaque entree, tiree du code du module. */
-function numeroModule(code: string): string {
-  return code.replace(/^M(\d+)_.*$/, "$1").padStart(2, "0");
+/* Numerotation affichee a gauche de chaque entree visible dans le profil. */
+function numeroModule(position: number): string {
+  return String(position + 1).padStart(2, "0");
 }
 
 /*
@@ -120,7 +120,9 @@ function numeroModule(code: string): string {
  * 8 septembre 2026.
  *
  * Repliee, elle passe de 240 a 60 px et les libelles cedent la place aux
- * icones. C'est la seule zone de l'outil ou une icone est admise : le libelle
+ * icones. Le passage d'un etat a l'autre s'anime : la colonne se resserre et
+ * les libelles s'effacent ensemble, voir app/globals.css. Les deux versions
+ * restent rendues, le CSS decide laquelle occupe de la place. C'est la seule zone de l'outil ou une icone est admise : le libelle
  * n'y a plus la place de s'ecrire, donc l'icone n'est pas decorative, elle est
  * le dernier porteur d'information. Chaque entree conserve son `title` et son
  * `aria-label` avec le libelle exact.
@@ -142,29 +144,15 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
         width: "var(--largeur-rail)",
         backgroundColor: "var(--color-primary-900)",
         paddingBottom: "var(--space-3)",
-        transition: "width var(--transition-douce)",
-        overflow: "hidden",
+        transition: "width var(--transition-rail)",
+        overflow: "visible",
       }}
     >
-      <div className="flex flex-col">
+      <div className="navigation-modules flex flex-col">
         <div
-          className="rail-entete flex items-center justify-between"
-          style={{ gap: "var(--space-2)", padding: "var(--space-5) var(--space-3) var(--space-4)" }}
+          className="rail-entete nav-section-heading flex items-center justify-end"
+          style={{ gap: "var(--space-2)", padding: "var(--space-5) var(--space-4) var(--space-4)" }}
         >
-          <span
-            className="rail-deplie"
-            style={{
-              paddingLeft: "var(--space-1)",
-              fontFamily: "var(--font-texte)",
-              fontSize: "var(--text-h3)",
-              fontWeight: 700,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "var(--color-on-primary)",
-            }}
-          >
-            {t("nav.modules")}
-          </span>
           <button
             type="button"
             onClick={() => ecrireRepli(!replie)}
@@ -173,19 +161,20 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
             title={replie ? t("nav.deplier") : t("nav.replier")}
             aria-label={replie ? t("nav.deplier") : t("nav.replier")}
           >
-            <span className="rail-deplie flex">
+            <span className="porte-deplie flex">
               <Icone nom="replier" taille={18} />
             </span>
-            <span className="rail-replie flex">
+            <span className="porte-replie flex">
               <Icone nom="deplier" taille={18} />
             </span>
           </button>
         </div>
 
-        {ORDRE_MODULES.filter((code) => modulesActifs.includes(code)).map((code) => {
+        {ORDRE_MODULES.filter((code) => modulesActifs.includes(code)).map((code, index) => {
           const route = ROUTES_CONSTRUITES[code];
           const actif = route !== undefined && chemin.startsWith(route);
           const libelle = t(CLE_LIBELLE[code]);
+          const numero = numeroModule(index);
 
           /* Les deux versions sont rendues, le CSS choisit laquelle s'affiche.
              C'est ce qui evite que le rail se reconfigure apres hydratation. */
@@ -195,23 +184,27 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
                 <Icone nom={ICONE[code]} />
               </span>
               <span
-                className="rail-deplie chiffres-tabulaires shrink-0"
+                className="rail-deplie nav-number chiffres-tabulaires shrink-0"
                 style={{
                   width: "1.4rem",
-                  fontSize: "var(--text-meta)",
+                  fontSize: "calc(var(--text-meta) + 4px)",
                   fontWeight: 600,
                   color: actif ? "var(--color-on-primary-muted)" : "var(--color-on-primary-faint)",
                 }}
               >
-                {numeroModule(code)}
+                {numero}
               </span>
-              <span className="rail-deplie truncate">{libelle}</span>
+              <span
+                className="rail-deplie"
+                style={{ fontSize: "calc(var(--text-body) + 4px)" }}
+              >
+                {libelle}
+              </span>
             </>
           );
 
           const styleCommun = {
-            borderLeftColor: actif ? "var(--color-success)" : "transparent",
-            backgroundColor: actif ? "var(--color-primary-700)" : "transparent",
+            backgroundColor: actif ? "var(--color-primary-600)" : "var(--color-primary-800)",
             color: actif ? "var(--color-on-primary)" : "var(--color-on-primary-muted)",
             fontWeight: actif ? 600 : 400,
           } as const;
@@ -222,7 +215,7 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
                 key={code}
                 className="entree-navigation"
                 style={{ ...styleCommun, color: "var(--color-on-primary-faint)", cursor: "default" }}
-                title={libelle}
+                data-tooltip={`${numero} · ${libelle}`}
               >
                 {contenu}
               </span>
@@ -235,7 +228,7 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
               href={route}
               aria-current={actif ? "page" : undefined}
               aria-label={libelle}
-              title={libelle}
+              data-tooltip={`${numero} · ${libelle}`}
               className="entree-navigation"
               style={styleCommun}
             >
@@ -245,7 +238,10 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
         })}
       </div>
 
-      <div className="flex flex-col" style={{ gap: "var(--space-3)" }}>
+      <div
+        className="flex flex-col"
+        style={{ gap: "var(--space-5)", paddingBottom: "var(--space-4)" }}
+      >
         <BoutonDeconnexion />
 
         {/* Document 8, section 11 : la mention d'attribution ne se masque pas.
@@ -259,7 +255,7 @@ export function NavigationLaterale({ modulesActifs }: { modulesActifs: string[] 
             borderTop: "1px solid var(--color-primary-800)",
             fontSize: "var(--text-meta)",
             lineHeight: 1.4,
-            color: "var(--color-on-primary-faint)",
+            color: "var(--color-on-primary)",
           }}
         >
           {t("app.attribution")}
