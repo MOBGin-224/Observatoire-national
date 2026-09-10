@@ -133,9 +133,15 @@ Toute valeur affichée porte son origine : `RECENSE`, `OBSERVE`, `EXPRIME`, `DEC
 
 Présent en haut de chaque écran, **non masquable**, repris sur tous les exports.
 
-Contenu : nombre d'établissements recensés, nombre de partenaires, part de la capacité couverte, date d'observation.
+**Deux variantes.** Une variante institutionnelle, applicable aux cinq profils institutionnels, et une variante interne applicable au seul profil `ADMIN`. Leur composition est définie au document 15, section 6.
+
+**Trois éléments sont communs aux deux variantes et ne peuvent en aucun cas être retirés :** la taille du périmètre recensé, la date et l'heure d'observation, et la mention de non-exhaustivité.
+
+La variante institutionnelle ne comporte aucune donnée relative au portefeuille commercial de SIMANDOU SEJOUR.
 
 Ce bandeau renforce la position de Simandou Séjour au lieu de l'affaiblir. Il distingue immédiatement l'Observatoire des acteurs qui promettent des chiffres nationaux qu'ils n'ont pas.
+
+> *Section remplacée par le document 15, section 6.7.*
 
 ### 5.3 Valeurs estimées
 
@@ -169,7 +175,19 @@ Un établissement en `REFUS` de relation compte dans l'inventaire mais n'appara�
 
 PDF et image uniquement.
 
-**Interdits, quel que soit le profil :** CSV, tableur, JSON, XML, API ouverte, accès direct à la base, connexion à un outil de visualisation tiers.
+**Interdits pour tout compte institutionnel, quel que soit son profil :** CSV, tableur, JSON, XML, API ouverte, accès direct à la base, connexion à un outil de visualisation tiers.
+
+**Exception unique, profil `ADMIN`.** Un export CSV du référentiel des établissements et des retours terrain est autorisé au seul profil `ADMIN`, à des fins internes de contrôle qualité et de sauvegarde de travail.
+
+Cette exception ne remet pas en cause le principe : la donnée n'est jamais cédée à un tiers. Elle reconnaît que SIMANDOU SEJOUR exporte des données qu'elle a elle-même collectées, pour son propre usage.
+
+**Trois garde-fous, cumulatifs :**
+
+1. L'export est fermé au niveau de la base, et non seulement masqué dans la navigation. Un compte institutionnel ne doit pas pouvoir l'atteindre en saisissant l'adresse.
+2. Chaque export écrit une ligne au journal d'accès, avec son périmètre.
+3. **L'export ne contient aucune donnée de recherche, de réservation ni d'inventaire quotidien.** Il porte sur l'inventaire de l'offre, jamais sur les données d'usage.
+
+> *Amendé par le document 14, section 3.*
 
 ### 7.2 Contenu obligatoire
 

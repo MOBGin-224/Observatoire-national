@@ -165,7 +165,22 @@ Implémenter ce mécanisme dès maintenant coûte quelques heures. L'ajouter apr
 
 Éléments non masquables, non désactivables, présents sur tous les écrans de tous les profils.
 
-**Bandeau de périmètre.** Nombre d'établissements recensés, nombre de partenaires, part de la capacité couverte, date d'observation.
+**Bandeau de périmètre.** Présent sur tous les écrans, en deux variantes selon le profil.
+
+| Élément | Variante institutionnelle | Variante interne `ADMIN` |
+|---|---|---|
+| Établissements recensés | Oui | Oui |
+| Dont réservables en ligne | Oui | Non |
+| Territoires couverts | Oui | Non |
+| Dont partenaires | Non | Oui |
+| Capacité couverte | Non | Oui |
+| Fiches vérifiées | Non | Oui |
+| Date et heure d'observation | Oui | Oui |
+| Mention de non-exhaustivité | Oui | Oui |
+
+Les trois derniers éléments du tableau sont communs et ne peuvent être retirés d'aucune variante.
+
+**La variante remise aux institutions ne comporte aucune donnée du portefeuille commercial de Simandou Séjour.** Le nombre de partenaires et la part de capacité couverte décrivent l'entreprise, pas le secteur ; ils relèvent du pilotage interne. La numérisation du parc est mesurée à la place par le nombre d'établissements réservables en ligne, toutes plateformes confondues.
 
 **Statut de donnée** sur chaque indicateur : recensé, observé, exprimé, déclaré ou estimé.
 

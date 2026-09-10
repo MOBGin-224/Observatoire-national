@@ -460,6 +460,25 @@ Renseigne aussi sur ce qui intéresse réellement chaque institution, ce qui ori
 
 Si un document fuite, la référence dit d'où il vient. Si un chiffre est contesté six mois plus tard, l'empreinte et la version permettent de régénérer l'état exact de la donnée.
 
+### `notification_expiration`
+
+Suivi des notifications d'approche d'expiration de compte, document 13 section 3.
+
+| Champ | Type | Note |
+|---|---|---|
+| `id` | uuid, PK | |
+| `id_compte` | uuid FK | |
+| `date_expiration` | date | Date visée au moment de l'envoi |
+| `echeance_jours` | integer | 30 ou 7 |
+| `horodatage` | timestamptz | |
+| `statut` | text | `EN_ATTENTE`, `ENVOYE`, `ECHEC` |
+
+Unicité sur le triplet compte, date d'expiration, échéance. Une tâche planifiée quotidienne ne doit pas notifier deux fois la même échéance, et une date d'expiration prolongée par l'administration rouvre légitimement le cycle.
+
+C'est aussi le tableau de suivi consulté dans `M11_ADMIN` : l'approche d'une expiration est un motif de reprise de contact avec l'institution, pas seulement un événement technique.
+
+*Table ajoutée par le document 14, section 5.1.*
+
 ---
 
 ## 11. Indicateurs et méthodologie
@@ -492,6 +511,23 @@ Le dictionnaire vit en base, pas seulement dans un fichier. C'est ce qui aliment
 | `date_debut`, `date_fin` | date |
 
 Le jour où une formule est affinée, les exports antérieurs doivent rester explicables.
+
+### `indicateur_module`
+
+Table d'association. **Un indicateur appartient à plusieurs modules**, une colonne unique sur `indicateur` n'en retiendrait qu'un et fausserait précisément le comptage recherché.
+
+| Champ | Type | Note |
+|---|---|---|
+| `code_indicateur` | text, PK composite, FK vers `indicateur` | |
+| `code_module` | text, PK composite, FK vers `enumeration` domaine `MODULE` | |
+| `ordre` | integer | Rang d'affichage dans le module |
+| `principal` | boolean | Vrai pour le module d'origine de l'indicateur |
+
+`principal` distingue le module où l'indicateur est défini de ceux où il est repris. `OFF_ETAB_RECENSES` est principal dans `M1_OFFRE`, repris dans `M5`, `M6`, `M7` et `M9`.
+
+Trois usages : le nombre d'indicateurs par module, affiché sur les cartes d'accès de la synthèse ; le champ « Modules où il apparaît » de la fiche méthodologique, aujourd'hui sans source ; et le contrôle de cohérence entre le dictionnaire et les écrans construits, un indicateur rattaché à aucun module signalant un oubli.
+
+*Table ajoutée par le document 15, section 5. Migration de rang 10.*
 
 ---
 

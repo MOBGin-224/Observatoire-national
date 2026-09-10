@@ -12,7 +12,19 @@ Nous construisons un produit distinct : l'**Observatoire National de l'Hospitali
 
 L'entreprise se positionne comme l'infrastructure numérique de l'hospitalité guinéenne, avec une ambition panafricaine. La Guinée est le marché de démonstration, pas la limite.
 
-**État actuel : rien n'est développé.** Ni base, ni écran, ni code.
+## État actuel du projet
+
+**Mise à jour : 9 septembre 2026.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
+
+**En base** (Supabase, projet `Observatoire`, schéma `observatoire`) : 29 tables, 14 vues matérialisées `mv_*`, 14 vues d'accès `acces_*`, 3 vues métier. RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 143 énumérations, 51 indicateurs. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
+
+**Construit** : authentification avec second facteur TOTP obligatoire, intergiciel en liste blanche, **deux compteurs d'expiration de session** (inactivité selon profil, plafond absolu, retour sur l'écran consulté), chrome commun, bandeau de périmètre, couches transverses (`queries`, `masking`, `indicators`, `format`, `i18n`, `permissions`, `csv`, `config`, `taches`), bibliothèque des cinq états, dix composants graphiques, les onze écrans de module, `M11_ADMIN` sur deux sections (institutions et comptes, import du recensement), et **trois routes de tâches planifiées** protégées par secret (`/api/taches/*`, déclarées dans `vercel.json`).
+
+**Reste à construire** : les sept autres sections de `M11_ADMIN`, le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, et la zone 5 de `M4_TENSION`.
+
+**En attente d'arbitrage technique** : le transport de courriel de la notification d'expiration. Voir `lib/taches/courriel.ts`. Les échéances sont relevées et conservées, rien n'est envoyé.
+
+**Bloqué par une décision** : les bornes de gamme tarifaire en GNF bloquent le démarrage du recensement, pas le développement. Le coefficient de retombées bloque l'activation de `M8`.
 
 ---
 
@@ -45,6 +57,10 @@ Toute fonctionnalité doit servir l'une de ces trois questions. Sinon elle est h
 | 10 | Charte des libellés bilingue | Tous les textes de l'interface |
 | 11 | Architecture technique et conventions | Pile, structure, nommage |
 | 12 | Plan de recette | Critères d'acceptation |
+| 13 | Décisions arbitrées | Paramètres tranchés, points ouverts restants |
+| 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
+
+**Tous les paramètres chiffrés arbitrés sont dans `/lib/config`**, jamais dans un composant ni dans une requête. Document 13 section 13, document 14 section 5.3.
 
 Tous dans `/docs`. **Les onze modules sont spécifiés.** La partie A du document 9 s'applique aux onze fiches.
 
@@ -64,7 +80,9 @@ Ces interdictions se garantissent par l'architecture. Le modèle de données ne 
 
 ### 2. La donnée est servie, jamais cédée
 
-Exports en PDF et image uniquement. **Aucun CSV, aucun JSON, aucune API ouverte**, quel que soit le profil.
+Exports en PDF et image uniquement. **Aucun CSV, aucun JSON, aucune API ouverte** pour un compte institutionnel, quel que soit son profil.
+
+**Exception unique, profil `ADMIN` :** export CSV interne du référentiel des établissements et des retours terrain, fermé au niveau de la base, tracé au journal, et **ne contenant aucune donnée de recherche, de réservation ni d'inventaire**. Voir document 7, section 7.1.
 
 ### 3. Un petit chiffre vrai vaut mieux qu'un grand chiffre approximatif
 

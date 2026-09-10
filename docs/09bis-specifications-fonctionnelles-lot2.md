@@ -66,6 +66,54 @@ Huit blocs clés, sélectionnés selon le profil. Un bloc dont le module d'origi
 
 Six blocs seulement pour ce profil, qui est le plus restreint. Ne pas compléter artificiellement jusqu'à huit.
 
+### Profil `ADMIN`
+
+`ADMIN` n'est ni un miroir de `TUTELLE`, ni un profil institutionnel. C'est un profil de pilotage interne : sa synthèse mesure l'avancement et la qualité de l'inventaire, qui est le chantier déterminant du projet.
+
+| Rang | Indicateur | Ce qu'il pilote |
+|---|---|---|
+| 1 | `OFF_ETAB_RECENSES` | Volume de l'inventaire |
+| 2 | `OFF_CAPACITE_RECENSEE` | Capacité inventoriée |
+| 3 | `CTX_RECENSEMENT_PROGRESSION` | Rythme de collecte |
+| 4 | `OFF_TAUX_VERIFICATION` | Fiabilité de l'inventaire |
+| 5 | `OFF_COMPLETUDE_FICHE` | Qualité documentaire |
+| 6 | `OFF_TAUX_COUVERTURE` | Part commercialisée |
+| 7 | `DEM_VOLUME_RECHERCHES` | Montée du signal de demande |
+| 8 | `TEN_TAUX_INFRUCTUEUX` | Écart offre et demande |
+
+Les cinq premiers mesurent l'avancement et la qualité du recensement. Les trois derniers indiquent si le signal de demande commence à monter.
+
+*Profil ajouté par le document 15, section 1.*
+
+### F.4 bis Réalisation en deux temps
+
+**Phase 1, actuelle.** Le module est construit au niveau national, sans sélecteur de période ni sélecteur de niveau géographique. La barre de contrôle affiche la mention « Vue nationale ». Cette limitation résulte de l'absence de dimension temporelle et territoriale dans les vues matérialisées agrégées.
+
+**Phase 2, ultérieure.** Les deux sélecteurs sont ajoutés lorsque les vues matérialisées disposent de leurs dimensions de période et de territoire. Cette évolution touche les huit modules et constitue un chantier à décider pour lui-même.
+
+**Le critère F.10.3 reste applicable en phase 1** : une valeur affichée en synthèse est identique à celle du module d'origine, au niveau national.
+
+*Section ajoutée par le document 15, section 4.3.*
+
+### F.4 ter Prévisualisation par profil
+
+Le profil `ADMIN` dispose d'un sélecteur « Voir comme », qui affiche l'écran exactement tel qu'un profil institutionnel le verra.
+
+| Élément | Règle |
+|---|---|
+| Portée | Tous les modules, pas seulement la synthèse |
+| Mode | Lecture seule stricte |
+| Signalisation | Bandeau visible en permanence indiquant le mode et le profil simulé |
+| Sortie | Un bouton de retour, toujours accessible |
+| Traçabilité | L'entrée en prévisualisation écrit une ligne au journal d'accès |
+| Bandeau de périmètre | Bascule sur la variante institutionnelle |
+
+**Cela ne contredit pas la règle d'absence de personnalisation**, qui vise l'utilisateur institutionnel. C'est un outil de vérification : avant une démonstration, il faut voir exactement ce que verra l'interlocuteur, pas une approximation. Un bloc masqué, une zone vide ou un module absent se découvrent en salle si personne ne les a vus avant.
+
+**Interdit :** que la prévisualisation permette une action d'écriture, ou qu'elle donne accès à un module que le profil simulé n'a pas.
+
+*Section ajoutée par le document 15, section 1.1.*
+
 ## F.5 Composition de l'écran
 
 ```

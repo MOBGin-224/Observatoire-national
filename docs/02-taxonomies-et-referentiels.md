@@ -556,7 +556,9 @@ Champ multivalué.
 | `TUTELLE` | Tutelle sectorielle |
 | `BAILLEUR` | Bailleur et partenaire technique |
 | `EVENEMENTIEL` | Organisateur d'événement |
-| `ADMIN` | Administration Simandou Séjour |
+| `ADMIN` | Administration |
+
+Le libellé identifie le profil dans l'en-tête, où il est le seul repère affiché. Il se lit donc sans son contexte : « Administration » suffit, la mention de l'éditeur y serait redondante.
 
 ---
 

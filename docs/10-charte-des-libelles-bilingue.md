@@ -80,7 +80,7 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 |---|---|---|
 | `app.titre` | Observatoire National de l'Hospitalité Guinéenne | National Observatory of Guinean Hospitality |
 | `app.titre_court` | Observatoire | Observatory |
-| `app.attribution` | Une infrastructure Simandou Séjour | A Simandou Séjour infrastructure |
+| `app.attribution` | By SIMANDOU SEJOUR | By SIMANDOU SEJOUR |
 | `app.editeur` | Simandou Séjour | Simandou Séjour |
 | `nav.modules` | Modules | Modules |
 | `nav.compte` | Mon compte | My account |
@@ -98,7 +98,10 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 | `perimetre.partenaires` | dont {n} partenaires | including {n} partners |
 | `perimetre.couverture` | soit {p} de la capacité identifiée | representing {p} of identified capacity |
 | `perimetre.date` | Données au {date} | Data as of {date} |
-| `perimetre.avertissement` | Les indicateurs de conjoncture portent sur le périmètre observé et ne constituent pas une statistique nationale exhaustive. | Market indicators cover the observed scope only and do not constitute exhaustive national statistics. |
+| `perimetre.reservables` | dont réservables en ligne : {n} | of which bookable online: {n} |
+| `perimetre.territoires` | Territoires couverts : {n} sur {total} | Territories covered: {n} of {total} |
+| `perimetre.verifiees` | Fiches vérifiées : {p} | Verified records: {p} |
+| `perimetre.avertissement` | Les données portent sur le périmètre recensé ci-dessus et ne constituent pas une statistique nationale exhaustive. | The data covers the surveyed scope above and does not constitute exhaustive national statistics. |
 
 ---
 
@@ -108,29 +111,51 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 |---|---|---|
 | `module.m1.titre` | Offre nationale d'hébergement | National accommodation supply |
 | `module.m1.court` | Offre | Supply |
+| `module.m1.description` | Ce que la Guinée compte en établissements d'hébergement, où, de quelle capacité, et quelle part en est réservable en ligne. | What Guinea has in accommodation establishments, where, at what capacity, and how much of it is bookable online. |
 | `module.m1.territoires` | Lecture territoriale | Territorial reading |
 | `module.m1.qualite_inventaire` | Qualité de l'inventaire | Inventory quality |
 | `module.m1.repartition_typologie` | Répartition par typologie | Breakdown by type |
 | `module.m1.repartition_gamme` | Répartition par gamme | Breakdown by price range |
 | `module.m2.titre` | Demande exprimée | Expressed demand |
 | `module.m2.court` | Demande | Demand |
+| `module.m2.description` | Qui cherche à venir en Guinée, depuis quel pays, vers quelle destination, à quelles dates et avec quel budget. | Who is looking to come to Guinea, from which country, to which destination, on what dates and with what budget. |
 | `module.m3.titre` | Activité observée | Observed activity |
 | `module.m3.court` | Activité | Activity |
+| `module.m3.description` | Ce qui se passe après la recherche : réservations, nuitées, taux d'occupation et prix moyens sur le périmètre commercialisé. | What happens after the search: bookings, room nights, occupancy and average rates across the commercialised scope. |
 | `module.m4.titre` | Tension et déficit d'offre | Pressure and supply gap |
 | `module.m4.court` | Tension | Pressure |
+| `module.m4.description` | Où la demande s'exprime sans trouver d'offre, et de quelle nature est le manque. | Where demand goes unmet, and what kind of gap lies behind it. |
 | `module.m5.titre` | Conformité et classification | Compliance and classification |
 | `module.m5.court` | Conformité | Compliance |
+| `module.m5.description` | L'état d'enregistrement et de classification du parc d'hébergement. | Registration and classification status of the accommodation stock. |
 | `module.m6.titre` | Maturité numérique du secteur | Sector digital maturity |
 | `module.m6.court` | Maturité numérique | Digital maturity |
+| `module.m6.description` | Le degré de numérisation du secteur, établissement par établissement et territoire par territoire. | The sector's level of digitalisation, establishment by establishment and territory by territory. |
 | `module.m7.titre` | Événementiel et pics de demande | Events and demand peaks |
 | `module.m7.court` | Événementiel | Events |
+| `module.m7.description` | La capacité d'accueil mobilisable sur les dates d'un événement, et l'écart avec les besoins annoncés. | Accommodation capacity that can be mobilised for an event's dates, and the gap with declared needs. |
 | `module.m8.titre` | Retombées économiques estimées | Estimated economic impact |
 | `module.m8.court` | Retombées estimées | Estimated impact |
+| `module.m8.description` | Estimation des retombées économiques de l'activité d'hébergement, méthode et coefficient publiés. | Estimated economic impact of accommodation activity, with published method and multiplier. |
 | `module.m9.titre` | Synthèse institutionnelle | Institutional summary |
 | `module.m9.court` | Synthèse | Summary |
+| `module.m9.description` | L'essentiel du secteur en un écran, adapté à votre mandat. | The sector's essentials on one screen, tailored to your mandate. |
 | `module.m9.en_construction` | Module en construction. | Module under construction. |
+| `module.m9.code` | M9 · Synthèse | M9 · Summary |
+| `module.m9.blocs_cles` | Blocs clés | Key figures |
+| `module.m9.carte` | Carte du périmètre | Scope map |
+| `module.m9.carte_aide` | Densité d'établissements recensés, par région | Density of surveyed establishments, by region |
+| `module.m9.evolution` | Évolution des recherches | Search volume over time |
+| `module.m9.acces` | Accès aux modules | Module access |
+
+> **Zones de la synthèse.** Les cinq clés ci-dessus reprennent les intitulés de zone de la composition d'écran du document 9 bis, section F.5. La synthèse n'emprunte pas les libellés des modules qu'elle agrège : elle rassemble leurs valeurs, pas leur vocabulaire.
 | `module.m10.titre` | Méthodologie | Methodology |
+| `module.m10.description` | Comment chaque chiffre est produit, sur quel périmètre, avec quelles limites. | How each figure is produced, over what scope, and with what limitations. |
+| `methodologie.nb_indicateurs` | {n} indicateurs | {n} indicators |
+
+> **Lacune signalée.** Le module `M10_METHODO` a été construit avec une trentaine de clés `methodologie.*` qui n'ont jamais été portées dans ce document. Seule `methodologie.nb_indicateurs`, ajoutée pour les cartes d'accès de la synthèse, y figure aujourd'hui. Les autres sont à reprendre lors d'une revue des libellés.
 | `module.m11.titre` | Administration | Administration |
+| `module.m11.description` | Saisie des données, gestion des accès et journal d'activité. | Data entry, access management and activity log. |
 | `module.m7.decomposition_partenaires` | Partenaires disponibles : disponibilité réelle connue | Available partners: actual availability known |
 | `module.m7.decomposition_recenses` | Recensés non réservables : capacité théorique, disponibilité inconnue | Recorded non-bookable: theoretical capacity, availability unknown |
 
@@ -525,6 +550,8 @@ Libellé invariable, jamais reformulé.
 | `state.erreur.titre` | Les données n'ont pas pu être chargées. | Data could not be loaded. |
 | `state.erreur.action` | Réessayer | Try again |
 | `state.erreur.persistante` | Si le problème persiste, contactez votre administrateur. | If the problem persists, contact your administrator. |
+| `state.erreur.action_echouee` | L'action n'a pas abouti. Réessayez. | The action did not complete. Try again. |
+| `state.erreur.session_expiree` | Votre session a expiré. Reconnectez-vous pour continuer. | Your session has expired. Sign in again to continue. |
 
 ---
 
@@ -645,6 +672,8 @@ Libellés du back-office de saisie, produits avec la fiche fonctionnelle du docu
 | `admin.import.titre` | Import du recensement | Survey import |
 | `admin.import.deposer` | Déposer un fichier CSV | Upload a CSV file |
 | `admin.import.format` | Fichier CSV, délimiteur point-virgule. | CSV file, semicolon delimiter. |
+| `admin.import.plafond` | Fichier de {plafond} lignes au maximum. | {plafond} rows maximum per file. |
+| `admin.import.erreur.plafond_depasse` | Fichier trop volumineux : {lignes} lignes détectées, {plafond} au maximum. Scindez le fichier en plusieurs lots. | File too large: {lignes} rows detected, {plafond} maximum. Split the file into several batches. |
 | `admin.import.previsualiser` | Prévisualiser | Preview |
 | `admin.import.valider` | Valider l'import | Validate import |
 | `admin.import.rapport.titre` | Rapport de contrôle | Control report |
@@ -720,6 +749,12 @@ Le bandeau passe de quatre phrases à quatre couples étiquette/valeur, seule fo
 | `perimetre.label.partenaires` | dont partenaires | of which partners |
 | `perimetre.label.couverture` | Capacité couverte | Capacity covered |
 | `perimetre.label.observation` | Données au | Data as of |
+| `perimetre.label.reservables` | dont réservables en ligne | of which bookable online |
+| `perimetre.label.territoires` | Territoires couverts | Territories covered |
+| `perimetre.label.verifiees` | Fiches vérifiées | Verified records |
+| `perimetre.valeur.rapport` | {n} sur {total} | {n} of {total} |
+
+> **Deux formes pour les mêmes mesures.** Les clés `perimetre.reservables`, `perimetre.territoires` et `perimetre.verifiees` du document 15 sont les phrases complètes, employées à l'impression et dans les exports. Les clés `perimetre.label.*` ci-dessus sont les étiquettes courtes du bandeau à l'écran, qui présente des couples étiquette et valeur : c'est la seule forme lisible en projection à trois mètres, document 9 section A.1.
 
 ### 16.2 Barre de contrôle
 
@@ -728,6 +763,9 @@ Le bandeau passe de quatre phrases à quatre couples étiquette/valeur, seule fo
 | `controle.niveau` | Niveau territorial | Territorial level |
 | `controle.national` | National | National |
 | `controle.export` | Exporter | Export |
+| `controle.vue_nationale` | Vue nationale | National view |
+
+> **Piège d'espace de noms.** Le document 15 section 4.2 nomme cette clé `ctrl.vue_nationale`. Le préfixe réellement lu par le code est `controle.`, celui de ce bloc ; le bloc `ctrl.` plus haut dans ce document n'a jamais été implémenté. La clé retenue est donc `controle.vue_nationale`. À unifier lors d'une revue des libellés.
 
 ### 16.3 Écran `M1_OFFRE`
 

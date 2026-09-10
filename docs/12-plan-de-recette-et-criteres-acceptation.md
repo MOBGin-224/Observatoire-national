@@ -115,6 +115,9 @@ Chaque passage de recette produit un relevé daté, signé, mentionnant la versi
 | S27 | Le sélecteur de niveau géographique est le seul mécanisme de navigation territoriale | Oui |
 | S28 | Le fil d'Ariane à Conakry passe de la région aux communes sans niveau préfectoral | Oui |
 | S29 | La navigation latérale est permanente et signale le module actif | Non |
+| S23a | La variante institutionnelle du bandeau ne comporte ni le nombre de partenaires ni la capacité couverte | Oui |
+| S23b | Les trois éléments communs sont présents dans les deux variantes | Oui |
+| S23c | En mode prévisualisation, le bandeau bascule sur la variante institutionnelle | Oui |
 
 ### 2.6 Socle de composants
 
@@ -198,7 +201,7 @@ Chaque passage de recette produit un relevé daté, signé, mentionnant la versi
 | Réf | Critère | Bloquant |
 |---|---|---|
 | M20 | L'export ne produit que du PDF ou de l'image | Oui |
-| M21 | Aucun export de données structurées n'est proposé, sous aucun profil | Oui |
+| M21 | Aucun export de données structurées n'est proposé à un compte institutionnel, quel que soit son profil. L'export CSV interne est accessible au seul profil `ADMIN`, fermé au niveau de la base, tracé au journal, et ne contient aucune donnée de recherche, de réservation ni d'inventaire | Oui |
 | M22 | L'export porte le filigrane au nom du compte émetteur | Oui |
 | M23 | L'export porte une référence unique, imprimée en pied de page | Oui |
 | M24 | L'export porte le bandeau de périmètre et l'horodatage | Oui |

@@ -256,7 +256,11 @@ Même traitement. Trois valeurs seulement.
 
 Fond `--color-bg-panel`, texte `--text-small`. **Non masquable, non désactivable, non paramétrable.**
 
-Contenu : établissements recensés, partenaires, part de capacité couverte, date d'observation.
+**Le composant accepte une variante, déterminée par le profil du compte et par lui seul**, jamais par un choix d'utilisateur : variante institutionnelle pour les cinq profils institutionnels, variante interne pour `ADMIN`. Composition au document 15, section 6.
+
+**Les trois éléments communs ne sont jamais conditionnels** : taille du périmètre recensé, date et heure d'observation, mention de non-exhaustivité. Ils ne dépendent d'aucune propriété, d'aucun profil et d'aucun état de chargement. Un rendu qui pourrait les omettre est un défaut de conception, pas un cas limite.
+
+*Complété par le document 15, section 6.7.*
 
 ### 5.5 Sélecteur de niveau géographique
 

@@ -325,6 +325,7 @@ Ces règles s'adressent à un agent de développement travaillant sur le projet.
 1. Relire le document 1, section 7, ce que l'Observatoire n'est pas.
 2. Relire le document 7, qui prime sur toute autre spécification.
 3. Relire la fiche du module concerné, document 9.
+4. **Consulter les guides fournis avec le cadre applicatif avant d'écrire du code, plutôt que d'écrire de mémoire.** Les guides de Next.js livrés dans `node_modules/next/dist/docs/` font foi sur la version installée. Cela vaut en particulier pour le téléversement de fichier, les routes planifiées et l'intergiciel. *Règle ajoutée par le document 14, section 7.*
 
 **Pendant le développement**
 
@@ -339,6 +340,10 @@ Ces règles s'adressent à un agent de développement travaillant sur le projet.
 - Sur l'affichage d'une donnée : ne pas l'afficher.
 - Sur un champ à intégrer : ne pas l'intégrer.
 - Sur une contradiction entre une demande fonctionnelle et une règle du document 7 : appliquer la règle et signaler la contradiction.
+
+**La source de vérité est le dépôt**
+
+Les documents du dépôt évoluent au fil du développement. Un fichier régénéré hors du dépôt écrase les amendements déjà validés. Deux modes acceptés, dans cet ordre : amendement textuel appliqué dans le dépôt, ou régénération complète d'un document dont la version en vigueur a été transmise au préalable. **Un fichier régénéré sans que sa version en vigueur ait été fournie ne s'installe pas.** *Règle ajoutée par le document 14, section 1.*
 
 **Ce qui constitue un composant terminé**
 

@@ -291,10 +291,15 @@ Nombre d'unités qui auraient été nécessaires pour satisfaire la demande expr
 ### `TEN_FENETRES_SATURATION`
 **Fenêtres de saturation**
 
-- Formule : périodes où la part de `OFFRE_INDISPONIBLE` dépasse un seuil sur un territoire
+- Formule : semaines de `date_arrivee` souhaitée où la part de `OFFRE_INDISPONIBLE` atteint 40 % des recherches du territoire, avec au moins 10 recherches sur l'intervalle
+- Agrégation : par semaine de date d'arrivée souhaitée, jamais par date de recherche
 - Unité : plages de dates
 - Fréquence : hebdomadaire
+- Seuils : `INDICATIF` de 10 à 29 recherches, `CONSOLIDE` au delà. En dessous de 10, aucune fenêtre n'est produite
 - Enrichissement : rapprochement automatique avec `evenement_calendrier`
+- Piège : agréger par date de recherche décale les fenêtres de plusieurs semaines et les rend inexploitables
+
+*Seuil arrêté par le document 15, section 2.*
 
 ---
 
@@ -525,7 +530,7 @@ Ce bandeau n'est jamais masquable et est repris sur tous les exports.
 ## 13. Points ouverts
 
 1. Pondérations définitives de `OFF_COMPLETUDE_FICHE` et `MAT_INDICE`.
-2. Seuil de déclenchement de `TEN_FENETRES_SATURATION`.
+2. ~~Seuil de déclenchement de `TEN_FENETRES_SATURATION`.~~ **Clos par le document 15, section 2.**
 3. Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE` et sa source.
 4. Règle de dédoublonnage par session pour `TEN_CAPACITE_MANQUANTE`.
 5. Seuils chiffrés de bascule entre `CONSOLIDE`, `INDICATIF` et `SIGNAL` pour les indicateurs où ils ne sont pas encore fixés.
