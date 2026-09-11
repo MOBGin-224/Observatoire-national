@@ -6,9 +6,14 @@ const catalogues = { fr, en };
 export type Langue = keyof typeof catalogues;
 
 function resoudre(catalogue: Record<string, unknown>, cle: string): string {
-  const valeur = cle
+  const noeud = cle
     .split(".")
     .reduce<unknown>((acc, segment) => (acc as Record<string, unknown>)?.[segment], catalogue);
+  /* Document 10, section 19 : un noeud qui porte a la fois un texte et des
+     sous-cles (m7.z3.partenaires et m7.z3.partenaires.aide) range son texte
+     sous "_". La cle appelee reste celle du document. */
+  const valeur =
+    noeud !== null && typeof noeud === "object" ? (noeud as Record<string, unknown>)._ : noeud;
   if (typeof valeur !== "string") {
     throw new Error(`Cle de traduction absente : ${cle}`);
   }

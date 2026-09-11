@@ -4,11 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { previsualiserImport, validerImport } from "@/lib/actions/admin-recensement";
 import { RapportControleImport } from "@/components/administration/RapportControleImport";
+import { executerAction } from "@/lib/erreurs";
 import { t } from "@/lib/i18n";
 import { IMPORT } from "@/lib/config";
 import type { RapportImport } from "@/lib/csv/parseRecensement";
 
-/* Document 9bis H.4.1 : previsualisation obligatoire, jamais d'import direct. */
+/*
+ * Document 9bis H.4.1 : previsualisation obligatoire, jamais d'import direct.
+ *
+ * Les deux actions passent par executerAction : un echec (session expiree,
+ * refus de la base) s'annonce en clair au lieu de laisser un bouton muet.
+ */
 export function ZoneImportCSV() {
   const router = useRouter();
   const [nomFichier, setNomFichier] = useState<string | null>(null);
@@ -16,6 +22,7 @@ export function ZoneImportCSV() {
   const [rapport, setRapport] = useState<RapportImport | null>(null);
   const [enCours, setEnCours] = useState(false);
   const [valide, setValide] = useState(false);
+  const [erreur, setErreur] = useState<string | null>(null);
 
   function surDepot(evenement: React.ChangeEvent<HTMLInputElement>) {
     const fichier = evenement.target.files?.[0];
@@ -32,16 +39,28 @@ export function ZoneImportCSV() {
   async function previsualiser() {
     if (!contenu) return;
     setEnCours(true);
-    const resultat = await previsualiserImport(contenu);
-    setRapport(resultat);
+    setErreur(null);
+    const issue = await executerAction(() => previsualiserImport(contenu));
     setEnCours(false);
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      router.refresh();
+      return;
+    }
+    setRapport(issue.valeur);
   }
 
   async function valider() {
     if (!contenu || !nomFichier) return;
     setEnCours(true);
-    await validerImport(contenu, nomFichier);
+    setErreur(null);
+    const issue = await executerAction(() => validerImport(contenu, nomFichier));
     setEnCours(false);
+    if (!issue.ok) {
+      setErreur(t(issue.cle));
+      router.refresh();
+      return;
+    }
     setValide(true);
     router.refresh();
   }
@@ -77,6 +96,12 @@ export function ZoneImportCSV() {
         >
           {t("admin.import.previsualiser")}
         </button>
+      )}
+
+      {erreur && (
+        <p role="alert" style={{ fontSize: "var(--text-small)", fontWeight: 600, color: "var(--color-text)" }}>
+          {erreur}
+        </p>
       )}
 
       {rapport && <RapportControleImport rapport={rapport} />}

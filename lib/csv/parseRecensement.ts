@@ -30,6 +30,34 @@ const CHAMPS_OBLIGATOIRES = [
 // Bornes approximatives de la Guinee (document 9bis H.4.1 : "coordonnees dans les bornes de la Guinee").
 const BORNES_GUINEE = { latMin: 7.0, latMax: 12.8, lonMin: -15.2, lonMax: -7.5 };
 
+/*
+ * Document 16, section C.2 : quinze colonnes d'equipement a plat, dans le meme
+ * fichier que la fiche. Chaque colonne binaire correspond a un code du domaine
+ * EQUIPEMENT (document 2, section 12) ; la capacite de salle est la quinzieme.
+ */
+const COLONNES_EQUIPEMENT: Record<string, string> = {
+  equip_restauration: "RESTAURATION",
+  equip_salle_reunion: "SALLE_REUNION",
+  equip_groupe_electrogene: "GROUPE_ELECTROGENE",
+  equip_wifi: "WIFI",
+  equip_climatisation: "CLIMATISATION",
+  equip_eau_chaude: "EAU_CHAUDE",
+  equip_parking: "PARKING",
+  equip_piscine: "PISCINE",
+  equip_navette_aeroport: "NAVETTE_AEROPORT",
+  equip_blanchisserie: "BLANCHISSERIE",
+  equip_securite_24h: "SECURITE_24H",
+  equip_acces_pmr: "ACCES_PMR",
+  equip_paiement_carte: "PAIEMENT_CARTE",
+  equip_paiement_mobile_money: "PAIEMENT_MOBILE_MONEY",
+};
+const COLONNE_CAPACITE_SALLE = "equip_salle_capacite";
+
+/* Valeurs acceptees, au caractere pres. Une cellule vide signifie "non demande",
+   ce qui n'est pas "absent" : elle ne cree aucune ligne. */
+const VALEURS_OUI = new Set(["O", "o", "OUI"]);
+const VALEURS_NON = new Set(["N", "n", "NON"]);
+
 export type LigneRecensementBrute = Record<string, string>;
 
 export type EnumerationsValides = {
@@ -44,6 +72,15 @@ export type EtablissementExistant = {
   codeCommune: string | null;
   latitude: number | null;
   longitude: number | null;
+};
+
+export type MotifLigne = { cle: string; variables?: Record<string, string> };
+
+export type EquipementValide = {
+  codeEquipement: string;
+  disponible: boolean;
+  /* Nombre de places, pour la seule salle de reunion. Nul si non renseigne. */
+  capacite: number | null;
 };
 
 export type LigneValidee = {
@@ -67,11 +104,14 @@ export type LigneValidee = {
   statutRelation: string;
   notes: string | null;
   doublonPotentiel: boolean;
+  equipements: EquipementValide[];
+  /* Ligne importee, mais signalee au rapport de controle (document 16, C.2). */
+  avertissements: MotifLigne[];
 };
 
 export type LigneEnErreur = {
   numeroLigne: number;
-  motifs: { cle: string; variables?: Record<string, string> }[];
+  motifs: MotifLigne[];
 };
 
 export type RapportImport = {
@@ -123,6 +163,59 @@ function estDoublonPotentiel(
         DOUBLON.distanceMetres;
     return memeNom || memeLieu;
   });
+}
+
+/*
+ * Document 16, section C.2, regles de traitement a l'import :
+ *   - une colonne vide ne cree aucune ligne dans etablissement_equipement ;
+ *   - toute valeur hors de O, N, o, n, OUI, NON, vide est une erreur de ligne ;
+ *   - une capacite de salle sans salle declaree (N ou vide) est une erreur de ligne ;
+ *   - une salle declaree sans capacite cree la ligne, capacite nulle, avec un avertissement.
+ * Les erreurs s'ajoutent a `motifs`, que l'appelant partage avec les autres controles.
+ */
+function lireEquipements(
+  brute: LigneRecensementBrute,
+  motifs: MotifLigne[]
+): { equipements: EquipementValide[]; avertissements: MotifLigne[] } {
+  const equipements: EquipementValide[] = [];
+  const avertissements: MotifLigne[] = [];
+  let salleDeclaree = false;
+
+  for (const [colonne, codeEquipement] of Object.entries(COLONNES_EQUIPEMENT)) {
+    const valeur = (brute[colonne] ?? "").trim();
+    if (valeur === "") continue;
+
+    if (VALEURS_OUI.has(valeur) || VALEURS_NON.has(valeur)) {
+      const disponible = VALEURS_OUI.has(valeur);
+      if (codeEquipement === "SALLE_REUNION") salleDeclaree = disponible;
+      equipements.push({ codeEquipement, disponible, capacite: null });
+    } else {
+      motifs.push({
+        cle: "admin.import.erreur.valeur_enumeration_invalide",
+        variables: { champ: colonne, valeur },
+      });
+    }
+  }
+
+  const capaciteBrute = (brute[COLONNE_CAPACITE_SALLE] ?? "").trim();
+  if (capaciteBrute !== "") {
+    const capacite = Number(capaciteBrute);
+    if (!salleDeclaree) {
+      motifs.push({ cle: "admin.import.erreur.capacite_salle_sans_salle" });
+    } else if (!Number.isInteger(capacite) || capacite < 1) {
+      motifs.push({
+        cle: "admin.import.erreur.valeur_enumeration_invalide",
+        variables: { champ: COLONNE_CAPACITE_SALLE, valeur: capaciteBrute },
+      });
+    } else {
+      const salle = equipements.find((e) => e.codeEquipement === "SALLE_REUNION");
+      if (salle) salle.capacite = capacite;
+    }
+  } else if (salleDeclaree) {
+    avertissements.push({ cle: "admin.import.avertissement.salle_sans_capacite" });
+  }
+
+  return { equipements, avertissements };
 }
 
 export function parserRecensement(
@@ -239,6 +332,8 @@ export function parserRecensement(
       });
     }
 
+    const { equipements, avertissements } = lireEquipements(brute, motifs);
+
     if (motifs.length > 0) {
       lignesErreur.push({ numeroLigne, motifs });
       return;
@@ -268,6 +363,8 @@ export function parserRecensement(
         { nom: brute.nom.trim(), codeCommune: codeCommune!, latitude, longitude },
         etablissementsExistants
       ),
+      equipements,
+      avertissements,
     });
   });
 

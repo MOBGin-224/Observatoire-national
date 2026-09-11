@@ -341,6 +341,11 @@ Neuf sections, dans cet ordre de priorité de réalisation.
 - Contrôles appliqués : champs obligatoires présents, valeurs énumérées conformes au document 2, rattachement territorial résolu ou signalé, coordonnées dans les bornes de la Guinée, doublons potentiels signalés.
 - **Rattachement territorial automatique** via `territoire_variante`, avec liste des libellés non résolus à traiter manuellement.
 - Détection de doublons sur le nom et la proximité géographique. Signalement, jamais fusion automatique.
+- **Équipements** (document 16, section C.2), quinze colonnes `equip_*` dans le même fichier :
+  - une colonne vide ne crée aucune ligne dans `etablissement_equipement` ;
+  - valeurs acceptées : `O`, `N`, `o`, `n`, `OUI`, `NON`, vide. Toute autre valeur déclenche une erreur de ligne ;
+  - `equip_salle_capacite` renseigné alors que `equip_salle_reunion` vaut N ou est vide déclenche une erreur de ligne. Une capacité qui n'est pas un entier positif aussi, la colonne étant de type entier ;
+  - `equip_salle_reunion` valant O sans capacité renseignée crée la ligne avec une capacité nulle, et un avertissement au rapport de contrôle.
 - Historique des imports : date, opérateur, nombre de lignes, fichier source.
 
 ### H.4.2 Fiche établissement

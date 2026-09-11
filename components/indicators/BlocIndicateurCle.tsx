@@ -33,6 +33,7 @@ export async function BlocIndicateurCle({
   niveauFiabilite,
   variante = "compact",
   accent = false,
+  alerte = false,
   pied,
 }: {
   code: string;
@@ -44,6 +45,9 @@ export async function BlocIndicateurCle({
   niveauFiabilite?: string;
   variante?: VarianteBloc;
   accent?: boolean;
+  /* Valeur en --color-alert. Reserve aux seuls signaux de tension que prevoit une
+     fiche (document 9, D.7 ; document 9 ter, J.8) : jamais un choix decoratif. */
+  alerte?: boolean;
   pied?: ReactNode;
 }) {
   const meta = await resoudreIndicateur(code);
@@ -104,6 +108,7 @@ export async function BlocIndicateurCle({
                 className="valeur-cle chiffres-tabulaires"
                 style={{
                   fontSize: variante === "volume" ? "var(--text-display-xl)" : "var(--text-display)",
+                  color: alerte ? "var(--color-alert)" : undefined,
                 }}
               >
                 {formater(v)}

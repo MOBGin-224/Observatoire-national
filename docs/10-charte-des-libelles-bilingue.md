@@ -26,6 +26,8 @@ Domaines : `nav`, `module`, `ctrl`, `kpi`, `state`, `export`, `auth`, `admin`, `
 
 Exemples : `nav.deconnexion`, `module.m1.titre`, `state.vide.defaut`, `kpi.off_taux_couverture.libelle`.
 
+Le document 16 ouvre en outre un domaine par module pour les zones des écrans `M5` à `M8` (`m5.` à `m8.`), et une convention pour le nœud qui porte à la fois un texte et des sous-clés. Voir la section 19.
+
 ### 1.2 Deux sources de textes
 
 | Source | Contenu | Où |
@@ -156,8 +158,10 @@ Fuseau d'affichage : Africa/Conakry, dans les deux langues.
 > **Lacune signalée.** Le module `M10_METHODO` a été construit avec une trentaine de clés `methodologie.*` qui n'ont jamais été portées dans ce document. Seule `methodologie.nb_indicateurs`, ajoutée pour les cartes d'accès de la synthèse, y figure aujourd'hui. Les autres sont à reprendre lors d'une revue des libellés.
 | `module.m11.titre` | Administration | Administration |
 | `module.m11.description` | Saisie des données, gestion des accès et journal d'activité. | Data entry, access management and activity log. |
-| `module.m7.decomposition_partenaires` | Partenaires disponibles : disponibilité réelle connue | Available partners: actual availability known |
-| `module.m7.decomposition_recenses` | Recensés non réservables : capacité théorique, disponibilité inconnue | Recorded non-bookable: theoretical capacity, availability unknown |
+| ~~`module.m7.decomposition_partenaires`~~ | ~~Partenaires disponibles : disponibilité réelle connue~~ | ~~Available partners: actual availability known~~ |
+| ~~`module.m7.decomposition_recenses`~~ | ~~Recensés non réservables : capacité théorique, disponibilité inconnue~~ | ~~Recorded non-bookable: theoretical capacity, availability unknown~~ |
+
+> Les deux clés `module.m7.decomposition_*` sont remplacées par `m7.z3.partenaires`, `m7.z3.recenses` et `m7.z3.vendu` (document 16, section D.4), et retirées des fichiers de traduction. `methodologie.nb_indicateurs` est de même remplacée par `module.compteur.indicateurs` (document 16, section B.3).
 
 > Trois clés ajoutées le 2026-09-08 : `module.m9.en_construction` (écran d'atterrissage provisoire) et les deux libellés de la zone de décomposition de la capacité de `M7_EVENEMENTIEL` (document 9 quater, partie J.8/J.10), qui étaient codés en dur sans être documentés ici.
 >
@@ -956,3 +960,214 @@ Le préfixe `dev.` est réservé à cet usage et ne doit jamais servir à un lib
 > `auth.mfa.aide_developpement` existait dans les fichiers de traduction depuis le 2026-09-08 sans être documentée ici. Elle est régularisée à l'occasion de l'ajout du sélecteur de profil, qui suit la même convention visuelle (bordure pointillée) et le même verrou (`NODE_ENV`).
 >
 > Le sélecteur de profil répond à un besoin de recette : vérifier ce que voit chaque profil du document 6 sans créer six comptes nominatifs ni enrôler six seconds facteurs. Il n'assouplit aucune règle. La bascule écrit réellement `compte_institutionnel.profil` et réécrit `compte_module` d'après la matrice du document 6, section 3, puis la sécurité de la base filtre normalement. `M8_RETOMBEES` reste éteint quel que soit le profil retenu, conformément au document 9 quater, section M.3.
+
+---
+
+## 19. Écrans `M5` à `M8`, compteurs contextuels et import des équipements, 11 septembre 2026
+
+Libellés fournis par le document 16, partie D et section B.3, reportés tels quels en 19.1 à 19.6. Les sections 19.7 à 19.9 ajoutent les clés dont l'implémentation a eu besoin et que le document 16 ne fournit pas : chacune reprend un texte déjà prescrit par une fiche fonctionnelle, ou nomme un élément d'interface nouveau, avec sa justification.
+
+**Deux particularités de nommage.**
+
+1. Les zones de ces quatre écrans ouvrent un domaine par module, `m5.` à `m8.`, là où `M1` à `M4` rangent les leurs sous `module.mX.`. Les clés sont reprises telles que le document 16 les prescrit.
+2. Le document 16 définit à la fois `m7.z3.partenaires` et `m7.z3.partenaires.aide`. Un fichier de traduction imbriqué ne peut pas porter un texte et des sous-clés au même nœud : le texte du nœud s'y range sous `_`, et le résolveur `t()` le lit quand la clé désigne un nœud. La clé appelée dans le code reste celle du document.
+
+### 19.1 Codes et questions métier
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.m5.code` | M5 · Conformité | M5 · Compliance |
+| `module.m5.question` | Quel est l'état d'enregistrement et de classification du parc d'hébergement guinéen. | What is the registration and classification status of Guinea's accommodation stock? |
+| `module.m6.code` | M6 · Maturité numérique | M6 · Digital maturity |
+| `module.m6.question` | Quel est le degré de numérisation du secteur de l'hébergement, et où se situent les retards. | How digitalised is the accommodation sector, and where are the gaps? |
+| `module.m7.code` | M7 · Événementiel | M7 · Events |
+| `module.m7.question` | Le pays peut-il héberger un événement donné, à des dates données, sur un territoire donné. | Can the country accommodate a given event, on given dates, in a given territory? |
+| `module.m8.code` | M8 · Retombées estimées | M8 · Estimated impact |
+| `module.m8.question` | Quelles retombées économiques l'activité d'hébergement génère-t-elle. | What economic impact does accommodation activity generate? |
+
+### 19.2 `M5_CONFORMITE`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `m5.z1.titre` | Indicateurs clés | Key indicators |
+| `m5.z1.aide` | État d'enregistrement et de classification sur le périmètre consulté. | Registration and classification status for the selected scope. |
+| `m5.z2.titre` | Taux d'enregistrement par territoire | Registration rate by territory |
+| `m5.z2.aide` | Part des établissements recensés disposant d'un enregistrement administratif documenté. | Share of surveyed establishments with documented administrative registration. |
+| `m5.z3.titre` | Répartition par typologie et par gamme | Breakdown by type and price range |
+| `m5.z3.aide` | Enregistrement et classification selon la nature et le niveau de prix des établissements. | Registration and classification by establishment type and price level. |
+| `m5.z4.titre` | Préparation à la classification | Classification readiness |
+| `m5.z4.aide` | Établissements dont la fiche est suffisamment complète pour entrer dans un processus de classification. Cette zone repose sur le recensement et ne dépend d'aucune transmission administrative. | Establishments whose record is complete enough to enter a classification process. This section draws on the survey and requires no administrative transmission. |
+| `m5.z5.titre` | Écart entre liste administrative et terrain | Gap between official list and field |
+| `m5.z5.aide` | Établissements figurant sur une liste administrative et invalidés par la collecte de terrain. | Establishments listed by the administration and invalidated by field collection. |
+| `m5.z6.titre` | Détail par territoire | Territory breakdown |
+| `m5.z6.aide` | Recensement, enregistrement et classification, territoire par territoire. | Survey, registration and classification, territory by territory. |
+| `m5.z4.col.territoire` | Territoire | Territory |
+| `m5.z4.col.recenses` | Recensés | Surveyed |
+| `m5.z4.col.completes` | Fiches complètes | Complete records |
+| `m5.z4.col.verifiees` | Fiches vérifiées | Verified records |
+| `m5.z4.col.prets` | Prêts pour classification | Ready for classification |
+| `m5.z5.col.territoire` | Territoire | Territory |
+| `m5.z5.col.fermes` | Fermés définitivement | Permanently closed |
+| `m5.z5.col.inexistants` | Inexistants | Non-existent |
+| `m5.z5.col.reclasses` | Reclassés | Reclassified |
+| `m5.z5.col.total` | Total de l'écart | Total gap |
+| `m5.z6.col.territoire` | Territoire | Territory |
+| `m5.z6.col.recenses` | Recensés | Surveyed |
+| `m5.z6.col.enregistres` | Enregistrés | Registered |
+| `m5.z6.col.classes` | Classés | Classified |
+| `m5.z6.col.non_documentes` | Enregistrement non documenté | Registration undocumented |
+
+### 19.3 `M6_MATURITE`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `m6.z1.titre` | Indicateurs clés | Key indicators |
+| `m6.z1.aide` | Degré de numérisation du secteur sur le périmètre consulté. | Sector digitalisation level for the selected scope. |
+| `m6.z2.titre` | Indice de maturité par territoire | Maturity index by territory |
+| `m6.z2.aide` | Score de numérisation moyen des établissements recensés, sur 100. | Average digitalisation score of surveyed establishments, out of 100. |
+| `m6.z3.titre` | Décomposition de l'indice | Index breakdown |
+| `m6.z3.aide` | Part des établissements disposant de chacune des six composantes de l'indice. | Share of establishments having each of the index's six components. |
+| `m6.z4.titre` | Maturité par typologie | Maturity by establishment type |
+| `m6.z4.aide` | Indice moyen selon la nature des établissements. | Average index by establishment type. |
+| `m6.z5.titre` | Maturité par gamme tarifaire | Maturity by price range |
+| `m6.z5.aide` | Indice moyen selon le niveau de prix. | Average index by price level. |
+| `m6.z6.titre` | Classement des territoires | Territory ranking |
+| `m6.z6.aide` | Territoires classés par indice de maturité. L'ordre croissant identifie les zones en retard, l'ordre décroissant les zones de référence. | Territories ranked by maturity index. Ascending order identifies lagging areas, descending order reference areas. |
+| `m6.comp.presence` | Présence en ligne | Online presence |
+| `m6.comp.reservation` | Canal de réservation en ligne | Online booking channel |
+| `m6.comp.tarifs` | Tarifs publiés | Published rates |
+| `m6.comp.contact` | Coordonnées valides | Valid contact details |
+| `m6.comp.carte` | Paiement par carte | Card payment |
+| `m6.comp.mobile` | Paiement mobile money | Mobile money payment |
+| `m6.z6.col.territoire` | Territoire | Territory |
+| `m6.z6.col.etablissements` | Établissements | Establishments |
+| `m6.z6.col.indice` | Indice | Index |
+| `m6.z6.col.presence` | Présence en ligne | Online presence |
+| `m6.z6.col.reservation` | Réservable en ligne | Bookable online |
+| `m6.z6.col.paiement` | Paiement numérique | Digital payment |
+| `m6.avertissement` | Cet indice mesure le degré de numérisation. Il ne constitue en aucun cas une note de qualité des établissements. | This index measures digitalisation only. It is in no way a quality rating of establishments. |
+
+`m6.avertissement` est affiché en permanence sous le titre du module, non masquable.
+
+### 19.4 `M7_EVENEMENTIEL`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `m7.z1.titre` | Fenêtre analysée | Analysed window |
+| `m7.z2.titre` | Indicateurs clés | Key indicators |
+| `m7.z2.aide` | Capacité d'accueil et tension sur la fenêtre sélectionnée. | Accommodation capacity and pressure over the selected window. |
+| `m7.z3.titre` | Décomposition de la capacité mobilisable | Mobilisable capacity breakdown |
+| `m7.z3.aide` | La capacité mobilisable se décompose en trois parts de fiabilité différente. Seule la première correspond à une disponibilité réellement connue. | Mobilisable capacity breaks down into three parts of differing reliability. Only the first reflects genuinely known availability. |
+| `m7.z4.titre` | Capacité mobilisable par territoire | Mobilisable capacity by territory |
+| `m7.z5.titre` | Capacité par gamme tarifaire | Capacity by price range |
+| `m7.z5.aide` | Répartition de la capacité recensée selon le niveau de prix. | Breakdown of surveyed capacity by price level. |
+| `m7.z6.titre` | Salles de réunion | Meeting rooms |
+| `m7.z6.aide` | Établissements disposant d'une salle, répartis par palier de capacité. | Establishments with a meeting room, by capacity bracket. |
+| `m7.z7.titre` | Demandes institutionnelles sur la fenêtre | Institutional requests over the window |
+| `m7.z7.aide` | Besoins d'hébergement déclarés dont les dates chevauchent la fenêtre analysée. | Declared accommodation needs whose dates overlap the analysed window. |
+| `m7.fenetre.format` | {evenement} · {territoire} · du {debut} au {fin} · {nuits} nuits | {evenement} · {territoire} · {debut} to {fin} · {nuits} nights |
+| `m7.fenetre.dates_libres` | Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuits | Custom dates · {territoire} · {debut} to {fin} · {nuits} nights |
+| `m7.fenetre.aucune` | Aucun événement enregistré. Sélectionnez des dates libres. | No event on record. Select custom dates. |
+| `m7.selecteur.titre` | Fenêtre | Window |
+| `m7.selecteur.evenement` | Événement enregistré | Recorded event |
+| `m7.selecteur.dates_libres` | Dates libres | Custom dates |
+| `m7.selecteur.choisir_evenement` | Choisir un événement | Choose an event |
+| `m7.selecteur.date_debut` | Date de début | Start date |
+| `m7.selecteur.date_fin` | Date de fin | End date |
+| `m7.filtre.capacite_salle` | Capacité de salle minimale | Minimum room capacity |
+| `m7.z3.partenaires` | Partenaires disponibles | Available partners |
+| `m7.z3.partenaires.aide` | Disponibilité réelle connue. | Actual availability known. |
+| `m7.z3.recenses` | Recensés non réservables | Surveyed, not bookable |
+| `m7.z3.recenses.aide` | Capacité théorique. La disponibilité de ces établissements n'est pas connue. | Theoretical capacity. Availability of these establishments is unknown. |
+| `m7.z3.vendu` | Déjà vendu | Already sold |
+| `m7.z3.vendu.aide` | Retiré du disponible sur la fenêtre. | Removed from availability over the window. |
+| `m7.z6.col.palier` | Palier de capacité | Capacity bracket |
+| `m7.z6.col.etablissements` | Établissements | Establishments |
+| `m7.z6.col.places` | Places totales | Total seats |
+| `m7.z7.col.libelle` | Libellé | Title |
+| `m7.z7.col.type` | Type | Type |
+| `m7.z7.col.dates` | Dates | Dates |
+| `m7.z7.col.demandees` | Unités demandées | Units requested |
+| `m7.z7.col.couvertes` | Unités couvertes | Units covered |
+| `m7.z7.col.statut` | Statut | Status |
+| `m7.avertissement` | Cet écran mesure une capacité, il ne garantit aucune disponibilité et ne permet aucune réservation. | This screen measures capacity. It guarantees no availability and enables no booking. |
+
+### 19.5 `M8_RETOMBEES`
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `m8.z1.titre` | Méthode appliquée | Method applied |
+| `m8.z2.titre` | Indicateurs clés | Key indicators |
+| `m8.z2.aide` | Dépense d'hébergement observée et estimation de la dépense totale. | Observed accommodation spending and total spending estimate. |
+| `m8.z3.titre` | Évolution de la dépense observée | Observed spending over time |
+| `m8.z3.aide` | Dépense d'hébergement sur le périmètre commercialisé. Donnée observée, non estimée. | Accommodation spending across the commercialised scope. Observed data, not estimated. |
+| `m8.z4.titre` | Répartitions | Breakdowns |
+| `m8.z4.aide` | Dépense observée par typologie, par gamme et par origine déclarée. | Observed spending by type, price range and declared origin. |
+| `m8.z5.titre` | Détail par territoire | Territory breakdown |
+| `m8.methode.format` | Estimation. Coefficient {valeur} appliqué à la dépense d'hébergement observée. Source : {source}, périmètre {perimetre}. Validé le {date}. | Estimate. Multiplier {valeur} applied to observed accommodation spending. Source: {source}, scope {perimetre}. Validated on {date}. |
+| `m8.methode.lien` | Voir la méthodologie | View methodology |
+| `m8.methode.absent` | Module désactivé : aucun coefficient validé n'est enregistré. | Module disabled: no validated multiplier on record. |
+| `m8.z5.col.territoire` | Territoire | Territory |
+| `m8.z5.col.nuitees` | Nuitées | Room nights |
+| `m8.z5.col.observee` | Dépense observée | Observed spending |
+| `m8.z5.col.estimee` | Dépense estimée | Estimated spending |
+| `m8.avertissement` | La dépense observée porte sur le seul périmètre commercialisé par SIMANDOU SEJOUR. L'estimation en dérive et ne mesure pas l'ensemble du secteur. | Observed spending covers only the scope commercialised by SIMANDOU SEJOUR. The estimate derives from it and does not measure the entire sector. |
+
+**Graphie de marque.** Le document 16 écrit « Simandou Séjour » dans `m8.avertissement`. Le texte est rendu « SIMANDOU SEJOUR », graphie de marque retenue dans tout l'outil (`app.editeur`, `methodologie.limites_connues.texte`).
+
+### 19.6 Compteurs des cartes d'accès de la synthèse
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `module.compteur.indicateurs` | {n} indicateurs | {n} indicators |
+| `module.compteur.documentes` | {n} indicateurs documentés | {n} documented indicators |
+| `module.compteur.sections` | {n} sections | {n} sections |
+
+`M1` à `M9` comptent leurs indicateurs rattachés via `indicateur_module`, `M10` le nombre d'indicateurs documentés tous modules confondus, `M11` le nombre de sections d'administration. **Pour `M11`, le compteur retient les sections réellement ouvertes dans l'outil** (deux à ce jour sur les neuf du document 9 bis, section H.4) : afficher neuf annoncerait sept écrans qui n'existent pas.
+
+### 19.7 Import des équipements
+
+Messages exigés par les règles de traitement du document 16, section C.2, reprises au document 9 bis, section H.4.1.
+
+| Clé | Français | Anglais |
+|---|---|---|
+| `admin.import.erreur.capacite_salle_sans_salle` | Capacité de salle renseignée sans salle de réunion déclarée : equip_salle_reunion vaut N ou est vide. | Room capacity entered with no meeting room declared: equip_salle_reunion is N or empty. |
+| `admin.import.avertissement.salle_sans_capacite` | Salle de réunion déclarée sans capacité : la ligne est importée, la capacité reste à renseigner. | Meeting room declared without capacity: the row is imported, capacity remains to be recorded. |
+| `admin.import.rapport.lignes_avertissement` | {n} lignes avec avertissement | {n} rows with warnings |
+| `admin.import.rapport.avertissements` | Avertissements | Warnings |
+| `admin.import.rapport.colonne_ligne` | Ligne | Row |
+
+`admin.import.rapport.colonne_ligne` corrige un défaut antérieur : l'en-tête de colonne du rapport appelait `admin.import.rapport.ligne` sans variable et affichait « Ligne {n} » tel quel.
+
+Une valeur d'équipement non reconnue, ou une capacité de salle qui n'est pas un entier positif, réutilise `admin.import.erreur.valeur_enumeration_invalide` : même contexte, même message.
+
+### 19.8 États prescrits par les fiches et absents du catalogue
+
+| Clé | Français | Anglais | Source |
+|---|---|---|---|
+| `state.vide.capacite_decomposer` | Aucune capacité à décomposer. | No capacity to break down. | 9 ter, J.9, zone 3 |
+| `state.vide.salles_critere` | Aucune salle recensée répondant au critère. | No surveyed room meets the criterion. | 9 ter, J.9, zone 6 |
+| `carte.aucune_capacite` | Aucune capacité recensée | No surveyed capacity | 9 ter, J.9, zone 4 |
+| `carte.aucune_donnee_conformite` | Aucune donnée de conformité | No compliance data | 9 quater, L.8, zone 2 |
+| `state.vide.evolution_donnees` | Pas encore assez de données pour tracer une évolution. | Not enough data yet to plot a trend. | 9 quater, M.8, zone 3 |
+| `state.vide.depense` | Aucune dépense à répartir. | No spending to break down. | 9 quater, M.8, zone 4 |
+
+### 19.9 Éléments d'interface sans libellé au document 16
+
+| Clé | Français | Anglais | Justification |
+|---|---|---|---|
+| `m6.comp.poids` | Poids {n} | Weight {n} | Poids affiché sur chaque composante, critère 9 ter I.11.3 |
+| `m6.comp.renseigne` | Renseigné pour {n} établissements sur {total} | Recorded for {n} of {total} establishments | Sous les deux composantes de paiement : une part faible faute de donnée ne doit pas se lire comme une absence avérée (document 16, C.2) |
+| `m6.effectif` | {n} établissements | {n} establishments | Effectif de chaque barre des zones 4 et 5 |
+| `m6.z6.tri_croissant` | Ordre croissant | Ascending order | Bascule du classement, 9 ter I.8 et I.11.5 |
+| `m6.z6.tri_decroissant` | Ordre décroissant | Descending order | Idem |
+| `m5.provenance` | Transmission administrative · source : {source} · données au {date} | Administrative transmission · source: {source} · data as of {date} | Source et date sur les zones de statut administratif, 9 quater L.7 et L.10.7 |
+| `m7.filtre.aucune` | Aucune | None | Valeur par défaut du filtre de capacité, 9 ter J.7 |
+| `m7.filtre.places` | {n} places et plus | {n} seats and over | Options du filtre de capacité |
+| `m7.z7.periode` | du {debut} au {fin} | {debut} to {fin} | Colonne « Dates » de la zone 7 |
+| `m8.z4.typologie` | Par typologie | By type | Trois répartitions de la zone 4, 9 quater M.4 |
+| `m8.z4.gamme` | Par gamme | By price range | Idem |
+| `m8.z4.origine` | Par origine déclarée | By declared origin | Idem. Pays saisi à la réservation, jamais « origine des voyageurs » |
+| `controle.filtre.gamme` | Gamme tarifaire | Price range | `ctrl.filtre.gamme` de la section 5, implémentée sous `controle.` comme `controle.vue_nationale` |
+| `controle.filtre.toutes` | Toutes | All | `ctrl.filtre.toutes` de la section 5, idem |
+| `controle.filtre.typologie` | Typologie | Type | `ctrl.filtre.typologie` de la section 5, idem. En-tête des croisements de la zone 3 de `M5` |

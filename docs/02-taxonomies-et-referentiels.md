@@ -444,6 +444,23 @@ Cette énumération produit un résultat publiable : l'écart entre une liste ad
 
 `PAIEMENT_CARTE` et `PAIEMENT_MOBILE_MONEY` alimentent l'indice de maturité numérique.
 
+### 12.1 Paliers de capacité de salle (`PALIER_SALLE`)
+
+*Énumération ajoutée par le document 16, section B.2.*
+
+| Code | Libellé | Borne |
+|---|---|---|
+| `P1` | Moins de 20 places | 1 à 19 |
+| `P2` | 20 à 49 places | 20 à 49 |
+| `P3` | 50 à 99 places | 50 à 99 |
+| `P4` | 100 à 199 places | 100 à 199 |
+| `P5` | 200 à 499 places | 200 à 499 |
+| `P6` | 500 places et plus | 500 et plus |
+
+Le palier est **calculé** à partir du champ `capacite` de `etablissement_equipement` pour `SALLE_REUNION`, jamais saisi. Il sert au filtre de capacité minimale et à la répartition de la zone 6 de `M7_EVENEMENTIEL`.
+
+Conséquence mécanique : une salle déclarée sans capacité n'appartient à aucun palier. Elle compte parmi les établissements disposant d'une salle, pas dans la répartition par palier.
+
 ---
 
 ## 13. Demande institutionnelle

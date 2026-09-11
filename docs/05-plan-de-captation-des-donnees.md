@@ -67,6 +67,28 @@ Une fiche à laquelle manque l'un de ces champs est enregistrée mais comptée c
 ### Champs complémentaires
 `quartier`, `adresse_texte`, `precision_geo`, `capacite_source`, `tarif_min_gnf`, `tarif_max_gnf`, `site_web`, `facebook`, `instagram`, `presence_ota`, `telephone_2`, `whatsapp`, `email`, `statut_verification`, `date_derniere_verification`, `consentement_publication`, `notes`.
 
+**Équipements et services, quinze colonnes à plat** (document 16, section C.2). Elles sont renseignées pendant l'appel de qualification, en même temps que la fiche, et figurent dans le même fichier d'import : deux fichiers imposeraient au collecteur de tenir deux tableurs cohérents entre eux, ce qui produirait des désynchronisations.
+
+| Colonne | Valeurs |
+|---|---|
+| `equip_restauration` | O, N, vide |
+| `equip_salle_reunion` | O, N, vide |
+| `equip_salle_capacite` | Entier, renseigné si `equip_salle_reunion` vaut O |
+| `equip_groupe_electrogene` | O, N, vide |
+| `equip_wifi` | O, N, vide |
+| `equip_climatisation` | O, N, vide |
+| `equip_eau_chaude` | O, N, vide |
+| `equip_parking` | O, N, vide |
+| `equip_piscine` | O, N, vide |
+| `equip_navette_aeroport` | O, N, vide |
+| `equip_blanchisserie` | O, N, vide |
+| `equip_securite_24h` | O, N, vide |
+| `equip_acces_pmr` | O, N, vide |
+| `equip_paiement_carte` | O, N, vide |
+| `equip_paiement_mobile_money` | O, N, vide |
+
+Trois valeurs et non deux : une cellule vide signifie « non demandé », ce qui est différent de « absent ». Un équipement non renseigné ne doit pas peser dans `MAT_INDICE` comme une absence avérée. Les règles de traitement à l'import figurent au document 9 bis, section H.4.1.
+
 ### Indicateurs alimentés
 Toute la famille `OFF_`, toute la famille `MAT_`, et le dénominateur de `TEN_INDICE_TENSION`.
 
@@ -93,7 +115,7 @@ Le champ `statut_relation` doit exister **avant** tout import de recensement. Sa
 Que propose concrètement chaque établissement, et le pays peut il accueillir un événement.
 
 ### Déclencheur
-Renseigné pendant l'appel de qualification, en même temps que la fiche.
+Renseigné pendant l'appel de qualification, en même temps que la fiche. Collecté dans le même fichier d'import, colonnes `equip_*` de la section 3 (document 16, section C.2).
 
 ### Table cible
 `etablissement_equipement`, une ligne par équipement.

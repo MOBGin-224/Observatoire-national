@@ -13,7 +13,27 @@ export type CelluleTerritoire = {
   libelle: string;
   valeur: number;
   mention?: string;
+  /*
+   * Absence de donnee declaree explicitement. Sans elle, une valeur nulle vaut
+   * absence : juste pour un effectif, faux pour un indice, ou zero est une
+   * mesure (un territoire dont aucun etablissement n'est numerise).
+   */
+  sansDonnee?: boolean;
+  /* Valeur deja formatee, pour une grandeur qui n'est pas un effectif (un taux). */
+  valeurAffichee?: string;
+  /* Texte d'une tuile sans donnee, "Aucune donnee" par defaut. */
+  texteSansDonnee?: string;
 };
+
+function classeCellule(cellule: CelluleTerritoire, seuils: number[]): number | null {
+  if (cellule.sansDonnee === true) return null;
+  if (cellule.sansDonnee === false && cellule.valeur <= 0) return 0;
+  return classeDensite(cellule.valeur, seuils);
+}
+
+function estSansDonnee(cellule: CelluleTerritoire): boolean {
+  return cellule.sansDonnee ?? cellule.valeur <= 0;
+}
 
 /*
  * Grille de tuiles territoriales, substitut de la carte de densité tant
@@ -37,7 +57,7 @@ export function TuilesTerritoriales({ cellules }: { cellules: CelluleTerritoire[
       style={{ gap: "var(--space-2)", gridTemplateColumns: "repeat(auto-fill, minmax(9.5rem, 1fr))" }}
     >
       {cellules.map((cellule) => {
-        const classe = classeDensite(cellule.valeur, seuils);
+        const classe = classeCellule(cellule, seuils);
         const sansDonnee = classe === null;
         return (
           <li
@@ -71,7 +91,7 @@ export function TuilesTerritoriales({ cellules }: { cellules: CelluleTerritoire[
               <span
                 style={{ fontSize: "var(--text-meta)", lineHeight: 1.3, color: "var(--color-text-muted)" }}
               >
-                {t("carte.aucune_donnee")}
+                {cellule.texteSansDonnee ?? t("carte.aucune_donnee")}
               </span>
             ) : (
               <span className="flex flex-col">
@@ -85,7 +105,7 @@ export function TuilesTerritoriales({ cellules }: { cellules: CelluleTerritoire[
                     lineHeight: 1.1,
                   }}
                 >
-                  {formatNombre(cellule.valeur)}
+                  {cellule.valeurAffichee ?? formatNombre(cellule.valeur)}
                 </span>
                 {cellule.mention && (
                   <span
@@ -108,17 +128,23 @@ export function TuilesTerritoriales({ cellules }: { cellules: CelluleTerritoire[
 export function LegendeDensite({
   cellules,
   note,
+  etiquette,
+  libelleSansDonnee,
 }: {
   cellules: CelluleTerritoire[];
   note?: string;
+  /* Grandeur portee par l'echelle, "Densite" par defaut. Un indice n'est pas une densite. */
+  etiquette?: string;
+  /* Legende de la trame, quand la fiche du module en prescrit une (document 9 quater, L.8). */
+  libelleSansDonnee?: string;
 }) {
   const seuils = paliersDensite(cellules.map((c) => c.valeur));
-  const sansDonnee = cellules.filter((c) => c.valeur <= 0).length;
+  const sansDonnee = cellules.filter(estSansDonnee).length;
 
   return (
     <div className="flex flex-wrap items-center justify-between" style={{ gap: "var(--space-4)" }}>
       <div className="flex items-center" style={{ gap: "var(--space-3)" }}>
-        <span className="etiquette">{t("carte.legende_densite")}</span>
+        <span className="etiquette">{etiquette ?? t("carte.legende_densite")}</span>
         <div className="flex items-center" style={{ gap: "var(--space-1)" }}>
           {ECHELLE_DENSITE.map((aplat, index) => (
             <span
@@ -159,7 +185,9 @@ export function LegendeDensite({
           }}
         />
         <span style={{ fontSize: "var(--text-meta)", color: "var(--color-text-muted)" }}>
-          {t("carte.legende_hachure", { n: String(sansDonnee) })}
+          {libelleSansDonnee
+            ? `${libelleSansDonnee} (${sansDonnee})`
+            : t("carte.legende_hachure", { n: String(sansDonnee) })}
         </span>
       </div>
 

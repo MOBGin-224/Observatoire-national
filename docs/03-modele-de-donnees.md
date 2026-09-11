@@ -111,9 +111,11 @@ Modèle unique pour toutes les listes du document 2.
 | `ordre` | integer |
 | `actif` | boolean |
 
-**Domaines :** `NIVEAU_TERRITOIRE`, `TYPOLOGIE`, `GAMME`, `STATUT_RELATION`, `STATUT_RESULTAT`, `STATUT_DONNEE`, `FIABILITE`, `SOURCE_RECENSEMENT`, `STATUT_VERIFICATION`, `PROFIL`, `NIVEAU_GEO`, `MODULE`, `CANAL`, `APPAREIL`, `MOTIF_SEJOUR`, `LANGUE`, `CONSENTEMENT`, `TYPE_EVENEMENT`, `RECURRENCE`, `PORTEE_EVENEMENT`, `STATUT_TERRAIN`, `EQUIPEMENT`, `TYPE_DEMANDE_INST`, `STATUT_DEMANDE_INST`, `ETAT_ROUTE`, `PRATICABILITE`, `INFRA_TRANSPORT`.
+**Domaines :** `NIVEAU_TERRITOIRE`, `TYPOLOGIE`, `GAMME`, `STATUT_RELATION`, `STATUT_RESULTAT`, `STATUT_DONNEE`, `FIABILITE`, `SOURCE_RECENSEMENT`, `STATUT_VERIFICATION`, `PROFIL`, `NIVEAU_GEO`, `MODULE`, `CANAL`, `APPAREIL`, `MOTIF_SEJOUR`, `LANGUE`, `CONSENTEMENT`, `TYPE_EVENEMENT`, `RECURRENCE`, `PORTEE_EVENEMENT`, `STATUT_TERRAIN`, `EQUIPEMENT`, `TYPE_DEMANDE_INST`, `STATUT_DEMANDE_INST`, `ETAT_ROUTE`, `PRATICABILITE`, `INFRA_TRANSPORT`, `PALIER_SALLE`.
 
-Une seule table plutôt que vingt-sept. Les clés étrangères pointent sur le couple domaine et code.
+`PALIER_SALLE` est ajouté par le document 16, section B.2.
+
+Une seule table plutôt que vingt-huit. Les clés étrangères pointent sur le couple domaine et code.
 
 ### `gamme_tarifaire_borne`
 
@@ -529,6 +531,30 @@ Trois usages : le nombre d'indicateurs par module, affiché sur les cartes d'acc
 
 *Table ajoutée par le document 15, section 5. Migration de rang 10.*
 
+### `coefficient_retombees`
+
+Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE`, avec sa source et sa validation. Le module `M8_RETOMBEES` doit afficher les trois à côté du chiffre (document 9 quater, section M.6), et rien d'autre dans le modèle ne pouvait les accueillir.
+
+| Champ | Type | Note |
+|---|---|---|
+| `id` | uuid, PK | |
+| `valeur` | numeric | Multiplicateur appliqué à la dépense d'hébergement |
+| `source_libelle` | text | Nom de la source, affiché à l'écran |
+| `source_reference` | text | Référence complète, publication et année |
+| `perimetre_source` | text | Pays ou zone couverte par la source |
+| `date_validation` | date | Date de validation par la direction |
+| `date_effet`, `date_fin` | date | Versionnage |
+| `courante` | boolean | Une seule vraie à la fois |
+| `notes` | text | Réserves méthodologiques éventuelles |
+
+**`perimetre_source` est le champ le plus important.** Si le coefficient provient d'un pays voisin, l'écran doit le dire. Une transposition assumée est défendable, une transposition tue ne l'est pas.
+
+**Règle d'activation.** `M8_RETOMBEES` ne s'ouvre à aucun compte tant que cette table ne contient pas une ligne courante avec `source_libelle`, `perimetre_source` et `date_validation` renseignés. La règle est tenue par la base, dans les fonctions `module_actif` et `mes_modules` : une ligne de `compte_module` activée par erreur ne suffit pas à ouvrir le module. Elle s'ajoute aux trois conditions du document 9 quater, section M.3, elle ne les remplace pas.
+
+**Aucune ligne n'est saisie par estimation** (document 16, section B.4). La table est vide au lancement, et c'est l'état attendu.
+
+*Table ajoutée par le document 16, section B.4.*
+
 ---
 
 ## 12. Agrégats
@@ -540,6 +566,13 @@ Nommage : `mv_<module>_<niveau>`, par exemple `mv_offre_commune`, `mv_tension_pr
 Chaque vue applique la règle de masquage et expose systématiquement trois colonnes de contexte : effectif de l'échantillon, niveau de fiabilité, horodatage du calcul. L'application n'a jamais à recalculer un seuil, la vue lui livre le verdict.
 
 Restent en lecture directe, sans matérialisation, les compteurs de volume brut des modules Offre et Demande, qui doivent apparaître en temps réel.
+
+**Deux calculs à la lecture, par nature** (document 16, mise en œuvre du 11 septembre 2026).
+
+- Les agrégats de `M7_EVENEMENTIEL` portent sur une fenêtre choisie à l'écran : dates, territoire, gamme, capacité de salle. Ils ne se pré-calculent pas. La fonction `evenementiel_fenetre` les produit à la demande, applique elle-même les contrôles des vues d'accès (compte valide, module actif, territoire visible) et ne renvoie que des agrégats, jamais une ligne d'établissement. La règle M1 y masque la part partenaires, dont le vendu révélerait sinon l'occupation d'un établissement identifiable.
+- L'estimation de `M8_RETOMBEES` n'est jamais stockée. La vue d'accès la calcule à la lecture à partir du seul coefficient courant et valide (section 11) : un coefficient révisé s'applique sans rafraîchissement, et aucun écart ne peut s'installer entre le chiffre affiché et le coefficient affiché à côté.
+
+Le niveau de fiabilité de chaque vue suit la règle transverse du document 4, section 1, calculée par une fonction unique, `niveau_fiabilite`, et par `fiabilite_la_plus_faible` pour les indicateurs composites.
 
 ---
 

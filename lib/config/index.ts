@@ -61,7 +61,16 @@ export const DOUBLON = {
 } as const;
 
 /**
- * Vue unique des douze parametres, pour l'ecran de methodologie et pour la
+ * Document 16, section B.2, et document 9 ter, section J.7. Options du filtre
+ * de capacite de salle minimale : les bornes basses des paliers P2 a P6. La
+ * base calcule les paliers sur les memes bornes (observatoire.palier_salle).
+ */
+export const EVENEMENTIEL = {
+  capacitesSalleMinimales: [20, 50, 100, 200, 500],
+} as const;
+
+/**
+ * Vue unique des parametres, pour l'ecran de methodologie et pour la
  * verification de recette. Ne pas lire une valeur ici dans du code metier :
  * passer par la constante du domaine concerne.
  */
@@ -72,6 +81,7 @@ export const CONFIGURATION = {
   LOGO,
   CONSERVATION,
   DOUBLON,
+  EVENEMENTIEL,
 } as const;
 
 /**

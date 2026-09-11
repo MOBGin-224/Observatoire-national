@@ -1,18 +1,6 @@
 import Link from "next/link";
+import { SECTIONS_ADMINISTRATION as CARTES } from "@/lib/administration/sections";
 import { t } from "@/lib/i18n";
-
-const CARTES = [
-  {
-    href: "/administration/institutions",
-    titre: "admin.carte_institutions.titre",
-    description: "admin.carte_institutions.description",
-  },
-  {
-    href: "/administration/recensement",
-    titre: "admin.carte_import.titre",
-    description: "admin.carte_import.description",
-  },
-] as const;
 
 /*
  * Ecran d'atterrissage M11_ADMIN (document 9bis, partie H). Lot 1 : deux

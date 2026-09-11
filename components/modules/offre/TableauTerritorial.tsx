@@ -219,8 +219,9 @@ export function TableauTerritorial({
   );
 }
 
-/* Micro-barre posee sous le chiffre : le rang se lit sans comparer les nombres. */
-function CelluleVolume({
+/* Micro-barre posee sous le chiffre : le rang se lit sans comparer les nombres.
+   Exportee pour les tableaux territoriaux des autres modules (M5, M6). */
+export function CelluleVolume({
   valeur,
   maximum,
   teinte = "var(--color-primary-500)",
@@ -255,7 +256,7 @@ function CelluleVolume({
 }
 
 /* Un taux se lit sur une echelle fixe de zero a cent, la meme pour toutes les lignes. */
-function CelluleTaux({ valeur }: { valeur: number | null }) {
+export function CelluleTaux({ valeur }: { valeur: number | null }) {
   if (valeur === null) {
     return (
       <td
@@ -297,7 +298,7 @@ function CelluleTaux({ valeur }: { valeur: number | null }) {
   );
 }
 
-function CelluleTotal({ valeur }: { valeur: number }) {
+export function CelluleTotal({ valeur }: { valeur: number }) {
   return (
     <td
       className="chiffres-tabulaires"

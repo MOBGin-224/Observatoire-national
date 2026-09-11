@@ -18,6 +18,26 @@ export type Territoire = {
  *
  * `codeParent` a null retourne le premier echelon, celui des regions.
  */
+/** Un territoire du referentiel par son code, null s'il n'existe pas. */
+export async function chargerTerritoire(code: string): Promise<Territoire | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("territoire")
+    .select("code, libelle, niveau, code_parent")
+    .eq("code", code)
+    .eq("actif", true)
+    .maybeSingle();
+
+  if (error || !data) return null;
+
+  return {
+    code: data.code,
+    libelle: data.libelle,
+    niveau: data.niveau,
+    codeParent: data.code_parent,
+  };
+}
+
 export async function chargerTerritoiresEnfants(
   codeParent: string | null,
   niveau: string

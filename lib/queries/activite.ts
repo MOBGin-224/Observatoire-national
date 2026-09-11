@@ -12,7 +12,10 @@ export type ActiviteNationale = {
   actTauxAnnulation: number | null;
   actTauxNonPresentation: number | null;
   actTauxConversion: number | null;
+  /* Document 16, B.1 : sous 10 reservations et 3 etablissements, la vue masque
+     et ne livre aucun niveau. */
   actMasque: boolean;
+  niveauFiabilite: string | null;
   actEffectifPartenaires: number;
   actEffectifRecherches: number;
   calculeA: string;
@@ -40,6 +43,7 @@ export async function chargerActiviteNationale(): Promise<ActiviteNationale | nu
     actTauxNonPresentation: data.act_taux_non_presentation,
     actTauxConversion: data.act_taux_conversion,
     actMasque: data.act_masque,
+    niveauFiabilite: data.niveau_fiabilite ?? null,
     actEffectifPartenaires: data.act_effectif_partenaires,
     actEffectifRecherches: data.act_effectif_recherches,
     calculeA: data.calcule_a,

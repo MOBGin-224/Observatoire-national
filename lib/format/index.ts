@@ -13,6 +13,21 @@ export function formatPourcentage(valeur: number, decimales = 1): string {
   return `${formatNombre(valeur, decimales)} %`;
 }
 
+/* Coefficient multiplicateur : jusqu'a trois decimales, sans zeros de remplissage. */
+export function formatCoefficient(valeur: number): string {
+  return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(valeur);
+}
+
+/* Document 10, section 2 : date courte, 07/09/2026, fuseau Africa/Conakry. */
+export function formatDate(iso: string): string {
+  return new Intl.DateTimeFormat("fr-FR", {
+    timeZone: "Africa/Conakry",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(iso));
+}
+
 export function formatDateHeure(iso: string): string {
   return new Intl.DateTimeFormat("fr-FR", {
     timeZone: "Africa/Conakry",

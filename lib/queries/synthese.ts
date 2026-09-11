@@ -23,8 +23,17 @@ export type ValeursSynthese = {
   calculeA: string;
 };
 
-/* Une entrée par vue d'accès : colonne à lire, et code d'indicateur servi. */
-const SOURCES: { vue: string; colonnes: Record<string, string> }[] = [
+/*
+ * Une entrée par vue d'accès : colonne à lire, et code d'indicateur servi.
+ * `fiabilite` désigne, pour un indicateur, la colonne de niveau qui lui est
+ * propre quand la vue en porte plusieurs (document 16, section B.1) ; à
+ * défaut, l'indicateur prend `niveau_fiabilite`.
+ */
+const SOURCES: {
+  vue: string;
+  colonnes: Record<string, string>;
+  fiabilite?: Record<string, string>;
+}[] = [
   {
     vue: "acces_offre_national",
     colonnes: {
@@ -51,6 +60,7 @@ const SOURCES: { vue: string; colonnes: Record<string, string> }[] = [
       ten_taux_infructueux: "TEN_TAUX_INFRUCTUEUX",
       ten_capacite_manquante: "TEN_CAPACITE_MANQUANTE",
     },
+    fiabilite: { TEN_CAPACITE_MANQUANTE: "ten_capacite_manquante_fiabilite" },
   },
   {
     vue: "acces_conformite_national",
@@ -110,10 +120,13 @@ export async function chargerValeursSynthese(): Promise<ValeursSynthese> {
 
     for (const [colonne, code] of Object.entries(source.colonnes)) {
       const brut = ligne[colonne];
+      const colonneFiabilite = source.fiabilite?.[code];
       parCode[code] = {
         valeur: typeof brut === "number" ? brut : brut === null ? null : Number(brut),
         masque,
-        niveauFiabilite,
+        niveauFiabilite: colonneFiabilite
+          ? ((ligne[colonneFiabilite] as string) ?? null)
+          : niveauFiabilite,
       };
     }
 

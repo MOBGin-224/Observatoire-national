@@ -14,7 +14,11 @@ import { chargerOffreRegions } from "@/lib/queries/offre";
 import { chargerDemandeSaisonnalite } from "@/lib/queries/demande";
 import { chargerTensionNationale } from "@/lib/queries/tension";
 import { chargerTerritoiresEnfants } from "@/lib/queries/territoire";
-import { compterIndicateursParModule } from "@/lib/queries/methodologie";
+import {
+  compterIndicateursDocumentes,
+  compterIndicateursParModule,
+} from "@/lib/queries/methodologie";
+import { SECTIONS_ADMINISTRATION } from "@/lib/administration/sections";
 import { blocsDuProfil, varianteDuBloc } from "@/lib/synthese/blocs";
 import { t } from "@/lib/i18n";
 
@@ -81,20 +85,49 @@ const ROUTE_MODULE: Record<string, string> = {
   M11_ADMIN: "/administration",
 };
 
+/*
+ * Document 16, section B.3 : le compteur d'une carte d'acces depend de la
+ * nature du module. M10 et M11 ne portent aucun indicateur en propre ; leur
+ * afficher un compte d'indicateurs rattaches produirait zero ou rien.
+ */
+function compteurCarte(
+  code: string,
+  parModule: Record<string, number>,
+  documentes: number
+): string | null {
+  if (code === "M10_METHODO") {
+    return documentes > 0 ? t("module.compteur.documentes", { n: documentes }) : null;
+  }
+  if (code === "M11_ADMIN") {
+    return t("module.compteur.sections", { n: SECTIONS_ADMINISTRATION.length });
+  }
+  const nombre = parModule[code] ?? 0;
+  return nombre > 0 ? t("module.compteur.indicateurs", { n: nombre }) : null;
+}
+
 export default async function Synthese() {
   const compte = await chargerMonCompte();
   if (!compte) return <EtatVide />;
 
-  const [valeurs, modulesActifs, regions, territoires, saisonnalite, tension, nbIndicateurs] =
-    await Promise.all([
-      chargerValeursSynthese(),
-      chargerMesModules(),
-      chargerOffreRegions(),
-      chargerTerritoiresEnfants(null, "REGION"),
-      chargerDemandeSaisonnalite(),
-      chargerTensionNationale(),
-      compterIndicateursParModule(),
-    ]);
+  const [
+    valeurs,
+    modulesActifs,
+    regions,
+    territoires,
+    saisonnalite,
+    tension,
+    nbIndicateurs,
+    nbDocumentes,
+  ] = await Promise.all([
+    chargerValeursSynthese(),
+    chargerMesModules(),
+    chargerOffreRegions(),
+    chargerTerritoiresEnfants(null, "REGION"),
+    chargerDemandeSaisonnalite(),
+    chargerTensionNationale(),
+    compterIndicateursParModule(),
+    compterIndicateursDocumentes(),
+  ]);
 
   const blocs = blocsDuProfil(compte.profil);
 
@@ -201,7 +234,7 @@ export default async function Synthese() {
           >
             {ORDRE_MODULES.filter((code) => modulesActifs.includes(code)).map((code) => {
               const cle = CLE_MODULE[code];
-              const nombre = nbIndicateurs[code] ?? 0;
+              const compteur = compteurCarte(code, nbIndicateurs, nbDocumentes);
               return (
                 <Link
                   key={code}
@@ -234,9 +267,9 @@ export default async function Synthese() {
                   >
                     {t(`module.${cle}.description`)}
                   </span>
-                  {nombre > 0 && (
+                  {compteur && (
                     <span className="etiquette" style={{ color: "var(--color-text-muted)" }}>
-                      {t("methodologie.nb_indicateurs", { n: nombre })}
+                      {compteur}
                     </span>
                   )}
                 </Link>

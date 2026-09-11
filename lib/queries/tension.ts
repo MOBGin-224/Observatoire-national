@@ -7,6 +7,11 @@ export type LigneTension = {
   tenIndiceTension: number | null;
   tenRepartitionEchec: Record<string, number>;
   effectifEchantillon: number;
+  /* Document 16, B.1 : trois niveaux, un par nature de mesure. Le taux et la
+     capacite manquante suivent la regle de la demande, l'indice est composite. */
+  niveauFiabilite: string | null;
+  tenCapaciteManquanteFiabilite: string | null;
+  tenIndiceFiabilite: string | null;
   calculeA: string;
 };
 
@@ -25,6 +30,9 @@ export async function chargerTensionNationale(): Promise<LigneTension | null> {
     tenIndiceTension: data.ten_indice_tension,
     tenRepartitionEchec: data.ten_repartition_echec ?? {},
     effectifEchantillon: data.effectif_echantillon,
+    niveauFiabilite: data.niveau_fiabilite ?? null,
+    tenCapaciteManquanteFiabilite: data.ten_capacite_manquante_fiabilite ?? null,
+    tenIndiceFiabilite: data.ten_indice_fiabilite ?? null,
     calculeA: data.calcule_a,
   };
 }

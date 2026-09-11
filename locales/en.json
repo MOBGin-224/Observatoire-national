@@ -55,7 +55,11 @@
         "doublon_potentiel": "Potential duplicate of an already surveyed establishment",
         "territoire_non_resolu": "Territory not recognised: {valeur}",
         "valeur_enumeration_invalide": "Unrecognised value for {champ}: {valeur}",
-        "plafond_depasse": "File too large: {lignes} rows detected, {plafond} maximum. Split the file into several batches."
+        "plafond_depasse": "File too large: {lignes} rows detected, {plafond} maximum. Split the file into several batches.",
+        "capacite_salle_sans_salle": "Room capacity entered with no meeting room declared: equip_salle_reunion is N or empty."
+      },
+      "avertissement": {
+        "salle_sans_capacite": "Meeting room declared without capacity: the row is imported, capacity remains to be recorded."
       },
       "format": "CSV file, semicolon delimiter.",
       "historique": {
@@ -71,7 +75,10 @@
         "lignes_erreur": "{n} rows with errors",
         "lignes_valides": "{n} valid rows",
         "motif": "Reason",
-        "titre": "Control report"
+        "titre": "Control report",
+        "lignes_avertissement": "{n} rows with warnings",
+        "avertissements": "Warnings",
+        "colonne_ligne": "Row"
       },
       "titre": "Survey import",
       "valider": "Validate import",
@@ -129,13 +136,20 @@
     "legende_densite": "Density",
     "legende_hachure": "No data ({n})",
     "legende_sans_echelle": "Scale not established, no establishment recorded",
+    "aucune_capacite": "No surveyed capacity",
+    "aucune_donnee_conformite": "No compliance data",
     "sans_contour": "Boundaries for the administrative division redrawn on 20 August 2026 are not available in any reusable file. Territories are shown here as a grid, without geometry."
   },
   "controle": {
     "export": "Export",
     "national": "National",
     "niveau": "Territorial level",
-    "vue_nationale": "National view"
+    "vue_nationale": "National view",
+    "filtre": {
+      "gamme": "Price range",
+      "toutes": "All",
+      "typologie": "Type"
+    }
   },
   "impression": {
     "emis_par": "Issued by",
@@ -199,10 +213,14 @@
       "titre": "Sources and channels"
     },
     "statut_donnee": "Data status",
-    "unite": "Unit",
-    "nb_indicateurs": "{n} indicators"
+    "unite": "Unit"
   },
   "module": {
+    "compteur": {
+      "indicateurs": "{n} indicators",
+      "documentes": "{n} documented indicators",
+      "sections": "{n} sections"
+    },
     "m1": {
       "code": "M1 · Supply",
       "court": "Supply",
@@ -321,24 +339,30 @@
       "description": "Where demand goes unmet, and what kind of gap lies behind it."
     },
     "m5": {
+      "code": "M5 · Compliance",
       "court": "Compliance",
+      "question": "What is the registration and classification status of Guinea's accommodation stock?",
       "titre": "Compliance and classification",
       "description": "Registration and classification status of the accommodation stock."
     },
     "m6": {
+      "code": "M6 · Digital maturity",
       "court": "Digital maturity",
+      "question": "How digitalised is the accommodation sector, and where are the gaps?",
       "titre": "Sector digital maturity",
       "description": "The sector's level of digitalisation, establishment by establishment and territory by territory."
     },
     "m7": {
+      "code": "M7 · Events",
       "court": "Events",
-      "decomposition_partenaires": "Available partners: actual availability known",
-      "decomposition_recenses": "Recorded non-bookable: theoretical capacity, availability unknown",
+      "question": "Can the country accommodate a given event, on given dates, in a given territory?",
       "titre": "Events and demand peaks",
       "description": "Accommodation capacity that can be mobilised for an event's dates, and the gap with declared needs."
     },
     "m8": {
+      "code": "M8 · Estimated impact",
       "court": "Estimated impact",
+      "question": "What economic impact does accommodation activity generate?",
       "titre": "Estimated economic impact",
       "description": "Estimated economic impact of accommodation activity, with published method and multiplier."
     },
@@ -354,6 +378,210 @@
       "evolution": "Search volume over time",
       "acces": "Module access"
     }
+  },
+  "m5": {
+    "z1": {
+      "titre": "Key indicators",
+      "aide": "Registration and classification status for the selected scope."
+    },
+    "z2": {
+      "titre": "Registration rate by territory",
+      "aide": "Share of surveyed establishments with documented administrative registration."
+    },
+    "z3": {
+      "titre": "Breakdown by type and price range",
+      "aide": "Registration and classification by establishment type and price level."
+    },
+    "z4": {
+      "titre": "Classification readiness",
+      "aide": "Establishments whose record is complete enough to enter a classification process. This section draws on the survey and requires no administrative transmission.",
+      "col": {
+        "territoire": "Territory",
+        "recenses": "Surveyed",
+        "completes": "Complete records",
+        "verifiees": "Verified records",
+        "prets": "Ready for classification"
+      }
+    },
+    "z5": {
+      "titre": "Gap between official list and field",
+      "aide": "Establishments listed by the administration and invalidated by field collection.",
+      "col": {
+        "territoire": "Territory",
+        "fermes": "Permanently closed",
+        "inexistants": "Non-existent",
+        "reclasses": "Reclassified",
+        "total": "Total gap"
+      }
+    },
+    "z6": {
+      "titre": "Territory breakdown",
+      "aide": "Survey, registration and classification, territory by territory.",
+      "col": {
+        "territoire": "Territory",
+        "recenses": "Surveyed",
+        "enregistres": "Registered",
+        "classes": "Classified",
+        "non_documentes": "Registration undocumented"
+      }
+    },
+    "provenance": "Administrative transmission · source: {source} · data as of {date}"
+  },
+  "m6": {
+    "z1": {
+      "titre": "Key indicators",
+      "aide": "Sector digitalisation level for the selected scope."
+    },
+    "z2": {
+      "titre": "Maturity index by territory",
+      "aide": "Average digitalisation score of surveyed establishments, out of 100."
+    },
+    "z3": {
+      "titre": "Index breakdown",
+      "aide": "Share of establishments having each of the index's six components."
+    },
+    "z4": {
+      "titre": "Maturity by establishment type",
+      "aide": "Average index by establishment type."
+    },
+    "z5": {
+      "titre": "Maturity by price range",
+      "aide": "Average index by price level."
+    },
+    "z6": {
+      "titre": "Territory ranking",
+      "aide": "Territories ranked by maturity index. Ascending order identifies lagging areas, descending order reference areas.",
+      "col": {
+        "territoire": "Territory",
+        "etablissements": "Establishments",
+        "indice": "Index",
+        "presence": "Online presence",
+        "reservation": "Bookable online",
+        "paiement": "Digital payment"
+      },
+      "tri_croissant": "Ascending order",
+      "tri_decroissant": "Descending order"
+    },
+    "comp": {
+      "presence": "Online presence",
+      "reservation": "Online booking channel",
+      "tarifs": "Published rates",
+      "contact": "Valid contact details",
+      "carte": "Card payment",
+      "mobile": "Mobile money payment",
+      "poids": "Weight {n}",
+      "renseigne": "Recorded for {n} of {total} establishments"
+    },
+    "effectif": "{n} establishments",
+    "avertissement": "This index measures digitalisation only. It is in no way a quality rating of establishments."
+  },
+  "m7": {
+    "z1": {
+      "titre": "Analysed window"
+    },
+    "z2": {
+      "titre": "Key indicators",
+      "aide": "Accommodation capacity and pressure over the selected window."
+    },
+    "z3": {
+      "titre": "Mobilisable capacity breakdown",
+      "aide": "Mobilisable capacity breaks down into three parts of differing reliability. Only the first reflects genuinely known availability.",
+      "partenaires": {
+        "_": "Available partners",
+        "aide": "Actual availability known."
+      },
+      "recenses": {
+        "_": "Surveyed, not bookable",
+        "aide": "Theoretical capacity. Availability of these establishments is unknown."
+      },
+      "vendu": {
+        "_": "Already sold",
+        "aide": "Removed from availability over the window."
+      }
+    },
+    "z4": {
+      "titre": "Mobilisable capacity by territory"
+    },
+    "z5": {
+      "titre": "Capacity by price range",
+      "aide": "Breakdown of surveyed capacity by price level."
+    },
+    "z6": {
+      "titre": "Meeting rooms",
+      "aide": "Establishments with a meeting room, by capacity bracket.",
+      "col": {
+        "palier": "Capacity bracket",
+        "etablissements": "Establishments",
+        "places": "Total seats"
+      }
+    },
+    "z7": {
+      "titre": "Institutional requests over the window",
+      "aide": "Declared accommodation needs whose dates overlap the analysed window.",
+      "col": {
+        "libelle": "Title",
+        "type": "Type",
+        "dates": "Dates",
+        "demandees": "Units requested",
+        "couvertes": "Units covered",
+        "statut": "Status"
+      },
+      "periode": "{debut} to {fin}"
+    },
+    "fenetre": {
+      "format": "{evenement} · {territoire} · {debut} to {fin} · {nuits} nights",
+      "dates_libres": "Custom dates · {territoire} · {debut} to {fin} · {nuits} nights",
+      "aucune": "No event on record. Select custom dates."
+    },
+    "selecteur": {
+      "titre": "Window",
+      "evenement": "Recorded event",
+      "dates_libres": "Custom dates",
+      "choisir_evenement": "Choose an event",
+      "date_debut": "Start date",
+      "date_fin": "End date"
+    },
+    "filtre": {
+      "capacite_salle": "Minimum room capacity",
+      "aucune": "None",
+      "places": "{n} seats and over"
+    },
+    "avertissement": "This screen measures capacity. It guarantees no availability and enables no booking."
+  },
+  "m8": {
+    "z1": {
+      "titre": "Method applied"
+    },
+    "z2": {
+      "titre": "Key indicators",
+      "aide": "Observed accommodation spending and total spending estimate."
+    },
+    "z3": {
+      "titre": "Observed spending over time",
+      "aide": "Accommodation spending across the commercialised scope. Observed data, not estimated."
+    },
+    "z4": {
+      "titre": "Breakdowns",
+      "aide": "Observed spending by type, price range and declared origin.",
+      "typologie": "By type",
+      "gamme": "By price range",
+      "origine": "By declared origin"
+    },
+    "z5": {
+      "titre": "Territory breakdown",
+      "col": {
+        "territoire": "Territory",
+        "nuitees": "Room nights",
+        "observee": "Observed spending",
+        "estimee": "Estimated spending"
+      }
+    },
+    "methode": {
+      "format": "Estimate. Multiplier {valeur} applied to observed accommodation spending. Source: {source}, scope {perimetre}. Validated on {date}.",
+      "lien": "View methodology",
+      "absent": "Module disabled: no validated multiplier on record."
+    },
+    "avertissement": "Observed spending covers only the scope commercialised by SIMANDOU SEJOUR. The estimate derives from it and does not measure the entire sector."
   },
   "nav": {
     "aide": "Help",
@@ -427,6 +655,10 @@
       "reservations": "No reservation for this period.",
       "saisonnalite": "The history is still too short to identify seasonality.",
       "salles": "No meeting room surveyed in this territory.",
+      "salles_critere": "No surveyed room meets the criterion.",
+      "capacite_decomposer": "No capacity to break down.",
+      "evolution_donnees": "Not enough data yet to plot a trend.",
+      "depense": "No spending to break down.",
       "saturation": "No saturation window detected.",
       "subdivision": "This territory has no recorded subdivision."
     }

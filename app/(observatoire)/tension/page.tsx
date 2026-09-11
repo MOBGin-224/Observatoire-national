@@ -74,6 +74,7 @@ export default async function Tension() {
               valeur={tension.tenTauxInfructueux}
               libelleVide={t("state.vide.recherches")}
               calculeA={tension.calculeA}
+              niveauFiabilite={tension.niveauFiabilite ?? undefined}
               variante="jauge"
               accent
             />
@@ -82,6 +83,7 @@ export default async function Tension() {
               valeur={capaciteManquanteVide ? null : tension.tenCapaciteManquante}
               libelleVide={t("state.estimation_non_produite")}
               calculeA={tension.calculeA}
+              niveauFiabilite={tension.tenCapaciteManquanteFiabilite ?? undefined}
               variante="volume"
               accent
             />
@@ -90,6 +92,7 @@ export default async function Tension() {
               valeur={tension.tenIndiceTension}
               libelleVide={t("state.tension_indefinie")}
               calculeA={tension.calculeA}
+              niveauFiabilite={tension.tenIndiceFiabilite ?? undefined}
               variante="volume"
               accent
             />

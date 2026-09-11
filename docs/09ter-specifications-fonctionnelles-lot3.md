@@ -59,8 +59,10 @@ Score sur 100, défini au document 4. Reproduit ici pour la lecture de l'écran,
 | Canal de réservation en ligne | 30 |
 | Tarifs publiés | 20 |
 | Coordonnées jointes valides | 10 |
-| Paiement par carte | 10 |
-| Paiement mobile money | 10 |
+| Paiement par carte | 5 |
+| Paiement mobile money | 15 |
+
+Pondération définitive arrêtée par le document 16, section A.2 : le mobile money est le canal de paiement numérique dominant en Guinée, la carte bancaire y reste marginale hors haut de gamme.
 
 ## I.6 Composition de l'écran
 
@@ -219,6 +221,8 @@ Le mode événement est le défaut lorsqu'au moins un événement futur existe. 
 | Gamme tarifaire | Multi-sélection sur `GAMME` | Toutes |
 | Capacité de salle minimale | 20, 50, 100, 200, 500 places | Aucune |
 
+Ces valeurs sont les bornes basses des paliers `PALIER_SALLE`, document 2, section 12.1.
+
 ## J.8 Comportements attendus
 
 **Zone 3, décomposition obligatoire.** La capacité mobilisable se décompose toujours en trois parts, jamais présentée en total unique :
@@ -281,7 +285,7 @@ Le mode événement est le défaut lorsqu'au moins un événement futur existe. 
 
 ## Points ouverts
 
-1. Paliers retenus pour le filtre de capacité de salle minimale.
+1. ~~Paliers retenus pour le filtre de capacité de salle minimale.~~ **Clos par le document 16, section B.2** : énumération `PALIER_SALLE`.
 2. Faut-il permettre la comparaison de deux territoires sur une même fenêtre, pour arbitrer un lieu d'accueil.
 3. Horizon maximal de projection en mode dates libres.
 4. Traitement d'une fenêtre chevauchant deux saisons, sèche et des pluies, au regard de l'accessibilité.

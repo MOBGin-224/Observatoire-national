@@ -1,5 +1,6 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { IMPORT } from "@/lib/config";
@@ -20,6 +21,10 @@ import {
  * controle applicatif explicite produit une erreur claire plutot que de
  * compter sur RLS pour renvoyer silencieusement des ensembles vides.
  */
+/* Taille de lot technique, pas un parametre metier : un fichier de 2 500 fiches
+   peut porter jusqu'a 35 000 lignes d'equipement. */
+const TAILLE_LOT_EQUIPEMENTS = 1000;
+
 async function exigerAdmin(): Promise<void> {
   const compte = await chargerMonCompte();
   if (compte?.profil !== "ADMIN") {
@@ -112,11 +117,14 @@ export async function validerImport(
   // Les doublons potentiels sont signales dans l'apercu (document 9bis H.4.1 :
   // "signalement, jamais fusion automatique") mais restent importables : le
   // choix d'ecarter une ligne signalee revient a l'operateur, pas au systeme.
-  const lignesAInserer = rapport.lignesValides;
+  /* L'identifiant est attribue ici pour rattacher les equipements a leur fiche
+     sans relire la table (document 16, section C.2). */
+  const lignesAInserer = rapport.lignesValides.map((ligne) => ({ ligne, id: randomUUID() }));
 
   if (lignesAInserer.length > 0) {
-    await supabase.from("etablissement").insert(
-      lignesAInserer.map((l) => ({
+    const { error: erreurEtablissements } = await supabase.from("etablissement").insert(
+      lignesAInserer.map(({ ligne: l, id }) => ({
+        id,
         nom: l.nom,
         typologie: l.typologie,
         code_commune: l.codeCommune,
@@ -141,6 +149,28 @@ export async function validerImport(
         actif: true,
       }))
     );
+    if (erreurEtablissements) {
+      throw new Error(`Import refuse par la base : ${erreurEtablissements.message}`);
+    }
+
+    /* Une ligne par equipement renseigne, aucune pour une cellule vide. */
+    const equipements = lignesAInserer.flatMap(({ ligne: l, id }) =>
+      l.equipements.map((e) => ({
+        id_etablissement: id,
+        code_equipement: e.codeEquipement,
+        disponible: e.disponible,
+        capacite: e.capacite,
+        source: l.sourceRecensement,
+      }))
+    );
+    for (let debut = 0; debut < equipements.length; debut += TAILLE_LOT_EQUIPEMENTS) {
+      const { error } = await supabase
+        .from("etablissement_equipement")
+        .insert(equipements.slice(debut, debut + TAILLE_LOT_EQUIPEMENTS));
+      if (error) {
+        throw new Error(`Equipements refuses par la base : ${error.message}`);
+      }
+    }
   }
 
   await supabase.from("import_recensement").insert({
@@ -151,6 +181,9 @@ export async function validerImport(
     nb_lignes_erreur: rapport.lignesErreur.length,
     rapport: {
       lignesErreur: rapport.lignesErreur,
+      lignesAvertissement: rapport.lignesValides
+        .filter((l) => l.avertissements.length > 0)
+        .map((l) => ({ numeroLigne: l.numeroLigne, motifs: l.avertissements })),
       doublonsSignales: rapport.lignesValides.filter((l) => l.doublonPotentiel).length,
     },
   });

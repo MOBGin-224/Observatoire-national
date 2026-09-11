@@ -82,6 +82,21 @@ export async function chargerVersionsIndicateur(code: string): Promise<VersionIn
  * non un prefixe de code : un indicateur appartient a plusieurs modules, et
  * `OFF_ETAB_RECENSES` compte dans cinq d'entre eux.
  */
+/**
+ * Document 16, section B.3 : M10_METHODO ne porte aucun indicateur en propre.
+ * Sa carte d'acces affiche le nombre d'indicateurs documentes, tous modules
+ * confondus.
+ */
+export async function compterIndicateursDocumentes(): Promise<number> {
+  const supabase = await createClient();
+  const { count, error } = await supabase
+    .from("indicateur")
+    .select("code", { count: "exact", head: true });
+
+  if (error || count === null) return 0;
+  return count;
+}
+
 export async function compterIndicateursParModule(): Promise<Record<string, number>> {
   const supabase = await createClient();
   const { data, error } = await supabase.from("indicateur_module").select("code_module");

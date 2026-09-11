@@ -31,6 +31,21 @@ Les établissements en `DOUBLON` sont exclus de tous les calculs. Les établisse
 
 **Format de fiche.** Code, libellé, définition, formule, unité, statut de donnée, masquage, fréquence, exemple, pièges.
 
+**Niveaux de fiabilité, règle transverse.** Applicable aux onze modules (document 16, section B.1).
+
+| Nature de l'indicateur | `CONSOLIDE` | `INDICATIF` | `SIGNAL` |
+|---|---|---|---|
+| Inventaire, comptages et ratios sur établissements | 30 établissements et plus | 10 à 29 | Moins de 10 |
+| Demande, calculs sur recherches | 30 recherches et plus | 10 à 29 | Moins de 10 |
+| Performance, calculs sur réservations | 30 réservations et 5 établissements | 10 à 29 réservations et 3 établissements | En dessous : masqué, règle M1 |
+| Demande institutionnelle | 5 demandes et plus | 2 à 4 | 1 |
+
+**Un indicateur composite hérite du niveau de fiabilité le plus faible de ses composantes.** `TEN_INDICE_TENSION` croise une mesure de demande et une mesure d'inventaire : si la demande est `CONSOLIDE` et l'inventaire `SIGNAL`, l'indice est `SIGNAL`. C'est la seule règle qui empêche un indicateur dérivé de paraître plus solide que ce sur quoi il repose.
+
+Les seuils déjà fixés dans une fiche pour un indicateur particulier priment sur la règle générale.
+
+Le niveau est calculé par la base, dans la vue qui produit l'indicateur, jamais par l'application.
+
 ---
 
 ## 2. Indicateurs d'offre (statut `RECENSE`)
@@ -101,6 +116,7 @@ Part des établissements disposant d'un canal de réservation en ligne réel, to
 Score de qualité de la fiche établissement.
 
 - Formule : somme pondérée des champs renseignés. Contact valide 30, localisation GPS 20, tarifs 20, typologie et capacité 20, présence en ligne 10
+- Pondération définitive, confirmée sans changement par le document 16, section A.2
 - Unité : score sur 100, sans décimale
 - Masquage : M0
 - Usage : prérequis technique de toute classification. Argument direct auprès de la tutelle.
@@ -139,7 +155,9 @@ Nombre d'établissements figurant sur une liste administrative et invalidés par
 
 Score composite mesurant le degré de numérisation d'un établissement.
 
-- Formule : présence en ligne 20, canal de réservation en ligne 30, tarifs publiés 20, coordonnées jointes valides 10, paiement par carte 10, paiement mobile money 10
+- Formule : présence en ligne 20, canal de réservation en ligne 30, tarifs publiés 20, coordonnées jointes valides 10, paiement par carte 5, paiement mobile money 15
+- Pondération définitive (document 16, section A.2). Le paiement par carte passe de 10 à 5, le mobile money de 10 à 15 : en Guinée, le mobile money est le canal de paiement numérique dominant, la carte bancaire reste marginale hors haut de gamme. Un indice de maturité numérique mesure la maturité dans le contexte où il s'applique, pas dans un contexte importé.
+- Composante non renseignée : elle compte pour zéro, et le niveau de fiabilité en rend compte (document 16, section C.2). Application de la règle des indicateurs composites : le niveau de l'indice est le plus faible de deux niveaux, celui de l'effectif recensé et celui de l'effectif dont les deux composantes de paiement sont renseignées.
 - Unité : score sur 100. Agrégation par moyenne territoriale
 - Masquage : M0
 - Usage : mesure chiffrée du problème que l'entreprise existe pour résoudre. Très lisible par un ministère ou un bailleur.
@@ -529,11 +547,11 @@ Ce bandeau n'est jamais masquable et est repris sur tous les exports.
 
 ## 13. Points ouverts
 
-1. Pondérations définitives de `OFF_COMPLETUDE_FICHE` et `MAT_INDICE`.
+1. ~~Pondérations définitives de `OFF_COMPLETUDE_FICHE` et `MAT_INDICE`.~~ **Clos par le document 16, section A.2.**
 2. ~~Seuil de déclenchement de `TEN_FENETRES_SATURATION`.~~ **Clos par le document 15, section 2.**
-3. Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE` et sa source.
+3. Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE` et sa source. **Reste ouvert, et ne se comble pas par estimation** (document 16, section B.4, qui décrit trois voies pour obtenir une source défendable). La structure d'accueil existe : table `coefficient_retombees`, document 3, section 11.
 4. Règle de dédoublonnage par session pour `TEN_CAPACITE_MANQUANTE`.
-5. Seuils chiffrés de bascule entre `CONSOLIDE`, `INDICATIF` et `SIGNAL` pour les indicateurs où ils ne sont pas encore fixés.
+5. ~~Seuils chiffrés de bascule entre `CONSOLIDE`, `INDICATIF` et `SIGNAL` pour les indicateurs où ils ne sont pas encore fixés.~~ **Clos par le document 16, section B.1** : règle transverse en section 1.
 
 ---
 

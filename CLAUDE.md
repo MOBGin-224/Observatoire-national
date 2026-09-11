@@ -14,13 +14,15 @@ L'entreprise se positionne comme l'infrastructure numérique de l'hospitalité g
 
 ## État actuel du projet
 
-**Mise à jour : 10 septembre 2026.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
+**Mise à jour : 11 septembre 2026, document 16 appliqué.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
 
-**En base** (Supabase, projet `Observatoire`, schéma `observatoire`, migrations versionnées dans `/supabase/migrations`) : 30 tables, 14 vues matérialisées `mv_*`, 14 vues d'accès `acces_*`, 3 vues métier. RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 143 énumérations, 51 indicateurs. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
+**En base** (Supabase, projet `Observatoire`, schéma `observatoire`, migrations versionnées dans `/supabase/migrations`) : 30 tables, 22 vues matérialisées `mv_*`, 22 vues d'accès `acces_*`, 6 vues métier internes, et 2 fonctions de calcul à la lecture pour la fenêtre de `M7` (`evenementiel_evenements`, `evenementiel_fenetre`). RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 149 énumérations, 53 indicateurs. **Règle de fiabilité transverse** (document 4, section 1) calculée par la seule fonction `niveau_fiabilite`, et `fiabilite_la_plus_faible` pour les composites, sur les onze modules. Table `coefficient_retombees`, vide : `M8_RETOMBEES` reste fermé par la base (`module_actif`, `mes_modules`) tant qu'aucun coefficient courant validé n'y figure. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
 
-**Construit** : authentification avec second facteur TOTP obligatoire, intergiciel en liste blanche, **deux compteurs d'expiration de session** (inactivité selon profil, plafond absolu, retour sur l'écran consulté), chrome commun, **bandeau de périmètre à deux variantes** (institutionnelle et interne, document 15 section 6), **`M9_SYNTHESE` en phase 1 nationale**, couches transverses (`queries`, `masking`, `indicators`, `format`, `i18n`, `permissions`, `csv`, `config`, `taches`), bibliothèque des cinq états, dix composants graphiques, les onze écrans de module, `M11_ADMIN` sur deux sections (institutions et comptes, import du recensement), et **trois routes de tâches planifiées** protégées par secret (`/api/taches/*`, déclarées dans `vercel.json`).
+**Construit** : authentification avec second facteur TOTP obligatoire, intergiciel en liste blanche, **deux compteurs d'expiration de session** (inactivité selon profil, plafond absolu, retour sur l'écran consulté), chrome commun, **bandeau de périmètre à deux variantes** (institutionnelle et interne, document 15 section 6), **`M9_SYNTHESE` en phase 1 nationale**, couches transverses (`queries`, `masking`, `indicators`, `format`, `i18n`, `permissions`, `csv`, `config`, `taches`), bibliothèque des cinq états, dix composants graphiques, les onze écrans de module, **dont dix au gabarit modernisé** (seul `M11_ADMIN` reste à l'ancien), `M11_ADMIN` sur deux sections (institutions et comptes, import du recensement avec les quinze colonnes d'équipement du document 16, C.2), et **trois routes de tâches planifiées** protégées par secret (`/api/taches/*`, déclarées dans `vercel.json`).
 
-**Reste à construire** : les sept autres sections de `M11_ADMIN`, la prévisualisation « Voir comme » du profil `ADMIN` (document 9 bis, F.4 ter), le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, et la zone 5 de `M4_TENSION`.
+**Reste à construire** : la refonte visuelle et les sept autres sections de `M11_ADMIN`, la prévisualisation « Voir comme » du profil `ADMIN` (document 9 bis, F.4 ter), le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, la zone 5 de `M4_TENSION`, et les filtres de module de `M1`, `M2`, `M3`, `M5` et `M6` (les vues sont pré-agrégées ; `M7` a les siens, calculés par sa fonction de fenêtre).
+
+**Écart connu** : les blocs `EVE_*` de la synthèse lisent encore `mv_evenementiel_national`, instantané « à partir d'aujourd'hui » antérieur à la fenêtre de `M7`. La fenêtre à retenir pour la synthèse n'est pas arbitrée.
 
 **Phase 2 de `M9_SYNTHESE`**, sélecteurs de période et de niveau géographique : subordonnée à la reprise des vues matérialisées pour leur donner ces deux dimensions. Chantier qui touche les huit modules et **se décide pour lui-même**, pas comme préalable à un écran.
 
@@ -62,8 +64,9 @@ Toute fonctionnalité doit servir l'une de ces trois questions. Sinon elle est h
 | 11 | Architecture technique et conventions | Pile, structure, nommage |
 | 12 | Plan de recette | Critères d'acceptation |
 | 13 | Décisions arbitrées | Paramètres tranchés, points ouverts restants |
-| 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
+| 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
 | 15 | Synthèse et bandeau de périmètre | **Amende les documents 3, 4, 6, 7, 8, 9 bis, 10 et 12** |
+| 16 | Modernisation des modules M5 à M8 | **Amende les documents 2, 3, 4, 5, 9 bis et 10** : fiabilité transverse, pondération de `MAT_INDICE`, paliers de salle, table du coefficient, colonnes d'équipement |
 
 **Tous les paramètres chiffrés arbitrés sont dans `/lib/config`**, jamais dans un composant ni dans une requête. Document 13 section 13, document 14 section 5.3.
 

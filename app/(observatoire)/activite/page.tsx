@@ -177,6 +177,7 @@ export default async function Activite() {
               code="ACT_TAUX_OCCUPATION_CONTRACTUALISE"
               valeur={activite.actTauxOccupationContractualise}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
               variante="jauge"
@@ -185,6 +186,7 @@ export default async function Activite() {
               code="ACT_TAUX_OCCUPATION"
               valeur={activite.actTauxOccupation}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.inventaire")}
               calculeA={activite.calculeA}
               variante="jauge"
@@ -193,6 +195,7 @@ export default async function Activite() {
               code="ACT_ADR"
               valeur={activite.actAdr}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
             />
@@ -200,6 +203,7 @@ export default async function Activite() {
               code="ACT_REVPAR"
               valeur={activite.actRevpar}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
             />
@@ -207,6 +211,7 @@ export default async function Activite() {
               code="ACT_ALOS"
               valeur={activite.actAlos}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
             />
@@ -214,6 +219,7 @@ export default async function Activite() {
               code="ACT_LEAD_TIME"
               valeur={activite.actLeadTime}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
             />
@@ -221,6 +227,7 @@ export default async function Activite() {
               code="ACT_TAUX_ANNULATION"
               valeur={activite.actTauxAnnulation}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
               variante="jauge"
@@ -229,6 +236,7 @@ export default async function Activite() {
               code="ACT_TAUX_NON_PRESENTATION"
               valeur={activite.actTauxNonPresentation}
               masque={activite.actMasque}
+              niveauFiabilite={activite.niveauFiabilite ?? undefined}
               libelleVide={t("state.vide.reservations")}
               calculeA={activite.calculeA}
               variante="jauge"

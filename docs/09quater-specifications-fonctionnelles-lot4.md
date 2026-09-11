@@ -203,6 +203,8 @@ Le montrer vide à la Direction nationale du Tourisme et de l'Hôtellerie, c'est
 
 Elle fonctionne dès le premier jour, sans aucune donnée administrative. C'est ce qui rend le module utile avant même la convention.
 
+*Définitions appliquées aux colonnes de la zone 4 (document 16, D.2), le document 16 n'en précisant pas le calcul.* **Fiche complète** : les quatre composantes de `OFF_COMPLETUDE_FICHE` qui conditionnent une classification, soit contact valide, localisation GPS, tarifs minimum et maximum, typologie et capacité, avec les mêmes critères que le score de complétude. La présence en ligne n'en fait pas partie. **Prêt pour classification** : fiche complète et vérifiée (`VERIFIE_TEL` ou `VERIFIE_TERRAIN`). À amender ici si une autre lecture est retenue.
+
 **Zone 5, écart terrain.** Alimentée par `retour_terrain`. Nombre d'établissements figurant sur une liste administrative et invalidés par la collecte : fermés définitivement, inexistants, ou relevant d'une autre typologie.
 
 ## L.7 Comportements attendus
@@ -366,7 +368,7 @@ C'est ce qui distingue une estimation assumée d'un chiffre lancé sans preuve. 
 
 ## Points ouverts
 
-1. Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE` et sa source. **Bloquant pour l'activation de `M8`.**
+1. Coefficient multiplicateur de `RET_DEPENSE_TOTALE_ESTIMEE` et sa source. **Bloquant pour l'activation de `M8`.** Structure d'accueil créée par le document 16, section B.4 (table `coefficient_retombees`). La valeur n'est pas fournie et ne doit pas l'être par estimation.
 2. Seuil d'effectif retenu pour le basculement des courbes de `M3` en indice base 100. Proposé à 30, à confirmer.
 3. Faut-il afficher dans `M5` la liste des territoires sans aucune donnée de conformité transmise.
 4. Format de transmission attendu de l'administration pour les données de conformité.
