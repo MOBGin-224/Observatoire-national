@@ -130,6 +130,7 @@ export function LegendeDensite({
   note,
   etiquette,
   libelleSansDonnee,
+  libelleSansEchelle,
 }: {
   cellules: CelluleTerritoire[];
   note?: string;
@@ -137,6 +138,9 @@ export function LegendeDensite({
   etiquette?: string;
   /* Legende de la trame, quand la fiche du module en prescrit une (document 9 quater, L.8). */
   libelleSansDonnee?: string;
+  /* Texte d'une echelle vide. Le texte par defaut parle d'etablissements : il est faux
+     quand ce qui manque est une autre donnee, la conformite par exemple. */
+  libelleSansEchelle?: string;
 }) {
   const seuils = paliersDensite(cellules.map((c) => c.valeur));
   const sansDonnee = cellules.filter(estSansDonnee).length;
@@ -168,7 +172,7 @@ export function LegendeDensite({
                 min: formatNombre(Math.round(seuils[0])),
                 max: formatNombre(Math.round(seuils[seuils.length - 1])),
               })
-            : t("carte.legende_sans_echelle")}
+            : (libelleSansEchelle ?? t("carte.legende_sans_echelle"))}
         </span>
       </div>
 

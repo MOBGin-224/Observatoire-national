@@ -216,7 +216,11 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
                   {bandeau}
                 </p>
               )}
-              {evenements.length === 0 && <p style={STYLE_AIDE}>{t("m7.fenetre.aucune")}</p>}
+              {/* Etat vide de la zone 1 (J.9) : utile tant qu'aucune fenetre n'est
+                  choisie, redondant des qu'un bandeau la decrit. */}
+              {evenements.length === 0 && !fenetreValide && (
+                <p style={STYLE_AIDE}>{t("m7.fenetre.aucune")}</p>
+              )}
               <SelecteurFenetre
                 etat={etat}
                 evenements={optionsEvenements}

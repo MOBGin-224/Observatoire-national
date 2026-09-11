@@ -218,6 +218,7 @@ export default async function Conformite() {
                   cellules={tuiles}
                   etiquette={indicateurTaux?.libelleFr}
                   libelleSansDonnee={transmission ? undefined : t("carte.aucune_donnee_conformite")}
+                  libelleSansEchelle={transmission ? undefined : t("state.vide.conformite")}
                 />
               }
               className="flex-1"
