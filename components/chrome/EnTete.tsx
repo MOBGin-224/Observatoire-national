@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logoEditeur from "@/public/Logo réactualisé.svg";
+import logoEditeur from "@/public/Logo.svg";
 import iconeEditeur from "@/public/Icône.svg";
 import { t } from "@/lib/i18n";
 import type { MonCompte } from "@/lib/queries/compte";
