@@ -77,6 +77,16 @@ Clôt le point ouvert 5 du document 4. **Applicable aux onze modules.**
 
 C'est la seule règle qui empêche un indicateur dérivé de paraître plus solide que ce sur quoi il repose.
 
+### Portée de la règle des composites
+
+**Amendement du document 17, section B.2.**
+
+**La règle du composant le plus faible s'applique aux indicateurs croisant deux bases de mesure distinctes**, comme `TEN_INDICE_TENSION` qui rapporte des recherches à de la capacité.
+
+Elle ne s'applique pas aux indicateurs composites dont les composantes sont des attributs d'un même échantillon, comme `MAT_INDICE` ou `OFF_COMPLETUDE_FICHE`. Ceux-ci suivent la règle d'inventaire, sur l'effectif d'établissements de l'agrégat.
+
+Une composante non renseignée compte pour zéro dans le score, ce qui est conservateur et honnête, mais ne dégrade pas la fiabilité : l'indicateur serait sinon pénalisé deux fois pour la même raison.
+
 ### Seuils spécifiques conservés
 
 Les seuils déjà fixés au document 4 pour un indicateur particulier priment sur la règle générale. Ils sont explicitement mentionnés dans la fiche concernée.
@@ -226,6 +236,8 @@ Les deux composantes de paiement passent de « non renseigné » à mesurables. 
 
 À charger au document 10.
 
+**Amendement du document 17, section B.5.** Toutes les clés de cette partie sont préfixées `module.`, comme celles de `M1` à `M4`. La version 1.0 de ce document donnait `m5.z1.titre` là où la convention existante veut `module.m5.z1.titre` ; l'incohérence venait d'ici. Les tables ci-dessous portent la forme retenue.
+
 ## D.1 Codes et questions métier
 
 | Clé | Français | Anglais |
@@ -243,18 +255,18 @@ Les deux composantes de paiement passent de « non renseigné » à mesurables. 
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m5.z1.titre` | Indicateurs clés | Key indicators |
-| `m5.z1.aide` | État d'enregistrement et de classification sur le périmètre consulté. | Registration and classification status for the selected scope. |
-| `m5.z2.titre` | Taux d'enregistrement par territoire | Registration rate by territory |
-| `m5.z2.aide` | Part des établissements recensés disposant d'un enregistrement administratif documenté. | Share of surveyed establishments with documented administrative registration. |
-| `m5.z3.titre` | Répartition par typologie et par gamme | Breakdown by type and price range |
-| `m5.z3.aide` | Enregistrement et classification selon la nature et le niveau de prix des établissements. | Registration and classification by establishment type and price level. |
-| `m5.z4.titre` | Préparation à la classification | Classification readiness |
-| `m5.z4.aide` | Établissements dont la fiche est suffisamment complète pour entrer dans un processus de classification. Cette zone repose sur le recensement et ne dépend d'aucune transmission administrative. | Establishments whose record is complete enough to enter a classification process. This section draws on the survey and requires no administrative transmission. |
-| `m5.z5.titre` | Écart entre liste administrative et terrain | Gap between official list and field |
-| `m5.z5.aide` | Établissements figurant sur une liste administrative et invalidés par la collecte de terrain. | Establishments listed by the administration and invalidated by field collection. |
-| `m5.z6.titre` | Détail par territoire | Territory breakdown |
-| `m5.z6.aide` | Recensement, enregistrement et classification, territoire par territoire. | Survey, registration and classification, territory by territory. |
+| `module.m5.z1.titre` | Indicateurs clés | Key indicators |
+| `module.m5.z1.aide` | État d'enregistrement et de classification sur le périmètre consulté. | Registration and classification status for the selected scope. |
+| `module.m5.z2.titre` | Taux d'enregistrement par territoire | Registration rate by territory |
+| `module.m5.z2.aide` | Part des établissements recensés disposant d'un enregistrement administratif documenté. | Share of surveyed establishments with documented administrative registration. |
+| `module.m5.z3.titre` | Répartition par typologie et par gamme | Breakdown by type and price range |
+| `module.m5.z3.aide` | Enregistrement et classification selon la nature et le niveau de prix des établissements. | Registration and classification by establishment type and price level. |
+| `module.m5.z4.titre` | Préparation à la classification | Classification readiness |
+| `module.m5.z4.aide` | Établissements dont la fiche est suffisamment complète pour entrer dans un processus de classification. Cette zone repose sur le recensement et ne dépend d'aucune transmission administrative. | Establishments whose record is complete enough to enter a classification process. This section draws on the survey and requires no administrative transmission. |
+| `module.m5.z5.titre` | Écart entre liste administrative et terrain | Gap between official list and field |
+| `module.m5.z5.aide` | Établissements figurant sur une liste administrative et invalidés par la collecte de terrain. | Establishments listed by the administration and invalidated by field collection. |
+| `module.m5.z6.titre` | Détail par territoire | Territory breakdown |
+| `module.m5.z6.aide` | Recensement, enregistrement et classification, territoire par territoire. | Survey, registration and classification, territory by territory. |
 
 ### En-têtes de colonnes M5
 
@@ -262,76 +274,76 @@ Les deux composantes de paiement passent de « non renseigné » à mesurables. 
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m5.z4.col.territoire` | Territoire | Territory |
-| `m5.z4.col.recenses` | Recensés | Surveyed |
-| `m5.z4.col.completes` | Fiches complètes | Complete records |
-| `m5.z4.col.verifiees` | Fiches vérifiées | Verified records |
-| `m5.z4.col.prets` | Prêts pour classification | Ready for classification |
+| `module.m5.z4.col.territoire` | Territoire | Territory |
+| `module.m5.z4.col.recenses` | Recensés | Surveyed |
+| `module.m5.z4.col.completes` | Fiches complètes | Complete records |
+| `module.m5.z4.col.verifiees` | Fiches vérifiées | Verified records |
+| `module.m5.z4.col.prets` | Prêts pour classification | Ready for classification |
 
 **Zone 5**
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m5.z5.col.territoire` | Territoire | Territory |
-| `m5.z5.col.fermes` | Fermés définitivement | Permanently closed |
-| `m5.z5.col.inexistants` | Inexistants | Non-existent |
-| `m5.z5.col.reclasses` | Reclassés | Reclassified |
-| `m5.z5.col.total` | Total de l'écart | Total gap |
+| `module.m5.z5.col.territoire` | Territoire | Territory |
+| `module.m5.z5.col.fermes` | Fermés définitivement | Permanently closed |
+| `module.m5.z5.col.inexistants` | Inexistants | Non-existent |
+| `module.m5.z5.col.reclasses` | Reclassés | Reclassified |
+| `module.m5.z5.col.total` | Total de l'écart | Total gap |
 
 **Zone 6**
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m5.z6.col.territoire` | Territoire | Territory |
-| `m5.z6.col.recenses` | Recensés | Surveyed |
-| `m5.z6.col.enregistres` | Enregistrés | Registered |
-| `m5.z6.col.classes` | Classés | Classified |
-| `m5.z6.col.non_documentes` | Enregistrement non documenté | Registration undocumented |
+| `module.m5.z6.col.territoire` | Territoire | Territory |
+| `module.m5.z6.col.recenses` | Recensés | Surveyed |
+| `module.m5.z6.col.enregistres` | Enregistrés | Registered |
+| `module.m5.z6.col.classes` | Classés | Classified |
+| `module.m5.z6.col.non_documentes` | Enregistrement non documenté | Registration undocumented |
 
 ## D.3 Module M6, zones
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m6.z1.titre` | Indicateurs clés | Key indicators |
-| `m6.z1.aide` | Degré de numérisation du secteur sur le périmètre consulté. | Sector digitalisation level for the selected scope. |
-| `m6.z2.titre` | Indice de maturité par territoire | Maturity index by territory |
-| `m6.z2.aide` | Score de numérisation moyen des établissements recensés, sur 100. | Average digitalisation score of surveyed establishments, out of 100. |
-| `m6.z3.titre` | Décomposition de l'indice | Index breakdown |
-| `m6.z3.aide` | Part des établissements disposant de chacune des six composantes de l'indice. | Share of establishments having each of the index's six components. |
-| `m6.z4.titre` | Maturité par typologie | Maturity by establishment type |
-| `m6.z4.aide` | Indice moyen selon la nature des établissements. | Average index by establishment type. |
-| `m6.z5.titre` | Maturité par gamme tarifaire | Maturity by price range |
-| `m6.z5.aide` | Indice moyen selon le niveau de prix. | Average index by price level. |
-| `m6.z6.titre` | Classement des territoires | Territory ranking |
-| `m6.z6.aide` | Territoires classés par indice de maturité. L'ordre croissant identifie les zones en retard, l'ordre décroissant les zones de référence. | Territories ranked by maturity index. Ascending order identifies lagging areas, descending order reference areas. |
+| `module.m6.z1.titre` | Indicateurs clés | Key indicators |
+| `module.m6.z1.aide` | Degré de numérisation du secteur sur le périmètre consulté. | Sector digitalisation level for the selected scope. |
+| `module.m6.z2.titre` | Indice de maturité par territoire | Maturity index by territory |
+| `module.m6.z2.aide` | Score de numérisation moyen des établissements recensés, sur 100. | Average digitalisation score of surveyed establishments, out of 100. |
+| `module.m6.z3.titre` | Décomposition de l'indice | Index breakdown |
+| `module.m6.z3.aide` | Part des établissements disposant de chacune des six composantes de l'indice. | Share of establishments having each of the index's six components. |
+| `module.m6.z4.titre` | Maturité par typologie | Maturity by establishment type |
+| `module.m6.z4.aide` | Indice moyen selon la nature des établissements. | Average index by establishment type. |
+| `module.m6.z5.titre` | Maturité par gamme tarifaire | Maturity by price range |
+| `module.m6.z5.aide` | Indice moyen selon le niveau de prix. | Average index by price level. |
+| `module.m6.z6.titre` | Classement des territoires | Territory ranking |
+| `module.m6.z6.aide` | Territoires classés par indice de maturité. L'ordre croissant identifie les zones en retard, l'ordre décroissant les zones de référence. | Territories ranked by maturity index. Ascending order identifies lagging areas, descending order reference areas. |
 
 ### Composantes de l'indice, zone 3
 
 | Clé | Français | Anglais | Poids |
 |---|---|---|---|
-| `m6.comp.presence` | Présence en ligne | Online presence | 20 |
-| `m6.comp.reservation` | Canal de réservation en ligne | Online booking channel | 30 |
-| `m6.comp.tarifs` | Tarifs publiés | Published rates | 20 |
-| `m6.comp.contact` | Coordonnées valides | Valid contact details | 10 |
-| `m6.comp.carte` | Paiement par carte | Card payment | 5 |
-| `m6.comp.mobile` | Paiement mobile money | Mobile money payment | 15 |
+| `module.m6.comp.presence` | Présence en ligne | Online presence | 20 |
+| `module.m6.comp.reservation` | Canal de réservation en ligne | Online booking channel | 30 |
+| `module.m6.comp.tarifs` | Tarifs publiés | Published rates | 20 |
+| `module.m6.comp.contact` | Coordonnées valides | Valid contact details | 10 |
+| `module.m6.comp.carte` | Paiement par carte | Card payment | 5 |
+| `module.m6.comp.mobile` | Paiement mobile money | Mobile money payment | 15 |
 
 ### En-têtes de colonnes M6, zone 6
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m6.z6.col.territoire` | Territoire | Territory |
-| `m6.z6.col.etablissements` | Établissements | Establishments |
-| `m6.z6.col.indice` | Indice | Index |
-| `m6.z6.col.presence` | Présence en ligne | Online presence |
-| `m6.z6.col.reservation` | Réservable en ligne | Bookable online |
-| `m6.z6.col.paiement` | Paiement numérique | Digital payment |
+| `module.m6.z6.col.territoire` | Territoire | Territory |
+| `module.m6.z6.col.etablissements` | Établissements | Establishments |
+| `module.m6.z6.col.indice` | Indice | Index |
+| `module.m6.z6.col.presence` | Présence en ligne | Online presence |
+| `module.m6.z6.col.reservation` | Réservable en ligne | Bookable online |
+| `module.m6.z6.col.paiement` | Paiement numérique | Digital payment |
 
 ### Mention obligatoire M6
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m6.avertissement` | Cet indice mesure le degré de numérisation. Il ne constitue en aucun cas une note de qualité des établissements. | This index measures digitalisation only. It is in no way a quality rating of establishments. |
+| `module.m6.avertissement` | Cet indice mesure le degré de numérisation. Il ne constitue en aucun cas une note de qualité des établissements. | This index measures digitalisation only. It is in no way a quality rating of establishments. |
 
 Cette mention est affichée en permanence sous le titre du module, non masquable.
 
@@ -339,49 +351,49 @@ Cette mention est affichée en permanence sous le titre du module, non masquable
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.z1.titre` | Fenêtre analysée | Analysed window |
-| `m7.z2.titre` | Indicateurs clés | Key indicators |
-| `m7.z2.aide` | Capacité d'accueil et tension sur la fenêtre sélectionnée. | Accommodation capacity and pressure over the selected window. |
-| `m7.z3.titre` | Décomposition de la capacité mobilisable | Mobilisable capacity breakdown |
-| `m7.z3.aide` | La capacité mobilisable se décompose en trois parts de fiabilité différente. Seule la première correspond à une disponibilité réellement connue. | Mobilisable capacity breaks down into three parts of differing reliability. Only the first reflects genuinely known availability. |
-| `m7.z4.titre` | Capacité mobilisable par territoire | Mobilisable capacity by territory |
-| `m7.z5.titre` | Capacité par gamme tarifaire | Capacity by price range |
-| `m7.z5.aide` | Répartition de la capacité recensée selon le niveau de prix. | Breakdown of surveyed capacity by price level. |
-| `m7.z6.titre` | Salles de réunion | Meeting rooms |
-| `m7.z6.aide` | Établissements disposant d'une salle, répartis par palier de capacité. | Establishments with a meeting room, by capacity bracket. |
-| `m7.z7.titre` | Demandes institutionnelles sur la fenêtre | Institutional requests over the window |
-| `m7.z7.aide` | Besoins d'hébergement déclarés dont les dates chevauchent la fenêtre analysée. | Declared accommodation needs whose dates overlap the analysed window. |
+| `module.m7.z1.titre` | Fenêtre analysée | Analysed window |
+| `module.m7.z2.titre` | Indicateurs clés | Key indicators |
+| `module.m7.z2.aide` | Capacité d'accueil et tension sur la fenêtre sélectionnée. | Accommodation capacity and pressure over the selected window. |
+| `module.m7.z3.titre` | Décomposition de la capacité mobilisable | Mobilisable capacity breakdown |
+| `module.m7.z3.aide` | La capacité mobilisable se décompose en trois parts de fiabilité différente. Seule la première correspond à une disponibilité réellement connue. | Mobilisable capacity breaks down into three parts of differing reliability. Only the first reflects genuinely known availability. |
+| `module.m7.z4.titre` | Capacité mobilisable par territoire | Mobilisable capacity by territory |
+| `module.m7.z5.titre` | Capacité par gamme tarifaire | Capacity by price range |
+| `module.m7.z5.aide` | Répartition de la capacité recensée selon le niveau de prix. | Breakdown of surveyed capacity by price level. |
+| `module.m7.z6.titre` | Salles de réunion | Meeting rooms |
+| `module.m7.z6.aide` | Établissements disposant d'une salle, répartis par palier de capacité. | Establishments with a meeting room, by capacity bracket. |
+| `module.m7.z7.titre` | Demandes institutionnelles sur la fenêtre | Institutional requests over the window |
+| `module.m7.z7.aide` | Besoins d'hébergement déclarés dont les dates chevauchent la fenêtre analysée. | Declared accommodation needs whose dates overlap the analysed window. |
 
 ### Bandeau de fenêtre, zone 1
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.fenetre.format` | {evenement} · {territoire} · du {debut} au {fin} · {nuits} nuits | {evenement} · {territoire} · {debut} to {fin} · {nuits} nights |
-| `m7.fenetre.dates_libres` | Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuits | Custom dates · {territoire} · {debut} to {fin} · {nuits} nights |
-| `m7.fenetre.aucune` | Aucun événement enregistré. Sélectionnez des dates libres. | No event on record. Select custom dates. |
+| `module.m7.fenetre.format` | {evenement} · {territoire} · du {debut} au {fin} · {nuits} nuits | {evenement} · {territoire} · {debut} to {fin} · {nuits} nights |
+| `module.m7.fenetre.dates_libres` | Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuits | Custom dates · {territoire} · {debut} to {fin} · {nuits} nights |
+| `module.m7.fenetre.aucune` | Aucun événement enregistré. Sélectionnez des dates libres. | No event on record. Select custom dates. |
 
 ### Sélecteur de fenêtre
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.selecteur.titre` | Fenêtre | Window |
-| `m7.selecteur.evenement` | Événement enregistré | Recorded event |
-| `m7.selecteur.dates_libres` | Dates libres | Custom dates |
-| `m7.selecteur.choisir_evenement` | Choisir un événement | Choose an event |
-| `m7.selecteur.date_debut` | Date de début | Start date |
-| `m7.selecteur.date_fin` | Date de fin | End date |
-| `m7.filtre.capacite_salle` | Capacité de salle minimale | Minimum room capacity |
+| `module.m7.selecteur.titre` | Fenêtre | Window |
+| `module.m7.selecteur.evenement` | Événement enregistré | Recorded event |
+| `module.m7.selecteur.dates_libres` | Dates libres | Custom dates |
+| `module.m7.selecteur.choisir_evenement` | Choisir un événement | Choose an event |
+| `module.m7.selecteur.date_debut` | Date de début | Start date |
+| `module.m7.selecteur.date_fin` | Date de fin | End date |
+| `module.m7.filtre.capacite_salle` | Capacité de salle minimale | Minimum room capacity |
 
 ### Décomposition de la capacité, zone 3
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.z3.partenaires` | Partenaires disponibles | Available partners |
-| `m7.z3.partenaires.aide` | Disponibilité réelle connue. | Actual availability known. |
-| `m7.z3.recenses` | Recensés non réservables | Surveyed, not bookable |
-| `m7.z3.recenses.aide` | Capacité théorique. La disponibilité de ces établissements n'est pas connue. | Theoretical capacity. Availability of these establishments is unknown. |
-| `m7.z3.vendu` | Déjà vendu | Already sold |
-| `m7.z3.vendu.aide` | Retiré du disponible sur la fenêtre. | Removed from availability over the window. |
+| `module.m7.z3.partenaires` | Partenaires disponibles | Available partners |
+| `module.m7.z3.partenaires.aide` | Disponibilité réelle connue. | Actual availability known. |
+| `module.m7.z3.recenses` | Recensés non réservables | Surveyed, not bookable |
+| `module.m7.z3.recenses.aide` | Capacité théorique. La disponibilité de ces établissements n'est pas connue. | Theoretical capacity. Availability of these establishments is unknown. |
+| `module.m7.z3.vendu` | Déjà vendu | Already sold |
+| `module.m7.z3.vendu.aide` | Retiré du disponible sur la fenêtre. | Removed from availability over the window. |
 
 ### En-têtes de colonnes M7
 
@@ -389,62 +401,62 @@ Cette mention est affichée en permanence sous le titre du module, non masquable
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.z6.col.palier` | Palier de capacité | Capacity bracket |
-| `m7.z6.col.etablissements` | Établissements | Establishments |
-| `m7.z6.col.places` | Places totales | Total seats |
+| `module.m7.z6.col.palier` | Palier de capacité | Capacity bracket |
+| `module.m7.z6.col.etablissements` | Établissements | Establishments |
+| `module.m7.z6.col.places` | Places totales | Total seats |
 
 **Zone 7**
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.z7.col.libelle` | Libellé | Title |
-| `m7.z7.col.type` | Type | Type |
-| `m7.z7.col.dates` | Dates | Dates |
-| `m7.z7.col.demandees` | Unités demandées | Units requested |
-| `m7.z7.col.couvertes` | Unités couvertes | Units covered |
-| `m7.z7.col.statut` | Statut | Status |
+| `module.m7.z7.col.libelle` | Libellé | Title |
+| `module.m7.z7.col.type` | Type | Type |
+| `module.m7.z7.col.dates` | Dates | Dates |
+| `module.m7.z7.col.demandees` | Unités demandées | Units requested |
+| `module.m7.z7.col.couvertes` | Unités couvertes | Units covered |
+| `module.m7.z7.col.statut` | Statut | Status |
 
 ### Mention obligatoire M7
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m7.avertissement` | Cet écran mesure une capacité, il ne garantit aucune disponibilité et ne permet aucune réservation. | This screen measures capacity. It guarantees no availability and enables no booking. |
+| `module.m7.avertissement` | Cet écran mesure une capacité, il ne garantit aucune disponibilité et ne permet aucune réservation. | This screen measures capacity. It guarantees no availability and enables no booking. |
 
 ## D.5 Module M8, zones
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m8.z1.titre` | Méthode appliquée | Method applied |
-| `m8.z2.titre` | Indicateurs clés | Key indicators |
-| `m8.z2.aide` | Dépense d'hébergement observée et estimation de la dépense totale. | Observed accommodation spending and total spending estimate. |
-| `m8.z3.titre` | Évolution de la dépense observée | Observed spending over time |
-| `m8.z3.aide` | Dépense d'hébergement sur le périmètre commercialisé. Donnée observée, non estimée. | Accommodation spending across the commercialised scope. Observed data, not estimated. |
-| `m8.z4.titre` | Répartitions | Breakdowns |
-| `m8.z4.aide` | Dépense observée par typologie, par gamme et par origine déclarée. | Observed spending by type, price range and declared origin. |
-| `m8.z5.titre` | Détail par territoire | Territory breakdown |
+| `module.m8.z1.titre` | Méthode appliquée | Method applied |
+| `module.m8.z2.titre` | Indicateurs clés | Key indicators |
+| `module.m8.z2.aide` | Dépense d'hébergement observée et estimation de la dépense totale. | Observed accommodation spending and total spending estimate. |
+| `module.m8.z3.titre` | Évolution de la dépense observée | Observed spending over time |
+| `module.m8.z3.aide` | Dépense d'hébergement sur le périmètre commercialisé. Donnée observée, non estimée. | Accommodation spending across the commercialised scope. Observed data, not estimated. |
+| `module.m8.z4.titre` | Répartitions | Breakdowns |
+| `module.m8.z4.aide` | Dépense observée par typologie, par gamme et par origine déclarée. | Observed spending by type, price range and declared origin. |
+| `module.m8.z5.titre` | Détail par territoire | Territory breakdown |
 
 ### Bandeau de méthode, zone 1
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m8.methode.format` | Estimation. Coefficient {valeur} appliqué à la dépense d'hébergement observée. Source : {source}, périmètre {perimetre}. Validé le {date}. | Estimate. Multiplier {valeur} applied to observed accommodation spending. Source: {source}, scope {perimetre}. Validated on {date}. |
-| `m8.methode.lien` | Voir la méthodologie | View methodology |
-| `m8.methode.absent` | Module désactivé : aucun coefficient validé n'est enregistré. | Module disabled: no validated multiplier on record. |
+| `module.m8.methode.format` | Estimation. Coefficient {valeur} appliqué à la dépense d'hébergement observée. Source : {source}, périmètre {perimetre}. Validé le {date}. | Estimate. Multiplier {valeur} applied to observed accommodation spending. Source: {source}, scope {perimetre}. Validated on {date}. |
+| `module.m8.methode.lien` | Voir la méthodologie | View methodology |
+| `module.m8.methode.absent` | Module désactivé : aucun coefficient validé n'est enregistré. | Module disabled: no validated multiplier on record. |
 
 ### En-têtes de colonnes M8, zone 5
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m8.z5.col.territoire` | Territoire | Territory |
-| `m8.z5.col.nuitees` | Nuitées | Room nights |
-| `m8.z5.col.observee` | Dépense observée | Observed spending |
-| `m8.z5.col.estimee` | Dépense estimée | Estimated spending |
+| `module.m8.z5.col.territoire` | Territoire | Territory |
+| `module.m8.z5.col.nuitees` | Nuitées | Room nights |
+| `module.m8.z5.col.observee` | Dépense observée | Observed spending |
+| `module.m8.z5.col.estimee` | Dépense estimée | Estimated spending |
 
 ### Mention obligatoire M8
 
 | Clé | Français | Anglais |
 |---|---|---|
-| `m8.avertissement` | La dépense observée porte sur le seul périmètre commercialisé par Simandou Séjour. L'estimation en dérive et ne mesure pas l'ensemble du secteur. | Observed spending covers only the scope commercialised by Simandou Séjour. The estimate derives from it and does not measure the entire sector. |
+| `module.m8.avertissement` | La dépense observée porte sur le seul périmètre commercialisé par Simandou Séjour. L'estimation en dérive et ne mesure pas l'ensemble du secteur. | Observed spending covers only the scope commercialised by Simandou Séjour. The estimate derives from it and does not measure the entire sector. |
 
 ---
 

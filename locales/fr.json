@@ -217,9 +217,18 @@
   },
   "module": {
     "compteur": {
-      "indicateurs": "{n} indicateurs",
-      "documentes": "{n} indicateurs documentés",
-      "sections": "{n} sections"
+      "indicateurs": {
+        "un": "{n} indicateur",
+        "autre": "{n} indicateurs"
+      },
+      "documentes": {
+        "un": "{n} indicateur documenté",
+        "autre": "{n} indicateurs documentés"
+      },
+      "sections": {
+        "un": "{n} section",
+        "autre": "{n} sections"
+      }
     },
     "m1": {
       "code": "M1 · Offre",
@@ -341,247 +350,259 @@
     "m5": {
       "code": "M5 · Conformité",
       "court": "Conformité",
+      "description": "L'état d'enregistrement et de classification du parc d'hébergement.",
+      "provenance": "Transmission administrative · source : {source} · données au {date}",
       "question": "Quel est l'état d'enregistrement et de classification du parc d'hébergement guinéen.",
       "titre": "Conformité et classification",
-      "description": "L'état d'enregistrement et de classification du parc d'hébergement."
+      "transmission": {
+        "_": "Données de conformité transmises pour {n} établissements sur {total} recensés.",
+        "aucune": "Aucune donnée de conformité transmise à ce jour. Les taux affichés sont nuls par absence de transmission, non par absence d'enregistrement."
+      },
+      "z1": {
+        "aide": "État d'enregistrement et de classification sur le périmètre consulté.",
+        "titre": "Indicateurs clés"
+      },
+      "z2": {
+        "aide": "Part des établissements recensés disposant d'un enregistrement administratif documenté.",
+        "titre": "Taux d'enregistrement par territoire"
+      },
+      "z3": {
+        "aide": "Enregistrement et classification selon la nature et le niveau de prix des établissements.",
+        "titre": "Répartition par typologie et par gamme"
+      },
+      "z4": {
+        "aide": "Établissements dont la fiche est suffisamment complète pour entrer dans un processus de classification. Cette zone repose sur le recensement et ne dépend d'aucune transmission administrative.",
+        "col": {
+          "completes": "Fiches complètes",
+          "prets": "Prêts pour classification",
+          "recenses": "Recensés",
+          "territoire": "Territoire",
+          "verifiees": "Fiches vérifiées"
+        },
+        "titre": "Préparation à la classification"
+      },
+      "z5": {
+        "aide": "Établissements figurant sur une liste administrative et invalidés par la collecte de terrain.",
+        "col": {
+          "fermes": "Fermés définitivement",
+          "inexistants": "Inexistants",
+          "reclasses": "Reclassés",
+          "territoire": "Territoire",
+          "total": "Total de l'écart"
+        },
+        "titre": "Écart entre liste administrative et terrain"
+      },
+      "z6": {
+        "aide": "Recensement, enregistrement et classification, territoire par territoire.",
+        "col": {
+          "classes": "Classés",
+          "enregistres": "Enregistrés",
+          "non_documentes": "Enregistrement non documenté",
+          "recenses": "Recensés",
+          "territoire": "Territoire"
+        },
+        "titre": "Détail par territoire"
+      }
     },
     "m6": {
+      "avertissement": "Cet indice mesure le degré de numérisation. Il ne constitue en aucun cas une note de qualité des établissements.",
       "code": "M6 · Maturité numérique",
+      "comp": {
+        "carte": "Paiement par carte",
+        "contact": "Coordonnées valides",
+        "mobile": "Paiement mobile money",
+        "poids": "Poids {n}",
+        "presence": "Présence en ligne",
+        "renseigne": "Renseigné pour {n} établissements sur {total}",
+        "reservation": "Canal de réservation en ligne",
+        "tarifs": "Tarifs publiés"
+      },
       "court": "Maturité numérique",
+      "description": "Le degré de numérisation du secteur, établissement par établissement et territoire par territoire.",
+      "effectif": "{n} établissements",
+      "plancher": "Certaines composantes ne sont pas encore renseignées pour tous les établissements. L'indice constitue un plancher, non une valeur définitive.",
       "question": "Quel est le degré de numérisation du secteur de l'hébergement, et où se situent les retards.",
       "titre": "Maturité numérique du secteur",
-      "description": "Le degré de numérisation du secteur, établissement par établissement et territoire par territoire."
+      "z1": {
+        "aide": "Degré de numérisation du secteur sur le périmètre consulté.",
+        "titre": "Indicateurs clés"
+      },
+      "z2": {
+        "aide": "Score de numérisation moyen des établissements recensés, sur 100.",
+        "titre": "Indice de maturité par territoire"
+      },
+      "z3": {
+        "aide": "Part des établissements disposant de chacune des six composantes de l'indice.",
+        "titre": "Décomposition de l'indice"
+      },
+      "z4": {
+        "aide": "Indice moyen selon la nature des établissements.",
+        "titre": "Maturité par typologie"
+      },
+      "z5": {
+        "aide": "Indice moyen selon le niveau de prix.",
+        "titre": "Maturité par gamme tarifaire"
+      },
+      "z6": {
+        "aide": "Territoires classés par indice de maturité. L'ordre croissant identifie les zones en retard, l'ordre décroissant les zones de référence.",
+        "col": {
+          "etablissements": "Établissements",
+          "indice": "Indice",
+          "paiement": "Paiement numérique",
+          "presence": "Présence en ligne",
+          "reservation": "Réservable en ligne",
+          "territoire": "Territoire"
+        },
+        "titre": "Classement des territoires",
+        "tri_croissant": "Ordre croissant",
+        "tri_decroissant": "Ordre décroissant"
+      }
     },
     "m7": {
+      "avertissement": "Cet écran mesure une capacité, il ne garantit aucune disponibilité et ne permet aucune réservation.",
       "code": "M7 · Événementiel",
       "court": "Événementiel",
+      "description": "La capacité d'accueil mobilisable sur les dates d'un événement, et l'écart avec les besoins annoncés.",
+      "fenetre": {
+        "aucune": "Aucun événement enregistré. Sélectionnez des dates libres.",
+        "dates_libres": {
+          "compte": "nuits",
+          "un": "Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuit",
+          "autre": "Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuits"
+        },
+        "format": {
+          "compte": "nuits",
+          "un": "{evenement} · {territoire} · du {debut} au {fin} · {nuits} nuit",
+          "autre": "{evenement} · {territoire} · du {debut} au {fin} · {nuits} nuits"
+        }
+      },
+      "filtre": {
+        "aucune": "Aucune",
+        "capacite_salle": "Capacité de salle minimale",
+        "places": "{n} places et plus"
+      },
       "question": "Le pays peut-il héberger un événement donné, à des dates données, sur un territoire donné.",
+      "selecteur": {
+        "choisir_evenement": "Choisir un événement",
+        "date_debut": "Date de début",
+        "date_fin": "Date de fin",
+        "dates_libres": "Dates libres",
+        "evenement": "Événement enregistré",
+        "titre": "Fenêtre"
+      },
       "titre": "Événementiel et pics de demande",
-      "description": "La capacité d'accueil mobilisable sur les dates d'un événement, et l'écart avec les besoins annoncés."
+      "z1": {
+        "titre": "Fenêtre analysée"
+      },
+      "z2": {
+        "aide": "Capacité d'accueil et tension sur la fenêtre sélectionnée.",
+        "titre": "Indicateurs clés"
+      },
+      "z3": {
+        "aide": "La capacité mobilisable se décompose en trois parts de fiabilité différente. Seule la première correspond à une disponibilité réellement connue.",
+        "partenaire_global": {
+          "_": "Capacité partenaire recensée",
+          "aide": "Détail non publié : effectif insuffisant pour préserver la confidentialité des établissements."
+        },
+        "partenaires": {
+          "_": "Partenaires disponibles",
+          "aide": "Disponibilité réelle connue."
+        },
+        "recenses": {
+          "_": "Recensés non réservables",
+          "aide": "Capacité théorique. La disponibilité de ces établissements n'est pas connue."
+        },
+        "titre": "Décomposition de la capacité mobilisable",
+        "vendu": {
+          "_": "Déjà vendu",
+          "aide": "Retiré du disponible sur la fenêtre."
+        }
+      },
+      "z4": {
+        "titre": "Capacité mobilisable par territoire"
+      },
+      "z5": {
+        "aide": "Répartition de la capacité recensée selon le niveau de prix.",
+        "titre": "Capacité par gamme tarifaire"
+      },
+      "z6": {
+        "aide": "Établissements disposant d'une salle, répartis par palier de capacité.",
+        "col": {
+          "etablissements": "Établissements",
+          "palier": "Palier de capacité",
+          "places": "Places totales"
+        },
+        "titre": "Salles de réunion"
+      },
+      "z7": {
+        "aide": "Besoins d'hébergement déclarés dont les dates chevauchent la fenêtre analysée.",
+        "col": {
+          "couvertes": "Unités couvertes",
+          "dates": "Dates",
+          "demandees": "Unités demandées",
+          "libelle": "Libellé",
+          "statut": "Statut",
+          "type": "Type"
+        },
+        "periode": "du {debut} au {fin}",
+        "titre": "Demandes institutionnelles sur la fenêtre"
+      }
     },
     "m8": {
+      "avertissement": "La dépense observée porte sur le seul périmètre commercialisé par SIMANDOU SEJOUR. L'estimation en dérive et ne mesure pas l'ensemble du secteur.",
       "code": "M8 · Retombées estimées",
       "court": "Retombées estimées",
+      "description": "Estimation des retombées économiques de l'activité d'hébergement, méthode et coefficient publiés.",
+      "methode": {
+        "absent": "Module désactivé : aucun coefficient validé n'est enregistré.",
+        "format": "Estimation. Coefficient {valeur} appliqué à la dépense d'hébergement observée. Source : {source}, périmètre {perimetre}. Validé le {date}.",
+        "lien": "Voir la méthodologie"
+      },
       "question": "Quelles retombées économiques l'activité d'hébergement génère-t-elle.",
       "titre": "Retombées économiques estimées",
-      "description": "Estimation des retombées économiques de l'activité d'hébergement, méthode et coefficient publiés."
+      "z1": {
+        "titre": "Méthode appliquée"
+      },
+      "z2": {
+        "aide": "Dépense d'hébergement observée et estimation de la dépense totale.",
+        "titre": "Indicateurs clés"
+      },
+      "z3": {
+        "aide": "Dépense d'hébergement sur le périmètre commercialisé. Donnée observée, non estimée.",
+        "titre": "Évolution de la dépense observée"
+      },
+      "z4": {
+        "aide": "Dépense observée par typologie, par gamme et par origine déclarée.",
+        "gamme": "Par gamme",
+        "origine": "Par origine déclarée",
+        "titre": "Répartitions",
+        "typologie": "Par typologie"
+      },
+      "z5": {
+        "col": {
+          "estimee": "Dépense estimée",
+          "nuitees": "Nuitées",
+          "observee": "Dépense observée",
+          "territoire": "Territoire"
+        },
+        "titre": "Détail par territoire"
+      }
     },
     "m9": {
-      "court": "Synthèse",
-      "en_construction": "Module en construction.",
-      "titre": "Synthèse institutionnelle",
-      "description": "L'essentiel du secteur en un écran, adapté à votre mandat.",
-      "code": "M9 · Synthèse",
+      "acces": "Accès aux modules",
       "blocs_cles": "Blocs clés",
       "carte": "Carte du périmètre",
       "carte_aide": "Densité d'établissements recensés, par région",
+      "code": "M9 · Synthèse",
+      "court": "Synthèse",
+      "description": "L'essentiel du secteur en un écran, adapté à votre mandat.",
+      "en_construction": "Module en construction.",
+      "eve": {
+        "fenetre": "Capacité mobilisable, 90 prochains jours"
+      },
       "evolution": "Évolution des recherches",
-      "acces": "Accès aux modules"
+      "titre": "Synthèse institutionnelle"
     }
-  },
-  "m5": {
-    "z1": {
-      "titre": "Indicateurs clés",
-      "aide": "État d'enregistrement et de classification sur le périmètre consulté."
-    },
-    "z2": {
-      "titre": "Taux d'enregistrement par territoire",
-      "aide": "Part des établissements recensés disposant d'un enregistrement administratif documenté."
-    },
-    "z3": {
-      "titre": "Répartition par typologie et par gamme",
-      "aide": "Enregistrement et classification selon la nature et le niveau de prix des établissements."
-    },
-    "z4": {
-      "titre": "Préparation à la classification",
-      "aide": "Établissements dont la fiche est suffisamment complète pour entrer dans un processus de classification. Cette zone repose sur le recensement et ne dépend d'aucune transmission administrative.",
-      "col": {
-        "territoire": "Territoire",
-        "recenses": "Recensés",
-        "completes": "Fiches complètes",
-        "verifiees": "Fiches vérifiées",
-        "prets": "Prêts pour classification"
-      }
-    },
-    "z5": {
-      "titre": "Écart entre liste administrative et terrain",
-      "aide": "Établissements figurant sur une liste administrative et invalidés par la collecte de terrain.",
-      "col": {
-        "territoire": "Territoire",
-        "fermes": "Fermés définitivement",
-        "inexistants": "Inexistants",
-        "reclasses": "Reclassés",
-        "total": "Total de l'écart"
-      }
-    },
-    "z6": {
-      "titre": "Détail par territoire",
-      "aide": "Recensement, enregistrement et classification, territoire par territoire.",
-      "col": {
-        "territoire": "Territoire",
-        "recenses": "Recensés",
-        "enregistres": "Enregistrés",
-        "classes": "Classés",
-        "non_documentes": "Enregistrement non documenté"
-      }
-    },
-    "provenance": "Transmission administrative · source : {source} · données au {date}"
-  },
-  "m6": {
-    "z1": {
-      "titre": "Indicateurs clés",
-      "aide": "Degré de numérisation du secteur sur le périmètre consulté."
-    },
-    "z2": {
-      "titre": "Indice de maturité par territoire",
-      "aide": "Score de numérisation moyen des établissements recensés, sur 100."
-    },
-    "z3": {
-      "titre": "Décomposition de l'indice",
-      "aide": "Part des établissements disposant de chacune des six composantes de l'indice."
-    },
-    "z4": {
-      "titre": "Maturité par typologie",
-      "aide": "Indice moyen selon la nature des établissements."
-    },
-    "z5": {
-      "titre": "Maturité par gamme tarifaire",
-      "aide": "Indice moyen selon le niveau de prix."
-    },
-    "z6": {
-      "titre": "Classement des territoires",
-      "aide": "Territoires classés par indice de maturité. L'ordre croissant identifie les zones en retard, l'ordre décroissant les zones de référence.",
-      "col": {
-        "territoire": "Territoire",
-        "etablissements": "Établissements",
-        "indice": "Indice",
-        "presence": "Présence en ligne",
-        "reservation": "Réservable en ligne",
-        "paiement": "Paiement numérique"
-      },
-      "tri_croissant": "Ordre croissant",
-      "tri_decroissant": "Ordre décroissant"
-    },
-    "comp": {
-      "presence": "Présence en ligne",
-      "reservation": "Canal de réservation en ligne",
-      "tarifs": "Tarifs publiés",
-      "contact": "Coordonnées valides",
-      "carte": "Paiement par carte",
-      "mobile": "Paiement mobile money",
-      "poids": "Poids {n}",
-      "renseigne": "Renseigné pour {n} établissements sur {total}"
-    },
-    "effectif": "{n} établissements",
-    "avertissement": "Cet indice mesure le degré de numérisation. Il ne constitue en aucun cas une note de qualité des établissements."
-  },
-  "m7": {
-    "z1": {
-      "titre": "Fenêtre analysée"
-    },
-    "z2": {
-      "titre": "Indicateurs clés",
-      "aide": "Capacité d'accueil et tension sur la fenêtre sélectionnée."
-    },
-    "z3": {
-      "titre": "Décomposition de la capacité mobilisable",
-      "aide": "La capacité mobilisable se décompose en trois parts de fiabilité différente. Seule la première correspond à une disponibilité réellement connue.",
-      "partenaires": {
-        "_": "Partenaires disponibles",
-        "aide": "Disponibilité réelle connue."
-      },
-      "recenses": {
-        "_": "Recensés non réservables",
-        "aide": "Capacité théorique. La disponibilité de ces établissements n'est pas connue."
-      },
-      "vendu": {
-        "_": "Déjà vendu",
-        "aide": "Retiré du disponible sur la fenêtre."
-      }
-    },
-    "z4": {
-      "titre": "Capacité mobilisable par territoire"
-    },
-    "z5": {
-      "titre": "Capacité par gamme tarifaire",
-      "aide": "Répartition de la capacité recensée selon le niveau de prix."
-    },
-    "z6": {
-      "titre": "Salles de réunion",
-      "aide": "Établissements disposant d'une salle, répartis par palier de capacité.",
-      "col": {
-        "palier": "Palier de capacité",
-        "etablissements": "Établissements",
-        "places": "Places totales"
-      }
-    },
-    "z7": {
-      "titre": "Demandes institutionnelles sur la fenêtre",
-      "aide": "Besoins d'hébergement déclarés dont les dates chevauchent la fenêtre analysée.",
-      "col": {
-        "libelle": "Libellé",
-        "type": "Type",
-        "dates": "Dates",
-        "demandees": "Unités demandées",
-        "couvertes": "Unités couvertes",
-        "statut": "Statut"
-      },
-      "periode": "du {debut} au {fin}"
-    },
-    "fenetre": {
-      "format": "{evenement} · {territoire} · du {debut} au {fin} · {nuits} nuits",
-      "dates_libres": "Dates libres · {territoire} · du {debut} au {fin} · {nuits} nuits",
-      "aucune": "Aucun événement enregistré. Sélectionnez des dates libres."
-    },
-    "selecteur": {
-      "titre": "Fenêtre",
-      "evenement": "Événement enregistré",
-      "dates_libres": "Dates libres",
-      "choisir_evenement": "Choisir un événement",
-      "date_debut": "Date de début",
-      "date_fin": "Date de fin"
-    },
-    "filtre": {
-      "capacite_salle": "Capacité de salle minimale",
-      "aucune": "Aucune",
-      "places": "{n} places et plus"
-    },
-    "avertissement": "Cet écran mesure une capacité, il ne garantit aucune disponibilité et ne permet aucune réservation."
-  },
-  "m8": {
-    "z1": {
-      "titre": "Méthode appliquée"
-    },
-    "z2": {
-      "titre": "Indicateurs clés",
-      "aide": "Dépense d'hébergement observée et estimation de la dépense totale."
-    },
-    "z3": {
-      "titre": "Évolution de la dépense observée",
-      "aide": "Dépense d'hébergement sur le périmètre commercialisé. Donnée observée, non estimée."
-    },
-    "z4": {
-      "titre": "Répartitions",
-      "aide": "Dépense observée par typologie, par gamme et par origine déclarée.",
-      "typologie": "Par typologie",
-      "gamme": "Par gamme",
-      "origine": "Par origine déclarée"
-    },
-    "z5": {
-      "titre": "Détail par territoire",
-      "col": {
-        "territoire": "Territoire",
-        "nuitees": "Nuitées",
-        "observee": "Dépense observée",
-        "estimee": "Dépense estimée"
-      }
-    },
-    "methode": {
-      "format": "Estimation. Coefficient {valeur} appliqué à la dépense d'hébergement observée. Source : {source}, périmètre {perimetre}. Validé le {date}.",
-      "lien": "Voir la méthodologie",
-      "absent": "Module désactivé : aucun coefficient validé n'est enregistré."
-    },
-    "avertissement": "La dépense observée porte sur le seul périmètre commercialisé par SIMANDOU SEJOUR. L'estimation en dérive et ne mesure pas l'ensemble du secteur."
   },
   "nav": {
     "aide": "Aide",
@@ -597,7 +618,10 @@
     "avertissement": "Les données portent sur le périmètre recensé ci-dessus et ne constituent pas une statistique nationale exhaustive.",
     "couverture": "soit {p} de la capacité identifiée",
     "date": "Données au {date}",
-    "etablissements": "{n} établissements recensés",
+    "etablissements": {
+      "un": "{n} établissement recensé",
+      "autre": "{n} établissements recensés"
+    },
     "label": {
       "couverture": "Capacité couverte",
       "etablissements": "Établissements recensés",
@@ -607,7 +631,10 @@
       "territoires": "Territoires couverts",
       "verifiees": "Fiches vérifiées"
     },
-    "partenaires": "dont {n} partenaires",
+    "partenaires": {
+      "un": "dont {n} partenaire",
+      "autre": "dont {n} partenaires"
+    },
     "titre": "Périmètre observé",
     "reservables": "dont réservables en ligne : {n}",
     "territoires": "Territoires couverts : {n} sur {total}",

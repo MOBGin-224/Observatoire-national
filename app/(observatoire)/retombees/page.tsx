@@ -61,13 +61,13 @@ export default async function Retombees() {
     ]);
 
   const bandeau = coefficient
-    ? t("m8.methode.format", {
+    ? t("module.m8.methode.format", {
         valeur: formatCoefficient(coefficient.valeur),
         source: coefficient.source,
         perimetre: coefficient.perimetre,
         date: formatDate(coefficient.dateValidation),
       })
-    : t("m8.methode.absent");
+    : t("module.m8.methode.absent");
 
   const pointsEvolution = evolution.map((point) => ({
     cle: point.mois,
@@ -77,8 +77,8 @@ export default async function Retombees() {
   const evolutionLisible = pointsEvolution.filter((point) => point.valeur !== null).length > 1;
 
   const colonnesRepartition = [
-    { libelle: t("m8.z5.col.observee"), forme: "volume" as const },
-    { libelle: t("m8.z5.col.nuitees"), forme: "volume" as const },
+    { libelle: t("module.m8.z5.col.observee"), forme: "volume" as const },
+    { libelle: t("module.m8.z5.col.nuitees"), forme: "volume" as const },
   ];
 
   const lignesRepartition = (
@@ -131,7 +131,7 @@ export default async function Retombees() {
 
         {/* Z1, bandeau de methode : permanent, non masquable, repris sur tout export (M.6). */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="01" titre={t("m8.z1.titre")} />
+          <TitreSection numero="01" titre={t("module.m8.z1.titre")} />
           <Panneau accent="bleu">
             <div className="flex flex-col" style={{ gap: "var(--space-3)" }}>
               <p
@@ -150,7 +150,7 @@ export default async function Retombees() {
                 className="lien-sobre self-start"
                 style={{ fontSize: "var(--text-small)", fontWeight: 600 }}
               >
-                {t("m8.methode.lien")}
+                {t("module.m8.methode.lien")}
               </Link>
             </div>
           </Panneau>
@@ -164,7 +164,7 @@ export default async function Retombees() {
               color: "var(--color-text-secondary)",
             }}
           >
-            {t("m8.avertissement")}
+            {t("module.m8.avertissement")}
           </p>
         </section>
 
@@ -172,8 +172,8 @@ export default async function Retombees() {
           <>
             {/* Z2, indicateurs cles. */}
             <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-              <TitreSection numero="02" titre={t("m8.z2.titre")} />
-              <p style={STYLE_AIDE}>{t("m8.z2.aide")}</p>
+              <TitreSection numero="02" titre={t("module.m8.z2.titre")} />
+              <p style={STYLE_AIDE}>{t("module.m8.z2.aide")}</p>
               <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "var(--space-5)" }}>
                 <BlocIndicateurCle
                   code="RET_DEPENSE_HEBERGEMENT"
@@ -206,10 +206,10 @@ export default async function Retombees() {
             <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
               {/* Z3, evolution de la depense observee. Jamais l'estimee sur la meme courbe. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="03" titre={t("m8.z3.titre")} />
+                <TitreSection numero="03" titre={t("module.m8.z3.titre")} />
                 <Panneau
-                  titre={t("m8.z3.titre")}
-                  soustitre={t("m8.z3.aide")}
+                  titre={t("module.m8.z3.titre")}
+                  soustitre={t("module.m8.z3.aide")}
                   actions={<BadgeStatutDonnee code={STATUT_OBSERVE} />}
                   className="flex-1"
                 >
@@ -225,10 +225,10 @@ export default async function Retombees() {
 
               {/* Z4, repartitions. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="04" titre={t("m8.z4.titre")} />
+                <TitreSection numero="04" titre={t("module.m8.z4.titre")} />
                 <Panneau
-                  titre={t("m8.z4.titre")}
-                  soustitre={t("m8.z4.aide")}
+                  titre={t("module.m8.z4.titre")}
+                  soustitre={t("module.m8.z4.aide")}
                   actions={<BadgeStatutDonnee code={STATUT_OBSERVE} />}
                   className="flex-1"
                 >
@@ -237,17 +237,17 @@ export default async function Retombees() {
                   ) : (
                     <div className="flex flex-col" style={{ gap: "var(--space-5)" }}>
                       <TableauRegional
-                        enTetePremiereColonne={t("m8.z4.typologie")}
+                        enTetePremiereColonne={t("module.m8.z4.typologie")}
                         colonnes={colonnesRepartition}
                         lignes={lignesRepartition("TYPOLOGIE", typologies)}
                       />
                       <TableauRegional
-                        enTetePremiereColonne={t("m8.z4.gamme")}
+                        enTetePremiereColonne={t("module.m8.z4.gamme")}
                         colonnes={colonnesRepartition}
                         lignes={lignesRepartition("GAMME", gammes)}
                       />
                       <TableauRegional
-                        enTetePremiereColonne={t("m8.z4.origine")}
+                        enTetePremiereColonne={t("module.m8.z4.origine")}
                         colonnes={colonnesRepartition}
                         lignes={lignesRepartition("ORIGINE")}
                       />
@@ -260,19 +260,19 @@ export default async function Retombees() {
             {/* Z5, detail par territoire. Un tableau, pas un graphique : observe et
                 estime y ont chacun leur colonne. */}
             <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-              <TitreSection numero="05" titre={t("m8.z5.titre")} />
-              <Panneau titre={t("m8.z5.titre")} actions={<BadgeStatutDonnee code={STATUT_OBSERVE} />}>
+              <TitreSection numero="05" titre={t("module.m8.z5.titre")} />
+              <Panneau titre={t("module.m8.z5.titre")} actions={<BadgeStatutDonnee code={STATUT_OBSERVE} />}>
                 {lignesRegions.length === 0 ? (
                   <p style={{ fontSize: "var(--text-body)", color: "var(--color-text-muted)" }}>
                     {t("state.vide.subdivision")}
                   </p>
                 ) : (
                   <TableauRegional
-                    enTetePremiereColonne={t("m8.z5.col.territoire")}
+                    enTetePremiereColonne={t("module.m8.z5.col.territoire")}
                     colonnes={[
-                      { libelle: t("m8.z5.col.nuitees"), forme: "volume" },
-                      { libelle: t("m8.z5.col.observee"), forme: "volume" },
-                      { libelle: t("m8.z5.col.estimee"), forme: "volume" },
+                      { libelle: t("module.m8.z5.col.nuitees"), forme: "volume" },
+                      { libelle: t("module.m8.z5.col.observee"), forme: "volume" },
+                      { libelle: t("module.m8.z5.col.estimee"), forme: "volume" },
                     ]}
                     lignes={lignesRegions}
                     total={[

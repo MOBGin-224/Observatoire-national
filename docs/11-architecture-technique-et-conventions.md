@@ -139,6 +139,12 @@ Fichiers SQL numérotés, jamais modifiés après application. Une migration cor
 
 **Toute migration appliquée au projet Supabase est reportée dans le dépôt dans la foulée.** Une migration appliquée en base et absente du dépôt rend le dépôt incapable de reconstruire son propre socle : le code y est, le schéma qu'il interroge n'y est pas. Ce n'est plus une sauvegarde.
 
+**Aucun objet de base de données n'est créé, modifié ou supprimé autrement que par un fichier de migration.** Document 17, partie A.3. Cela vaut pour les tables, les vues, les vues matérialisées, les fonctions, les politiques de sécurité, les index et les tâches planifiées.
+
+**Aucune exception, y compris pour un correctif urgent.** Un correctif appliqué directement en base est une dette invisible : il fonctionne, rien ne le signale, et il disparaît au premier déploiement propre. Trois objets ont été créés hors de ce flux avant que la règle ne soit posée, et ils ont vécu plusieurs jours sans que rien ne les signale.
+
+La règle est vérifiable : `node scripts/controle-migrations.mjs` compare les objets présents en base à ceux que les migrations créent, et signale tout écart dans les deux sens. Exécution avant chaque livraison, vérification I10 du document 12.
+
 Ordre d'application initial :
 
 | Rang | Migration |

@@ -29,12 +29,12 @@ export async function TableauDemandes({ lignes }: { lignes: DemandeFenetre[] }) 
   const libelleStatut = new Map(statuts.map((valeur) => [valeur.code, valeur.libelleFr]));
 
   const colonnes = [
-    { cle: "libelle", libelle: t("m7.z7.col.libelle"), droite: false },
-    { cle: "type", libelle: t("m7.z7.col.type"), droite: false },
-    { cle: "dates", libelle: t("m7.z7.col.dates"), droite: false },
-    { cle: "demandees", libelle: t("m7.z7.col.demandees"), droite: true },
-    { cle: "couvertes", libelle: t("m7.z7.col.couvertes"), droite: true },
-    { cle: "statut", libelle: t("m7.z7.col.statut"), droite: false },
+    { cle: "libelle", libelle: t("module.m7.z7.col.libelle"), droite: false },
+    { cle: "type", libelle: t("module.m7.z7.col.type"), droite: false },
+    { cle: "dates", libelle: t("module.m7.z7.col.dates"), droite: false },
+    { cle: "demandees", libelle: t("module.m7.z7.col.demandees"), droite: true },
+    { cle: "couvertes", libelle: t("module.m7.z7.col.couvertes"), droite: true },
+    { cle: "statut", libelle: t("module.m7.z7.col.statut"), droite: false },
   ];
 
   const nonRenseigne = t("state.non_renseigne");
@@ -74,7 +74,7 @@ export async function TableauDemandes({ lignes }: { lignes: DemandeFenetre[] }) 
             const signalee = demande.statut !== null && STATUTS_SIGNALES.has(demande.statut);
             const dates = demande.dateDebut
               ? demande.dateFin && demande.dateFin !== demande.dateDebut
-                ? t("m7.z7.periode", { debut: formatDate(demande.dateDebut), fin: formatDate(demande.dateFin) })
+                ? t("module.m7.z7.periode", { debut: formatDate(demande.dateDebut), fin: formatDate(demande.dateFin) })
                 : formatDate(demande.dateDebut)
               : nonRenseigne;
             return (

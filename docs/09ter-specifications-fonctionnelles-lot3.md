@@ -235,6 +235,19 @@ Ces valeurs sont les bornes basses des paliers `PALIER_SALLE`, document 2, secti
 
 **Raison :** annoncer une capacité mobilisable de mille unités dont neuf cents relèvent d'établissements dont on ignore la disponibilité serait un engagement que Simandou Séjour ne peut pas tenir. La décomposition rend l'incertitude visible.
 
+**Unité des trois parts** (document 17, section B.4). **Les trois parts s'expriment en unités par nuit, à la nuit de pointe de la fenêtre.** Sans cette règle, une part exprimée en stock et une autre en cumul de nuitées seraient incomparables, et leur somme n'aurait aucun sens. C'est le genre d'erreur qui produit un total plausible et faux.
+
+**Mode dégradé de la zone 3** (document 17, section B.4). Appliquer la règle M1 à la part partenaires viderait la décomposition de son seul élément fiable, alors que cette décomposition est la raison d'être de l'écran.
+
+| Situation | Affichage |
+|---|---|
+| Règle M1 satisfaite | Trois parts distinctes : partenaires disponibles, déjà vendu, recensés non réservables |
+| Règle M1 non satisfaite | Deux parts : capacité partenaire recensée, recensés non réservables |
+
+En mode dégradé, les parts « partenaires disponibles » et « déjà vendu » fusionnent en une part unique intitulée « capacité partenaire recensée », clé `module.m7.z3.partenaire_global`.
+
+**Ce que cela préserve :** le message essentiel de l'écran, la distinction entre disponibilité connue et disponibilité inconnue, reste lisible. **Ce que cela protège :** les unités vendues, qui sont la donnée de performance, ne sont pas déduites.
+
 **Zone 7.** Liste des demandes institutionnelles chevauchant la fenêtre. L'écart entre unités demandées et unités couvertes est mis en évidence. Une demande en `NON_SATISFAITE` ou `PARTIELLEMENT_SATISFAITE` est signalée.
 
 **Tension.** `EVE_TAUX_TENSION_EVENEMENT` dépassant cent pour cent signifie que le besoin déclaré excède la capacité mobilisable. C'est le seul cas où `--color-alert` apparaît sur cet écran.

@@ -70,6 +70,18 @@ export const EVENEMENTIEL = {
 } as const;
 
 /**
+ * Document 17, section B.2. Tant que le taux de renseignement d'une composante
+ * de MAT_INDICE reste sous ce seuil, une mention permanente accompagne
+ * l'indice : il constitue un plancher, non une valeur definitive.
+ *
+ * Une composante non renseignee compte pour zero dans le score, l'indice ne
+ * peut donc que monter quand la collecte avance.
+ */
+export const MATURITE = {
+  seuilRenseignementPlancher: 0.5,
+} as const;
+
+/**
  * Vue unique des parametres, pour l'ecran de methodologie et pour la
  * verification de recette. Ne pas lire une valeur ici dans du code metier :
  * passer par la constante du domaine concerne.
@@ -82,6 +94,7 @@ export const CONFIGURATION = {
   CONSERVATION,
   DOUBLON,
   EVENEMENTIEL,
+  MATURITE,
 } as const;
 
 /**

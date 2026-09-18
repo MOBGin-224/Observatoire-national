@@ -19,13 +19,19 @@ import { t } from "@/lib/i18n";
  * statut de donnee (le vendu est observe, le recense est recense), et un
  * graphique ne melange jamais deux statuts.
  *
- * Masquage M1 : sous trois partenaires, ou quand l'un porte plus de la moitie
- * des unites, le vendu et le disponible partenaire ne sont pas publies. Les
- * deux lignes restent a l'ecran, trame et libelle invariable : la decomposition
- * garde ses trois parts, meme quand deux sont non publiees.
+ * Masquage M1, mode degrade (document 17, B.4). Sous trois partenaires, ou
+ * quand l'un porte plus de la moitie des unites, le vendu ne peut pas etre
+ * publie : c'est une donnee de performance. Masquer les deux parts viderait
+ * la decomposition de son seul element fiable, alors qu'elle est la raison
+ * d'etre de l'ecran.
+ *
+ * Les deux parts fusionnent donc en une seule, "capacite partenaire recensee",
+ * et l'ecran passe de trois parts a deux. Le message essentiel, la distinction
+ * entre disponibilite connue et disponibilite inconnue, reste lisible ; les
+ * unites vendues ne sont pas deductibles.
  */
 type Part = {
-  cle: "partenaires" | "recenses" | "vendu";
+  cle: "partenaires" | "recenses" | "vendu" | "partenaire_global";
   valeur: number | null;
   teinte: string;
 };
@@ -47,11 +53,25 @@ export function DecompositionCapacite({
     return <EtatVide libelle={t("state.vide.capacite_decomposer")} />;
   }
 
-  const parts: Part[] = [
-    { cle: "partenaires", valeur: masque ? null : partenairesDisponibles, teinte: "var(--color-primary-700)" },
-    { cle: "recenses", valeur: recensesNonReservables, teinte: "var(--seq-2)" },
-    { cle: "vendu", valeur: masque ? null : dejaVendu, teinte: "var(--color-border-strong)" },
-  ];
+  // La capacite partenaire recensee est la difference de deux nombres deja
+  // publies : le recense total et la part non reservable. Aucune donnee
+  // nouvelle n'est exposee par cette soustraction.
+  const capacitePartenaireRecensee = Math.max(0, capaciteRecensee - recensesNonReservables);
+
+  const parts: Part[] = masque
+    ? [
+        {
+          cle: "partenaire_global",
+          valeur: capacitePartenaireRecensee,
+          teinte: "var(--color-primary-700)",
+        },
+        { cle: "recenses", valeur: recensesNonReservables, teinte: "var(--seq-2)" },
+      ]
+    : [
+        { cle: "partenaires", valeur: partenairesDisponibles, teinte: "var(--color-primary-700)" },
+        { cle: "recenses", valeur: recensesNonReservables, teinte: "var(--seq-2)" },
+        { cle: "vendu", valeur: dejaVendu, teinte: "var(--color-border-strong)" },
+      ];
 
   return (
     <ul className="flex flex-col" style={{ gap: "var(--space-5)" }}>
@@ -63,10 +83,10 @@ export function DecompositionCapacite({
             <div className="flex items-baseline justify-between" style={{ gap: "var(--space-4)" }}>
               <span className="flex flex-col" style={{ gap: "var(--space-1)" }}>
                 <span style={{ fontSize: "var(--text-small)", fontWeight: 600, color: "var(--color-text)" }}>
-                  {t(`m7.z3.${part.cle}`)}
+                  {t(`module.m7.z3.${part.cle}`)}
                 </span>
                 <span style={{ fontSize: "var(--text-meta)", lineHeight: 1.4, color: "var(--color-text-muted)" }}>
-                  {t(`m7.z3.${part.cle}.aide`)}
+                  {t(`module.m7.z3.${part.cle}.aide`)}
                 </span>
               </span>
               <span

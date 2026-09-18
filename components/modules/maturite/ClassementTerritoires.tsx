@@ -60,19 +60,19 @@ export function ClassementTerritoires({ lignes }: { lignes: LigneClassement[] })
   }
 
   const colonnes = [
-    { cle: "territoire", libelle: t("m6.z6.col.territoire"), droite: false },
-    { cle: "etablissements", libelle: t("m6.z6.col.etablissements"), droite: true },
-    { cle: "indice", libelle: t("m6.z6.col.indice"), droite: true },
-    { cle: "presence", libelle: t("m6.z6.col.presence"), droite: true },
-    { cle: "reservation", libelle: t("m6.z6.col.reservation"), droite: true },
-    { cle: "paiement", libelle: t("m6.z6.col.paiement"), droite: true },
+    { cle: "territoire", libelle: t("module.m6.z6.col.territoire"), droite: false },
+    { cle: "etablissements", libelle: t("module.m6.z6.col.etablissements"), droite: true },
+    { cle: "indice", libelle: t("module.m6.z6.col.indice"), droite: true },
+    { cle: "presence", libelle: t("module.m6.z6.col.presence"), droite: true },
+    { cle: "reservation", libelle: t("module.m6.z6.col.reservation"), droite: true },
+    { cle: "paiement", libelle: t("module.m6.z6.col.paiement"), droite: true },
   ];
 
   return (
     <div className="flex flex-col" style={{ gap: "var(--space-4)" }}>
       <div
         role="group"
-        aria-label={t("m6.z6.titre")}
+        aria-label={t("module.m6.z6.titre")}
         className="inline-flex self-start"
         style={{
           border: "1px solid var(--color-border-strong)",
@@ -97,7 +97,7 @@ export function ClassementTerritoires({ lignes }: { lignes: LigneClassement[] })
                 transition: "background-color 150ms ease-out, color 150ms ease-out",
               }}
             >
-              {t(sens === "asc" ? "m6.z6.tri_croissant" : "m6.z6.tri_decroissant")}
+              {t(sens === "asc" ? "module.m6.z6.tri_croissant" : "module.m6.z6.tri_decroissant")}
             </button>
           );
         })}

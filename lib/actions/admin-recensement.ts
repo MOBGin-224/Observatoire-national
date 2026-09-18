@@ -21,10 +21,6 @@ import {
  * controle applicatif explicite produit une erreur claire plutot que de
  * compter sur RLS pour renvoyer silencieusement des ensembles vides.
  */
-/* Taille de lot technique, pas un parametre metier : un fichier de 2 500 fiches
-   peut porter jusqu'a 35 000 lignes d'equipement. */
-const TAILLE_LOT_EQUIPEMENTS = 1000;
-
 async function exigerAdmin(): Promise<void> {
   const compte = await chargerMonCompte();
   if (compte?.profil !== "ADMIN") {
@@ -122,36 +118,31 @@ export async function validerImport(
   const lignesAInserer = rapport.lignesValides.map((ligne) => ({ ligne, id: randomUUID() }));
 
   if (lignesAInserer.length > 0) {
-    const { error: erreurEtablissements } = await supabase.from("etablissement").insert(
-      lignesAInserer.map(({ ligne: l, id }) => ({
-        id,
-        nom: l.nom,
-        typologie: l.typologie,
-        code_commune: l.codeCommune,
-        quartier: l.quartier,
-        adresse_texte: l.adresseTexte,
-        latitude: l.latitude,
-        longitude: l.longitude,
-        precision_geo: "RELEVE",
-        capacite_unites: l.capaciteUnites,
-        capacite_source: "DECLAREE",
-        gamme_tarifaire: l.gammeTarifaire,
-        telephone_1: l.telephone1,
-        telephone_2: l.telephone2,
-        whatsapp: l.whatsapp,
-        email: l.email,
-        site_web: l.siteWeb,
-        reservation_en_ligne: l.reservationEnLigne,
-        source_recensement: l.sourceRecensement,
-        statut_relation: l.statutRelation,
-        statut_verification: "NON_VERIFIE",
-        notes: l.notes,
-        actif: true,
-      }))
-    );
-    if (erreurEtablissements) {
-      throw new Error(`Import refuse par la base : ${erreurEtablissements.message}`);
-    }
+    const etablissements = lignesAInserer.map(({ ligne: l, id }) => ({
+      id,
+      nom: l.nom,
+      typologie: l.typologie,
+      code_commune: l.codeCommune,
+      quartier: l.quartier,
+      adresse_texte: l.adresseTexte,
+      latitude: l.latitude,
+      longitude: l.longitude,
+      precision_geo: "RELEVE",
+      capacite_unites: l.capaciteUnites,
+      capacite_source: "DECLAREE",
+      gamme_tarifaire: l.gammeTarifaire,
+      telephone_1: l.telephone1,
+      telephone_2: l.telephone2,
+      whatsapp: l.whatsapp,
+      email: l.email,
+      site_web: l.siteWeb,
+      reservation_en_ligne: l.reservationEnLigne,
+      source_recensement: l.sourceRecensement,
+      statut_relation: l.statutRelation,
+      statut_verification: "NON_VERIFIE",
+      notes: l.notes,
+      actif: true,
+    }));
 
     /* Une ligne par equipement renseigne, aucune pour une cellule vide. */
     const equipements = lignesAInserer.flatMap(({ ligne: l, id }) =>
@@ -163,13 +154,18 @@ export async function validerImport(
         source: l.sourceRecensement,
       }))
     );
-    for (let debut = 0; debut < equipements.length; debut += TAILLE_LOT_EQUIPEMENTS) {
-      const { error } = await supabase
-        .from("etablissement_equipement")
-        .insert(equipements.slice(debut, debut + TAILLE_LOT_EQUIPEMENTS));
-      if (error) {
-        throw new Error(`Equipements refuses par la base : ${error.message}`);
-      }
+
+    /* Document 17, D.5 : tout ou rien. Les deux ecritures vivent dans une
+       seule transaction cote base, un echec sur les equipements annulant les
+       etablissements. Un import a moitie applique corrompt l'inventaire en
+       silence, sans qu'on puisse distinguer un equipement absent d'un
+       equipement non importe. */
+    const { error } = await supabase.rpc("importer_recensement", {
+      p_etablissements: etablissements,
+      p_equipements: equipements,
+    });
+    if (error) {
+      throw new Error(`Import refuse par la base, aucune ligne ecrite : ${error.message}`);
     }
   }
 

@@ -86,6 +86,21 @@ const ROUTE_MODULE: Record<string, string> = {
 };
 
 /*
+ * Document 17, partie C. Un chiffre de capacite sans horizon est
+ * ininterpretable : mobilisable quand. En synthese, la capacite mobilisable
+ * s'entend sur les 90 prochains jours, et le libelle du bloc le dit.
+ *
+ * EVE_CAPACITE_SALLES n'est pas concerne : c'est un comptage d'inventaire, qui
+ * n'a besoin d'aucune fenetre (document 17, C.1).
+ *
+ * Qui veut une autre fenetre passe par M7, qui offre les deux modes de
+ * selection.
+ */
+const LIBELLES_RESTREINTS: Record<string, string | undefined> = {
+  EVE_CAPACITE_MOBILISABLE: t("module.m9.eve.fenetre"),
+};
+
+/*
  * Document 16, section B.3 : le compteur d'une carte d'acces depend de la
  * nature du module. M10 et M11 ne portent aucun indicateur en propre ; leur
  * afficher un compte d'indicateurs rattaches produirait zero ou rien.
@@ -186,6 +201,7 @@ export default async function Synthese() {
                   code={code}
                   valeur={bloc?.valeur ?? null}
                   masque={bloc?.masque ?? false}
+                  libelle={LIBELLES_RESTREINTS[code]}
                   niveauFiabilite={bloc?.niveauFiabilite ?? undefined}
                   calculeA={valeurs.calculeA}
                   variante={varianteDuBloc(code)}

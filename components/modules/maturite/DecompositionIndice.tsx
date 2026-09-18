@@ -21,12 +21,12 @@ import type { CleComposante } from "@/lib/queries/maturite";
  * qu'elle se lise comme un constat.
  */
 const COMPOSANTES: { cle: CleComposante; libelle: string; paiement: boolean }[] = [
-  { cle: "presenceLigne", libelle: "m6.comp.presence", paiement: false },
-  { cle: "canalReservation", libelle: "m6.comp.reservation", paiement: false },
-  { cle: "tarifsPublies", libelle: "m6.comp.tarifs", paiement: false },
-  { cle: "coordonneesValides", libelle: "m6.comp.contact", paiement: false },
-  { cle: "paiementCarte", libelle: "m6.comp.carte", paiement: true },
-  { cle: "paiementMobile", libelle: "m6.comp.mobile", paiement: true },
+  { cle: "presenceLigne", libelle: "module.m6.comp.presence", paiement: false },
+  { cle: "canalReservation", libelle: "module.m6.comp.reservation", paiement: false },
+  { cle: "tarifsPublies", libelle: "module.m6.comp.tarifs", paiement: false },
+  { cle: "coordonneesValides", libelle: "module.m6.comp.contact", paiement: false },
+  { cle: "paiementCarte", libelle: "module.m6.comp.carte", paiement: true },
+  { cle: "paiementMobile", libelle: "module.m6.comp.mobile", paiement: true },
 ];
 
 export function DecompositionIndice({
@@ -71,7 +71,7 @@ export function DecompositionIndice({
                       color: "var(--color-text-muted)",
                     }}
                   >
-                    {t("m6.comp.poids", { n: poids })}
+                    {t("module.m6.comp.poids", { n: poids })}
                   </span>
                 )}
               </span>
@@ -102,7 +102,7 @@ export function DecompositionIndice({
                 className="chiffres-tabulaires"
                 style={{ fontSize: "var(--text-meta)", color: "var(--color-text-muted)" }}
               >
-                {t("m6.comp.renseigne", {
+                {t("module.m6.comp.renseigne", {
                   n: formatNombre(renseigne[cle] ?? 0),
                   total: formatNombre(effectif),
                 })}

@@ -66,6 +66,16 @@ Huit blocs clés, sélectionnés selon le profil. Un bloc dont le module d'origi
 
 Six blocs seulement pour ce profil, qui est le plus restreint. Ne pas compléter artificiellement jusqu'à huit.
 
+**Fenêtre des deux blocs événementiels.** Amendement du document 17, partie C.
+
+`EVE_CAPACITE_SALLES` est un comptage d'inventaire : aucune fenêtre temporelle, il reste tel quel.
+
+`EVE_CAPACITE_MOBILISABLE` n'a aucun sens sans fenêtre, mobilisable quand. **En synthèse, il applique une fenêtre par défaut des 90 prochains jours**, et le libellé du bloc l'indique explicitement, clé `module.m9.eve.fenetre`.
+
+90 jours est l'horizon sur lequel une institution prépare un événement. Plus court, il manquerait les sommets en préparation ; plus long, la disponibilité partenaire connue deviendrait trop incertaine pour être informative.
+
+L'utilisateur qui veut une autre fenêtre passe par `M7`, qui offre les deux modes de sélection.
+
 ### Profil `ADMIN`
 
 `ADMIN` n'est ni un miroir de `TUTELLE`, ni un profil institutionnel. C'est un profil de pilotage interne : sa synthèse mesure l'avancement et la qualité de l'inventaire, qui est le chantier déterminant du projet.
@@ -347,6 +357,8 @@ Neuf sections, dans cet ordre de priorité de réalisation.
   - `equip_salle_capacite` renseigné alors que `equip_salle_reunion` vaut N ou est vide déclenche une erreur de ligne. Une capacité qui n'est pas un entier positif aussi, la colonne étant de type entier ;
   - `equip_salle_reunion` valant O sans capacité renseignée crée la ligne avec une capacité nulle, et un avertissement au rapport de contrôle.
 - Historique des imports : date, opérateur, nombre de lignes, fichier source.
+- **Transaction unique, tout ou rien** (document 17, section D.5). Établissements et équipements sont écrits dans la même transaction : un échec en seconde passe annule la première. Un import appliqué à moitié corrompt l'inventaire en silence, en créant des établissements sans leurs équipements, sans trace de l'échec et sans moyen de distinguer un équipement absent d'un équipement non importé.
+- **Rapport d'échec explicite.** En cas d'échec, l'écran indique qu'aucune ligne n'a été écrite, et le motif.
 
 ### H.4.2 Fiche établissement
 

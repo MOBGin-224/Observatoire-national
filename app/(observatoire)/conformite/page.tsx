@@ -8,7 +8,7 @@ import { TableauRegional } from "@/components/modules/TableauRegional";
 import { BadgeStatutDonnee } from "@/components/states/BadgeStatutDonnee";
 import { EtatVide } from "@/components/states/EtatVide";
 import { listerEnumeration, type ValeurEnumeration } from "@/lib/enumerations";
-import { formatDate, formatPourcentage } from "@/lib/format";
+import { formatDate, formatNombre, formatPourcentage } from "@/lib/format";
 import { resoudreIndicateur } from "@/lib/indicators";
 import { t } from "@/lib/i18n";
 import {
@@ -77,7 +77,7 @@ export default async function Conformite() {
 
   /* Source et date de la transmission, sur les zones administratives (L.7). */
   const provenance = transmission
-    ? t("m5.provenance", {
+    ? t("module.m5.provenance", {
         source: national.confSources ?? t("state.non_renseigne"),
         date: national.confDateDonnees ? formatDate(national.confDateDonnees) : t("state.non_renseigne"),
       })
@@ -128,9 +128,9 @@ export default async function Conformite() {
   }));
 
   const colonnesCroisement = [
-    { libelle: t("m5.z6.col.recenses"), forme: "volume" as const },
-    { libelle: t("m5.z6.col.enregistres"), forme: "volume" as const },
-    { libelle: t("m5.z6.col.classes"), forme: "volume" as const },
+    { libelle: t("module.m5.z6.col.recenses"), forme: "volume" as const },
+    { libelle: t("module.m5.z6.col.enregistres"), forme: "volume" as const },
+    { libelle: t("module.m5.z6.col.classes"), forme: "volume" as const },
   ];
 
   /* Les categories suivent l'ordre du referentiel. */
@@ -166,8 +166,37 @@ export default async function Conformite() {
 
         {/* Z1, blocs cles. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="01" titre={t("m5.z1.titre")} />
-          <p style={STYLE_AIDE}>{t("m5.z1.aide")}</p>
+          <TitreSection numero="01" titre={t("module.m5.z1.titre")} />
+          <p style={STYLE_AIDE}>{t("module.m5.z1.aide")}</p>
+
+          {/*
+           * Mention obligatoire, permanente et non masquable (document 17, B.3).
+           *
+           * Les taux CONF_ sont rapportes aux etablissements recenses, ce qui
+           * est la bonne formule mais devient trompeur affiche seul : le
+           * denominateur confond l'etablissement non enregistre et celui dont
+           * l'enregistrement n'a pas ete transmis. Un etablissement en regle
+           * apparaitrait alors comme non documente, ce que la regle de
+           * vocabulaire du document 4 cherche precisement a eviter.
+           */}
+          <p
+            style={{
+              padding: "var(--space-3) var(--space-4)",
+              borderLeft: "var(--filet-accent) solid var(--color-border-strong)",
+              backgroundColor: "var(--color-bg-panel)",
+              fontSize: "var(--text-small)",
+              lineHeight: 1.5,
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            {national.confEffectifTransmission === 0
+              ? t("module.m5.transmission.aucune")
+              : t("module.m5.transmission", {
+                  n: formatNombre(national.confEffectifTransmission),
+                  total: formatNombre(national.offEtabRecenses),
+                })}
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4" style={{ gap: "var(--space-5)" }}>
             <BlocIndicateurCle
               code="OFF_ETAB_RECENSES"
@@ -208,10 +237,10 @@ export default async function Conformite() {
         <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
           {/* Z2, taux d'enregistrement par territoire. */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="02" titre={t("m5.z2.titre")} />
+            <TitreSection numero="02" titre={t("module.m5.z2.titre")} />
             <Panneau
-              titre={t("m5.z2.titre")}
-              soustitre={t("m5.z2.aide")}
+              titre={t("module.m5.z2.titre")}
+              soustitre={t("module.m5.z2.aide")}
               actions={<BadgeStatutDonnee code={STATUT_ADMINISTRATIF} />}
               pied={
                 <LegendeDensite
@@ -235,10 +264,10 @@ export default async function Conformite() {
 
           {/* Z3, repartition par typologie et par gamme. */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="03" titre={t("m5.z3.titre")} />
+            <TitreSection numero="03" titre={t("module.m5.z3.titre")} />
             <Panneau
-              titre={t("m5.z3.titre")}
-              soustitre={t("m5.z3.aide")}
+              titre={t("module.m5.z3.titre")}
+              soustitre={t("module.m5.z3.aide")}
               actions={<BadgeStatutDonnee code={STATUT_ADMINISTRATIF} />}
               className="flex-1"
             >
@@ -265,22 +294,22 @@ export default async function Conformite() {
         {/* Z4, preparation a la classification : la zone la plus utile a la
             tutelle avant toute transmission (L.6). */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="04" titre={t("m5.z4.titre")} />
+          <TitreSection numero="04" titre={t("module.m5.z4.titre")} />
           <Panneau
-            titre={t("m5.z4.titre")}
-            soustitre={t("m5.z4.aide")}
+            titre={t("module.m5.z4.titre")}
+            soustitre={t("module.m5.z4.aide")}
             actions={<BadgeStatutDonnee code={STATUT_RECENSEMENT} />}
           >
             {national.offEtabRecenses === 0 ? (
               <EtatVide libelle={t("state.vide.etablissements")} />
             ) : (
               <TableauRegional
-                enTetePremiereColonne={t("m5.z4.col.territoire")}
+                enTetePremiereColonne={t("module.m5.z4.col.territoire")}
                 colonnes={[
-                  { libelle: t("m5.z4.col.recenses"), forme: "volume" },
-                  { libelle: t("m5.z4.col.completes"), forme: "volume" },
-                  { libelle: t("m5.z4.col.verifiees"), forme: "volume" },
-                  { libelle: t("m5.z4.col.prets"), forme: "volume" },
+                  { libelle: t("module.m5.z4.col.recenses"), forme: "volume" },
+                  { libelle: t("module.m5.z4.col.completes"), forme: "volume" },
+                  { libelle: t("module.m5.z4.col.verifiees"), forme: "volume" },
+                  { libelle: t("module.m5.z4.col.prets"), forme: "volume" },
                 ]}
                 lignes={lignesPreparation}
                 total={[
@@ -296,22 +325,22 @@ export default async function Conformite() {
 
         {/* Z5, ecart entre liste administrative et terrain. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="05" titre={t("m5.z5.titre")} />
+          <TitreSection numero="05" titre={t("module.m5.z5.titre")} />
           <Panneau
-            titre={t("m5.z5.titre")}
-            soustitre={t("m5.z5.aide")}
+            titre={t("module.m5.z5.titre")}
+            soustitre={t("module.m5.z5.aide")}
             actions={<BadgeStatutDonnee code={STATUT_RECENSEMENT} />}
           >
             {national.offEcartListeAdmin === 0 ? (
               <EtatVide libelle={t("state.vide.ecart_terrain")} />
             ) : (
               <TableauRegional
-                enTetePremiereColonne={t("m5.z5.col.territoire")}
+                enTetePremiereColonne={t("module.m5.z5.col.territoire")}
                 colonnes={[
-                  { libelle: t("m5.z5.col.fermes"), forme: "volume" },
-                  { libelle: t("m5.z5.col.inexistants"), forme: "volume" },
-                  { libelle: t("m5.z5.col.reclasses"), forme: "volume" },
-                  { libelle: t("m5.z5.col.total"), forme: "volume" },
+                  { libelle: t("module.m5.z5.col.fermes"), forme: "volume" },
+                  { libelle: t("module.m5.z5.col.inexistants"), forme: "volume" },
+                  { libelle: t("module.m5.z5.col.reclasses"), forme: "volume" },
+                  { libelle: t("module.m5.z5.col.total"), forme: "volume" },
                 ]}
                 lignes={lignesEcart}
                 total={[
@@ -327,21 +356,21 @@ export default async function Conformite() {
 
         {/* Z6, detail par territoire. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="06" titre={t("m5.z6.titre")} />
+          <TitreSection numero="06" titre={t("module.m5.z6.titre")} />
           <Panneau
-            titre={t("m5.z6.titre")}
-            soustitre={t("m5.z6.aide")}
+            titre={t("module.m5.z6.titre")}
+            soustitre={t("module.m5.z6.aide")}
             actions={<BadgeStatutDonnee code={STATUT_ADMINISTRATIF} />}
             pied={provenance ? <p style={STYLE_AIDE}>{provenance}</p> : undefined}
           >
             {transmission ? (
               <TableauRegional
-                enTetePremiereColonne={t("m5.z6.col.territoire")}
+                enTetePremiereColonne={t("module.m5.z6.col.territoire")}
                 colonnes={[
-                  { libelle: t("m5.z6.col.recenses"), forme: "volume" },
-                  { libelle: t("m5.z6.col.enregistres"), forme: "volume" },
-                  { libelle: t("m5.z6.col.classes"), forme: "volume" },
-                  { libelle: t("m5.z6.col.non_documentes"), forme: "volume" },
+                  { libelle: t("module.m5.z6.col.recenses"), forme: "volume" },
+                  { libelle: t("module.m5.z6.col.enregistres"), forme: "volume" },
+                  { libelle: t("module.m5.z6.col.classes"), forme: "volume" },
+                  { libelle: t("module.m5.z6.col.non_documentes"), forme: "volume" },
                 ]}
                 lignes={lignesDetail}
                 total={[

@@ -80,7 +80,7 @@ export async function BarresIndice({ domaine, lignes }: { domaine: string; ligne
                 color: "var(--color-text-muted)",
               }}
             >
-              {t("m6.effectif", { n: formatNombre(ligne.effectif) })}
+              {t("module.m6.effectif", { n: formatNombre(ligne.effectif) })}
               {ligne.niveauFiabilite && ligne.niveauFiabilite !== "CONSOLIDE" && (
                 <>
                   <span aria-hidden="true">&middot;</span>

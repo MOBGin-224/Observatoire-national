@@ -42,6 +42,17 @@ Les établissements en `DOUBLON` sont exclus de tous les calculs. Les établisse
 
 **Un indicateur composite hérite du niveau de fiabilité le plus faible de ses composantes.** `TEN_INDICE_TENSION` croise une mesure de demande et une mesure d'inventaire : si la demande est `CONSOLIDE` et l'inventaire `SIGNAL`, l'indice est `SIGNAL`. C'est la seule règle qui empêche un indicateur dérivé de paraître plus solide que ce sur quoi il repose.
 
+**Portée de cette règle** (document 17, section B.2). Elle vise les indicateurs qui croisent **deux bases de mesure distinctes**, comme `TEN_INDICE_TENSION`, qui rapporte des recherches à de la capacité : ce sont deux échantillons différents, et le plus faible commande.
+
+Elle ne s'applique pas aux composites dont les composantes sont des **attributs d'un même échantillon**, comme `MAT_INDICE` ou `OFF_COMPLETUDE_FICHE`. L'échantillon y est unique, le nombre d'établissements de l'agrégat, et c'est la règle d'inventaire qui s'applique. Une composante non renseignée compte pour zéro dans le score, ce qui est conservateur et honnête, mais elle ne dégrade pas la fiabilité : l'indicateur serait sinon pénalisé deux fois pour la même raison.
+
+**Masquage des indicateurs de performance** (document 17, section B.1). Les indicateurs de performance n'ont pas de niveau `SIGNAL` : en dessous du seuil `INDICATIF`, ils sont masqués. Un indicateur de performance s'affiche donc si les deux conditions sont réunies :
+
+1. la règle M1 est satisfaite, au moins 3 établissements dans l'agrégat et aucun ne représentant plus de la moitié des unités ;
+2. l'agrégat compte au moins 10 réservations.
+
+Sinon il est masqué, avec le libellé M1 habituel et **sans distinction de motif à l'écran**. Afficher « effectif de réservations insuffisant » plutôt que le libellé de confidentialité informerait sur le volume d'activité d'un territoire, ce que la règle M1 protège précisément. Concernés : `M3_ACTIVITE` et `M8_RETOMBEES`.
+
 Les seuils déjà fixés dans une fiche pour un indicateur particulier priment sur la règle générale.
 
 Le niveau est calculé par la base, dans la vue qui produit l'indicateur, jamais par l'application.
@@ -285,6 +296,12 @@ Rapport entre demande exprimée et capacité réservable sur un territoire, rame
 - Unité : indice, sans décimale
 - Seuils : `CONSOLIDE` à partir de 50 recherches sur le territoire, `INDICATIF` de 15 à 49, `SIGNAL` en dessous
 - Piège : sur un territoire à capacité réservable nulle, le rapport est indéfini. Ne pas afficher l'infini, basculer sur `TEN_CAPACITE_MANQUANTE`.
+
+> **Diagnostic du 18 septembre 2026** (document 17, section D.1). La valeur 100 constante relevée dans `mv_tension_national` n'est pas un défaut de code : **au niveau national, la formule vaut 100 par construction**, numérateur et dénominateur étant le même rapport. L'indice ne porte d'information qu'au niveau territorial.
+>
+> Le test proposé au document 17, charger de la demande sur deux territoires de capacités différentes, ne peut pas départager quoi que ce soit : il n'existe aucune vue de tension par territoire, l'agrégat territorial restant à construire.
+>
+> **Rien à corriger sur `mv_tension_national`.** La formule ci-dessus est à implémenter lors de la construction de l'agrégat de tension par territoire, et c'est là seulement que la valeur cessera d'être constante.
 
 ### `TEN_CAPACITE_MANQUANTE`
 **Capacité manquante estimée**

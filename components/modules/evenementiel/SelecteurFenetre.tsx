@@ -76,10 +76,10 @@ export function SelecteurFenetre({
   return (
     <div className="flex flex-col" style={{ gap: "var(--space-4)" }}>
       <div className="flex flex-wrap items-end" style={{ gap: "var(--space-5)" }}>
-        <Champ libelle={t("m7.selecteur.titre")}>
+        <Champ libelle={t("module.m7.selecteur.titre")}>
           <div
             role="group"
-            aria-label={t("m7.selecteur.titre")}
+            aria-label={t("module.m7.selecteur.titre")}
             className="inline-flex"
             style={{
               border: "1px solid var(--color-border-strong)",
@@ -92,16 +92,16 @@ export function SelecteurFenetre({
               desactive={evenements.length === 0}
               surClic={() => naviguer({ mode: "evenement", evenement: etat.evenement ?? evenements[0]?.cle ?? null })}
             >
-              {t("m7.selecteur.evenement")}
+              {t("module.m7.selecteur.evenement")}
             </Segment>
             <Segment actif={etat.mode === "dates"} surClic={() => naviguer({ mode: "dates" })}>
-              {t("m7.selecteur.dates_libres")}
+              {t("module.m7.selecteur.dates_libres")}
             </Segment>
           </div>
         </Champ>
 
         {etat.mode === "evenement" ? (
-          <Champ libelle={t("m7.selecteur.choisir_evenement")} pour="m7-evenement">
+          <Champ libelle={t("module.m7.selecteur.choisir_evenement")} pour="m7-evenement">
             <select
               id="m7-evenement"
               value={etat.evenement ?? ""}
@@ -117,7 +117,7 @@ export function SelecteurFenetre({
           </Champ>
         ) : (
           <>
-            <Champ libelle={t("m7.selecteur.date_debut")} pour="m7-debut">
+            <Champ libelle={t("module.m7.selecteur.date_debut")} pour="m7-debut">
               <input
                 id="m7-debut"
                 type="date"
@@ -127,7 +127,7 @@ export function SelecteurFenetre({
                 style={STYLE_CHAMP}
               />
             </Champ>
-            <Champ libelle={t("m7.selecteur.date_fin")} pour="m7-fin">
+            <Champ libelle={t("module.m7.selecteur.date_fin")} pour="m7-fin">
               <input
                 id="m7-fin"
                 type="date"
@@ -155,7 +155,7 @@ export function SelecteurFenetre({
           </div>
         </Champ>
 
-        <Champ libelle={t("m7.filtre.capacite_salle")} pour="m7-salle">
+        <Champ libelle={t("module.m7.filtre.capacite_salle")} pour="m7-salle">
           <select
             id="m7-salle"
             value={etat.salleMin === null ? "" : String(etat.salleMin)}
@@ -164,10 +164,10 @@ export function SelecteurFenetre({
             }
             style={STYLE_CHAMP}
           >
-            <option value="">{t("m7.filtre.aucune")}</option>
+            <option value="">{t("module.m7.filtre.aucune")}</option>
             {capacitesSalle.map((capacite) => (
               <option key={capacite} value={capacite}>
-                {t("m7.filtre.places", { n: capacite })}
+                {t("module.m7.filtre.places", { n: capacite })}
               </option>
             ))}
           </select>

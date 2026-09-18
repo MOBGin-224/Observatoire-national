@@ -14,7 +14,9 @@ L'entreprise se positionne comme l'infrastructure numérique de l'hospitalité g
 
 ## État actuel du projet
 
-**Mise à jour : 11 septembre 2026, document 16 appliqué.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
+**Mise à jour : 18 septembre 2026, document 17 appliqué côté dépôt.** Cette section se met à jour à chaque livraison de module. Une session qui lirait un état périmé repartirait de zéro sur un projet déjà avancé.
+
+> **Cinq migrations écrites et non appliquées.** Les fichiers `20260918*` de `/supabase/migrations` sont dans le dépôt mais pas dans la base : le classifieur d'auto mode a refusé `apply_migration` pendant la session du 18 septembre. À appliquer avant toute revue à l'écran des écrans `M6`, `M7`, `M9` et de l'import. Le contrôle `node scripts/controle-migrations.mjs` les signalera comme « créé par une migration, absent de la base » tant que ce n'est pas fait.
 
 **En base** (Supabase, projet `Observatoire`, schéma `observatoire`, migrations versionnées dans `/supabase/migrations`) : 30 tables, 22 vues matérialisées `mv_*`, 22 vues d'accès `acces_*`, 6 vues métier internes, et 2 fonctions de calcul à la lecture pour la fenêtre de `M7` (`evenementiel_evenements`, `evenementiel_fenetre`). RLS posée. Référentiel territorial chargé (111 territoires, 30 variantes, 1 version de découpage), 149 énumérations, 53 indicateurs. **Règle de fiabilité transverse** (document 4, section 1) calculée par la seule fonction `niveau_fiabilite`, et `fiabilite_la_plus_faible` pour les composites, sur les onze modules. Table `coefficient_retombees`, vide : `M8_RETOMBEES` reste fermé par la base (`module_actif`, `mes_modules`) tant qu'aucun coefficient courant validé n'y figure. Compartiment de stockage privé `logos-institutions`, cloisonné par institution. Un jeu de test synthétique explicitement identifié est en place (`/scripts`) : 142 établissements, 23 000 recherches, 6 000 réservations. **Ce ne sont pas des données réelles.**
 
@@ -22,11 +24,13 @@ L'entreprise se positionne comme l'infrastructure numérique de l'hospitalité g
 
 **Reste à construire** : la refonte visuelle et les sept autres sections de `M11_ADMIN`, la prévisualisation « Voir comme » du profil `ADMIN` (document 9 bis, F.4 ter), le téléversement des logos dans le compartiment déjà créé, l'export CSV interne `ADMIN`, le rendu PDF serveur (l'impression navigateur tient lieu de repli), l'agrégat de tension par territoire, la zone 5 de `M4_TENSION`, et les filtres de module de `M1`, `M2`, `M3`, `M5` et `M6` (les vues sont pré-agrégées ; `M7` a les siens, calculés par sa fonction de fenêtre).
 
-**Écart connu** : les blocs `EVE_*` de la synthèse lisent encore `mv_evenementiel_national`, instantané « à partir d'aujourd'hui » antérieur à la fenêtre de `M7`. La fenêtre à retenir pour la synthèse n'est pas arbitrée.
+**Fenêtre de la synthèse, arbitrée** (document 17, partie C) : `EVE_CAPACITE_MOBILISABLE` s'entend sur les 90 prochains jours et le libellé du bloc le dit ; `EVE_CAPACITE_SALLES`, comptage d'inventaire, reste sans fenêtre. La migration est écrite, **elle n'est pas encore appliquée à la base**.
 
 **Phase 2 de `M9_SYNTHESE`**, sélecteurs de période et de niveau géographique : subordonnée à la reprise des vues matérialisées pour leur donner ces deux dimensions. Chantier qui touche les huit modules et **se décide pour lui-même**, pas comme préalable à un écran.
 
-**Trois blocs de la synthèse s'affichent en état vide**, aucun n'est simulé : `INS_DEFICIT` (normal, aucune demande institutionnelle saisie), `TEN_FENETRES_SATURATION` (seuil arrêté, vue à construire) et `CTX_RECENSEMENT_PROGRESSION` (**bloqué : `etablissement` n'a pas de date de création**, il faut une colonne `cree_a` et un amendement au document 3).
+**Trois blocs de la synthèse s'affichent en état vide**, aucun n'est simulé : `INS_DEFICIT` (normal, aucune demande institutionnelle saisie), `TEN_FENETRES_SATURATION` (seuil arrêté, vue à construire) et `CTX_RECENSEMENT_PROGRESSION` (vue à construire).
+
+**Correction du 18 septembre 2026.** `CTX_RECENSEMENT_PROGRESSION` n'a jamais été bloqué par le modèle. La table `etablissement` porte `created_at` et `updated_at` depuis l'origine, toutes deux non nulles, par défaut à `now()`, avec le déclencheur `trg_etablissement_updated_at` sur la seconde. Le document 3 est respecté, il n'y a ni colonne à ajouter ni amendement à écrire. Seule la vue de l'indicateur manque. L'affirmation contraire, portée ici et au document 17 section D.2, était fausse.
 
 **En attente d'arbitrage technique** : le transport de courriel de la notification d'expiration. Voir `lib/taches/courriel.ts`. Les échéances sont relevées et conservées, rien n'est envoyé.
 
@@ -67,6 +71,7 @@ Toute fonctionnalité doit servir l'une de ces trois questions. Sinon elle est h
 | 14 | Amendements et réponses | **Amende le document 7 section 7.1 et le critère M21** |
 | 15 | Synthèse et bandeau de périmètre | **Amende les documents 3, 4, 6, 7, 8, 9 bis, 10 et 12** |
 | 16 | Modernisation des modules M5 à M8 | **Amende les documents 2, 3, 4, 5, 9 bis et 10** : fiabilité transverse, pondération de `MAT_INDICE`, paliers de salle, table du coefficient, colonnes d'équipement |
+| 17 | Arbitrages, corrections et dette technique | **Amende les documents 4, 9 bis, 9 ter, 10, 11, 12 et 16** : règle « aucun objet de base hors migration », portée de la règle des composites, masquage des indicateurs de performance, mentions obligatoires de `M5` et `M6`, mode dégradé de la zone 3 de `M7`, fenêtre de 90 jours en synthèse, préfixe `module.`, import transactionnel, règle de pluriel |
 
 **Tous les paramètres chiffrés arbitrés sont dans `/lib/config`**, jamais dans un composant ni dans une requête. Document 13 section 13, document 14 section 5.3.
 
@@ -74,7 +79,7 @@ Tous dans `/docs`. **Les onze modules sont spécifiés.** La partie A du documen
 
 ---
 
-## Les six règles qui ne se discutent pas
+## Les sept règles qui ne se discutent pas
 
 ### 1. Trois interdictions structurelles
 
@@ -112,7 +117,15 @@ Bandeau de périmètre : non masquable, sur tous les écrans et tous les exports
 
 Un graphique ne mélange jamais deux statuts de donnée.
 
-### 6. Aucune institution n'existe dans le code
+### 6. Aucun objet de base ne naît hors migration
+
+Tables, vues, vues matérialisées, fonctions, politiques, index, tâches planifiées : **aucun objet n'est créé, modifié ou supprimé autrement que par un fichier de migration.** Aucune exception, y compris pour un correctif urgent.
+
+Un correctif appliqué directement en base est une dette invisible : il fonctionne, rien ne le signale, et il disparaît au premier déploiement propre. Document 17, partie A.3.
+
+Vérification : `node scripts/controle-migrations.mjs`, avant chaque livraison.
+
+### 7. Aucune institution n'existe dans le code
 
 Nom, logo, périmètre, convention sont des données de configuration en base. Le même code doit servir n'importe quelle institution sans modification.
 
@@ -227,6 +240,7 @@ Le domaine métier est en français, le code est en anglais.
 | Camembert, double axe, 3D | Revue de `/components/charts` |
 | Anneau sans total central ni légende chiffrée | Revue de `/components/charts` (document 8, section 6) |
 | Moyenne là où une médiane est prescrite | Revue des agrégats |
+| Objet de base créé hors migration | `node scripts/controle-migrations.mjs` |
 
 ---
 

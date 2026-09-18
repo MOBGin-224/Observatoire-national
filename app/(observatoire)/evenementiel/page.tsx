@@ -135,14 +135,14 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
   /* Z1, bandeau de fenetre (document 16, D.4). */
   const bandeau = fenetreValide
     ? mode === "evenement" && evenement
-      ? t("m7.fenetre.format", {
+      ? t("module.m7.fenetre.format", {
           evenement: evenement.libelle ?? t("state.non_renseigne"),
           territoire: libelleTerritoire,
           debut: formatDate(debut!),
           fin: formatDate(fin!),
           nuits: nuitsEntre(debut!, fin!),
         })
-      : t("m7.fenetre.dates_libres", {
+      : t("module.m7.fenetre.dates_libres", {
           territoire: libelleTerritoire,
           debut: formatDate(debut!),
           fin: formatDate(fin!),
@@ -164,7 +164,7 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
     cle: e.cle,
     libelle: `${e.libelle ?? t("state.non_renseigne")} · ${
       e.dateFin && e.dateFin !== e.dateDebut
-        ? t("m7.z7.periode", { debut: formatDate(e.dateDebut), fin: formatDate(e.dateFin) })
+        ? t("module.m7.z7.periode", { debut: formatDate(e.dateDebut), fin: formatDate(e.dateFin) })
         : formatDate(e.dateDebut)
     }`,
   }));
@@ -195,12 +195,12 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
             color: "var(--color-text-secondary)",
           }}
         >
-          {t("m7.avertissement")}
+          {t("module.m7.avertissement")}
         </p>
 
         {/* Z1, fenetre analysee. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="01" titre={t("m7.z1.titre")} />
+          <TitreSection numero="01" titre={t("module.m7.z1.titre")} />
           <Panneau accent="bleu">
             <div className="flex flex-col" style={{ gap: "var(--space-5)" }}>
               {bandeau && (
@@ -219,7 +219,7 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
               {/* Etat vide de la zone 1 (J.9) : utile tant qu'aucune fenetre n'est
                   choisie, redondant des qu'un bandeau la decrit. */}
               {evenements.length === 0 && !fenetreValide && (
-                <p style={STYLE_AIDE}>{t("m7.fenetre.aucune")}</p>
+                <p style={STYLE_AIDE}>{t("module.m7.fenetre.aucune")}</p>
               )}
               <SelecteurFenetre
                 etat={etat}
@@ -237,8 +237,8 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
           <>
             {/* Z2, indicateurs cles. */}
             <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-              <TitreSection numero="02" titre={t("m7.z2.titre")} />
-              <p style={STYLE_AIDE}>{t("m7.z2.aide")}</p>
+              <TitreSection numero="02" titre={t("module.m7.z2.titre")} />
+              <p style={STYLE_AIDE}>{t("module.m7.z2.aide")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4" style={{ gap: "var(--space-5)" }}>
                 <BlocIndicateurCle
                   code="EVE_CAPACITE_MOBILISABLE"
@@ -262,7 +262,7 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
                       className="chiffres-tabulaires"
                       style={{ fontSize: "var(--text-small)", color: "var(--color-text-secondary)" }}
                     >
-                      {t("m7.z6.col.places")} : {formatNombre(fenetre.placesSalles)}
+                      {t("module.m7.z6.col.places")} : {formatNombre(fenetre.placesSalles)}
                     </span>
                   }
                 />
@@ -291,8 +291,8 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
             <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
               {/* Z3, decomposition obligatoire de la capacite mobilisable. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="03" titre={t("m7.z3.titre")} />
-                <Panneau titre={t("m7.z3.titre")} soustitre={t("m7.z3.aide")} className="flex-1">
+                <TitreSection numero="03" titre={t("module.m7.z3.titre")} />
+                <Panneau titre={t("module.m7.z3.titre")} soustitre={t("module.m7.z3.aide")} className="flex-1">
                   <DecompositionCapacite
                     capaciteRecensee={fenetre.capaciteRecensee}
                     partenairesDisponibles={fenetre.partenairesDisponibles}
@@ -305,9 +305,9 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
 
               {/* Z4, capacite mobilisable par territoire enfant. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="04" titre={t("m7.z4.titre")} />
+                <TitreSection numero="04" titre={t("module.m7.z4.titre")} />
                 <Panneau
-                  titre={t("m7.z4.titre")}
+                  titre={t("module.m7.z4.titre")}
                   pied={
                     fenetre.territoires.length > 0 ? (
                       <LegendeDensite
@@ -347,10 +347,10 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
             <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
               {/* Z5, capacite par gamme tarifaire. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="05" titre={t("m7.z5.titre")} />
+                <TitreSection numero="05" titre={t("module.m7.z5.titre")} />
                 <Panneau
-                  titre={t("m7.z5.titre")}
-                  soustitre={t("m7.z5.aide")}
+                  titre={t("module.m7.z5.titre")}
+                  soustitre={t("module.m7.z5.aide")}
                   actions={<BadgeStatutDonnee code="RECENSE" />}
                   className="flex-1"
                 >
@@ -373,10 +373,10 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
 
               {/* Z6, salles de reunion par palier de capacite. */}
               <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-                <TitreSection numero="06" titre={t("m7.z6.titre")} />
+                <TitreSection numero="06" titre={t("module.m7.z6.titre")} />
                 <Panneau
-                  titre={t("m7.z6.titre")}
-                  soustitre={t("m7.z6.aide")}
+                  titre={t("module.m7.z6.titre")}
+                  soustitre={t("module.m7.z6.aide")}
                   actions={<BadgeStatutDonnee code="RECENSE" />}
                   className="flex-1"
                 >
@@ -386,10 +386,10 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
                     />
                   ) : (
                     <TableauRegional
-                      enTetePremiereColonne={t("m7.z6.col.palier")}
+                      enTetePremiereColonne={t("module.m7.z6.col.palier")}
                       colonnes={[
-                        { libelle: t("m7.z6.col.etablissements"), forme: "volume" },
-                        { libelle: t("m7.z6.col.places"), forme: "volume" },
+                        { libelle: t("module.m7.z6.col.etablissements"), forme: "volume" },
+                        { libelle: t("module.m7.z6.col.places"), forme: "volume" },
                       ]}
                       lignes={paliers
                         .filter((palier) => fenetre.paliers.some((p) => p.palier === palier.code))
@@ -409,10 +409,10 @@ export default async function Evenementiel({ searchParams }: { searchParams: Pro
 
             {/* Z7, demandes institutionnelles sur la fenetre. */}
             <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-              <TitreSection numero="07" titre={t("m7.z7.titre")} />
+              <TitreSection numero="07" titre={t("module.m7.z7.titre")} />
               <Panneau
-                titre={t("m7.z7.titre")}
-                soustitre={t("m7.z7.aide")}
+                titre={t("module.m7.z7.titre")}
+                soustitre={t("module.m7.z7.aide")}
                 actions={<BadgeStatutDonnee code="DECLARE" />}
               >
                 <TableauDemandes lignes={fenetre.listeDemandes} />

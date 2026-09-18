@@ -29,6 +29,7 @@ export async function BlocIndicateurCle({
   calculeA,
   masque = false,
   cleLibelleMasque,
+  libelle,
   libelleVide,
   niveauFiabilite,
   variante = "compact",
@@ -41,6 +42,10 @@ export async function BlocIndicateurCle({
   calculeA: string;
   masque?: boolean;
   cleLibelleMasque?: string;
+  /* Remplace le libelle du dictionnaire quand l'ecran restreint la portee de
+     l'indicateur et doit le dire (document 17, C.2 : la capacite mobilisable
+     s'entend sur 90 jours en synthese). Reste l'exception, jamais le confort. */
+  libelle?: string;
   libelleVide?: string;
   niveauFiabilite?: string;
   variante?: VarianteBloc;
@@ -68,7 +73,7 @@ export async function BlocIndicateurCle({
       style={{ gap: "var(--space-3)", padding: "var(--space-4) var(--space-5) var(--space-3)" }}
     >
       <span className="etiquette" style={{ lineHeight: 1.35 }}>
-        {meta?.libelleFr ?? code}
+        {libelle ?? meta?.libelleFr ?? code}
       </span>
 
       <EtatDonnee

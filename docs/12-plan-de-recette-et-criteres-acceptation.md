@@ -334,6 +334,17 @@ Vérifications textuelles, exécutables en une commande, sans lecture de code.
 | I07 | `SUPABASE_SERVICE_ROLE_KEY` dans un composant client | Aucune occurrence |
 | I08 | Fichier `.env` versionné | Absent du dépôt |
 | I09 | Jeu de données de production dans le dépôt | Absent |
+| I10 | Croisement des objets présents en base avec ceux créés par les migrations | Aucun écart dans les deux sens |
+
+La vérification I10 s'exécute par `node scripts/controle-migrations.mjs`, avant
+chaque livraison. Le script rend un code de sortie non nul dès qu'un écart est
+trouvé, dans un sens comme dans l'autre.
+
+Un objet présent en base et absent des migrations disparaît au premier
+déploiement propre, sans que rien ne le signale d'ici là. Un objet créé par une
+migration et absent de la base signale une migration jamais appliquée.
+
+Document 17, partie A.3.
 
 ---
 

@@ -9,6 +9,7 @@ import { ClassementTerritoires } from "@/components/modules/maturite/ClassementT
 import { DecompositionIndice } from "@/components/modules/maturite/DecompositionIndice";
 import { BadgeStatutDonnee } from "@/components/states/BadgeStatutDonnee";
 import { EtatVide } from "@/components/states/EtatVide";
+import { MATURITE } from "@/lib/config";
 import { listerEnumeration } from "@/lib/enumerations";
 import { formatNombre } from "@/lib/format";
 import { resoudreIndicateur } from "@/lib/indicators";
@@ -96,8 +97,20 @@ export default async function Maturite() {
     valeur: ligne.indice ?? 0,
     sansDonnee: ligne.indice === null,
     mention:
-      ligne.etablissements > 0 ? t("m6.effectif", { n: formatNombre(ligne.etablissements) }) : undefined,
+      ligne.etablissements > 0 ? t("module.m6.effectif", { n: formatNombre(ligne.etablissements) }) : undefined,
   }));
+
+  /*
+   * Document 17, B.2 : l'indice est un plancher tant qu'une composante n'est
+   * pas renseignee pour la moitie au moins des etablissements. Seules les deux
+   * composantes de paiement peuvent etre non renseignees : les quatre autres
+   * se lisent dans la fiche, ou elles sont presentes ou absentes.
+   */
+  const plancher =
+    national.offEtabRecenses > 0 &&
+    Math.min(national.effectifCarteRenseigne, national.effectifMobileRenseigne) /
+      national.offEtabRecenses <
+      MATURITE.seuilRenseignementPlancher;
 
   const versLigneIndice = (dimension: "TYPOLOGIE" | "GAMME") =>
     croisements
@@ -135,13 +148,35 @@ export default async function Maturite() {
             color: "var(--color-text-secondary)",
           }}
         >
-          {t("m6.avertissement")}
+          {t("module.m6.avertissement")}
         </p>
+
+        {/*
+         * Mention de plancher (document 17, B.2). Une composante non renseignee
+         * compte pour zero dans le score : tant qu'une composante n'est pas
+         * renseignee pour au moins la moitie des etablissements, l'indice ne
+         * peut que monter, et le dire evite de le lire comme un resultat.
+         */}
+        {plancher && (
+          <p
+            style={{
+              marginTop: "calc(-1 * var(--space-6))",
+              padding: "var(--space-3) var(--space-4)",
+              borderLeft: "var(--filet-accent) solid var(--color-border-strong)",
+              backgroundColor: "var(--color-bg-panel)",
+              fontSize: "var(--text-small)",
+              lineHeight: 1.5,
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            {t("module.m6.plancher")}
+          </p>
+        )}
 
         {/* Z1, blocs cles. Quatre taux lus sur une meme echelle de zero a cent. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="01" titre={t("m6.z1.titre")} />
-          <p style={STYLE_AIDE}>{t("m6.z1.aide")}</p>
+          <TitreSection numero="01" titre={t("module.m6.z1.titre")} />
+          <p style={STYLE_AIDE}>{t("module.m6.z1.aide")}</p>
           <div className="grid grid-cols-2 xl:grid-cols-4" style={{ gap: "var(--space-5)" }}>
             <BlocIndicateurCle
               code="MAT_INDICE"
@@ -182,10 +217,10 @@ export default async function Maturite() {
         <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
           {/* Z2, indice par territoire. */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="02" titre={t("m6.z2.titre")} />
+            <TitreSection numero="02" titre={t("module.m6.z2.titre")} />
             <Panneau
-              titre={t("m6.z2.titre")}
-              soustitre={t("m6.z2.aide")}
+              titre={t("module.m6.z2.titre")}
+              soustitre={t("module.m6.z2.aide")}
               actions={<BadgeStatutDonnee code={statutDonnee} />}
               pied={<LegendeDensite cellules={tuiles} etiquette={indice?.libelleFr} />}
               className="flex-1"
@@ -202,10 +237,10 @@ export default async function Maturite() {
 
           {/* Z3, decomposition de l'indice : la zone la plus instructive (I.8). */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="03" titre={t("m6.z3.titre")} />
+            <TitreSection numero="03" titre={t("module.m6.z3.titre")} />
             <Panneau
-              titre={t("m6.z3.titre")}
-              soustitre={t("m6.z3.aide")}
+              titre={t("module.m6.z3.titre")}
+              soustitre={t("module.m6.z3.aide")}
               actions={<BadgeStatutDonnee code={statutDonnee} />}
               className="flex-1"
             >
@@ -223,10 +258,10 @@ export default async function Maturite() {
         <div className="grid grid-cols-1 xl:grid-cols-2" style={{ gap: "var(--space-8)" }}>
           {/* Z4, maturite par typologie. */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="04" titre={t("m6.z4.titre")} />
+            <TitreSection numero="04" titre={t("module.m6.z4.titre")} />
             <Panneau
-              titre={t("m6.z4.titre")}
-              soustitre={t("m6.z4.aide")}
+              titre={t("module.m6.z4.titre")}
+              soustitre={t("module.m6.z4.aide")}
               actions={<BadgeStatutDonnee code={statutDonnee} />}
               className="flex-1"
             >
@@ -236,10 +271,10 @@ export default async function Maturite() {
 
           {/* Z5, maturite par gamme tarifaire. */}
           <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-            <TitreSection numero="05" titre={t("m6.z5.titre")} />
+            <TitreSection numero="05" titre={t("module.m6.z5.titre")} />
             <Panneau
-              titre={t("m6.z5.titre")}
-              soustitre={t("m6.z5.aide")}
+              titre={t("module.m6.z5.titre")}
+              soustitre={t("module.m6.z5.aide")}
               actions={<BadgeStatutDonnee code={statutDonnee} />}
               className="flex-1"
             >
@@ -250,10 +285,10 @@ export default async function Maturite() {
 
         {/* Z6, classement des territoires. */}
         <section className="flex flex-col" style={{ gap: "var(--space-4)" }}>
-          <TitreSection numero="06" titre={t("m6.z6.titre")} />
+          <TitreSection numero="06" titre={t("module.m6.z6.titre")} />
           <Panneau
-            titre={t("m6.z6.titre")}
-            soustitre={t("m6.z6.aide")}
+            titre={t("module.m6.z6.titre")}
+            soustitre={t("module.m6.z6.aide")}
             actions={<BadgeStatutDonnee code={statutDonnee} />}
           >
             <ClassementTerritoires lignes={lignes} />
